@@ -2,7 +2,7 @@
 University project
 
 Made by team Profectus
-Rokas Čebatorius, Vilius Kucavičius, Danielius Anužas
+Rokas Čebatorius, Vilius Kucavičius, Danielius Anužas, Meinardas Klinkovas
 
 Expenses tracker
 
