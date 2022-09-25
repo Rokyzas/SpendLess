@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {}
+    "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {
+    "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
+        "projectUniqueName": "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
         "projectName": "SpendlessBlazor",
-        "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
+        "projectPath": "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
         "packagesPath": "C:\\Users\\Rokis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\obj\\",
+        "outputPath": "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

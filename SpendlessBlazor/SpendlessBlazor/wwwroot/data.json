@@ -1,27 +1,32 @@
 [
   {
     "expenseValue": 1,
-    "categoryValue": null,
-    "dateValue": 0
+    "categoryValue": "2",
+    "dateValue": 3
   },
   {
     "expenseValue": 2,
-    "categoryValue": null,
-    "dateValue": 0
-  },
-  {
-    "expenseValue": 3,
-    "categoryValue": null,
-    "dateValue": 0
-  },
-  {
-    "expenseValue": 5,
-    "categoryValue": null,
-    "dateValue": 0
-  },
-  {
-    "expenseValue": 5,
-    "categoryValue": "asd",
+    "categoryValue": "3",
     "dateValue": 4
+  },
+  {
+    "expenseValue": 5,
+    "categoryValue": "35",
+    "dateValue": 45
+  },
+  {
+    "expenseValue": 5,
+    "categoryValue": "355",
+    "dateValue": 45
+  },
+  {
+    "expenseValue": 55,
+    "categoryValue": "355",
+    "dateValue": 455
+  },
+  {
+    "expenseValue": 60,
+    "categoryValue": "70",
+    "dateValue": 80
   }
 ]
