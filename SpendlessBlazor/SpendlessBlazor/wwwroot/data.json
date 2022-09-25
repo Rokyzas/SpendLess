@@ -1,0 +1,27 @@
+[
+  {
+    "expenseValue": 1,
+    "categoryValue": null,
+    "dateValue": 0
+  },
+  {
+    "expenseValue": 2,
+    "categoryValue": null,
+    "dateValue": 0
+  },
+  {
+    "expenseValue": 3,
+    "categoryValue": null,
+    "dateValue": 0
+  },
+  {
+    "expenseValue": 5,
+    "categoryValue": null,
+    "dateValue": 0
+  },
+  {
+    "expenseValue": 5,
+    "categoryValue": "asd",
+    "dateValue": 4
+  }
+]

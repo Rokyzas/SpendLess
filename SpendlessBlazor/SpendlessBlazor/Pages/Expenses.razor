@@ -1,0 +1,77 @@
+﻿@page "/expenses"
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @aName</p>
+
+
+<MudTextField @bind-Value="expenseValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
+@code {
+    public int expenseValue { get; set; }
+}
+<MudTextField @bind-Value="categoryValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
+@code {
+    public string categoryValue { get; set; }
+}
+<MudTextField @bind-Value="dateValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
+@code {
+    public int dateValue { get; set; }
+}
+
+<button class="btn btn-primary" @onclick="writeToJson">Save</button>
+
+@code {
+
+    [Parameter]
+    public List<Info>? info { get; set; }
+
+    [Parameter]
+    public String? aName { get; set; }
+
+    public class Info
+    {
+        public int? expenseValue { get; set; }
+
+        public string? categoryValue { get; set;  }
+
+        public int? dateValue { get; set; }
+
+
+        public Info(int? x, string? y, int? z)
+        {
+            expenseValue = x;
+            categoryValue = y;
+            dateValue = z;
+        }
+    }
+
+    private void readJson()
+    {
+        String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
+        info = JsonSerializer.Deserialize<List<Info>>(someString)!;
+        aName = info.ElementAt(1).categoryValue;
+    }
+
+    public void writeToJson()
+    {
+        Info lol = new Info(expenseValue, categoryValue, dateValue);
+        info.Add(lol);
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(info, options);
+
+        System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
+    }
+    
+
+
+
+    protected  async Task OnInitializedAsync()
+    {
+        readJson();
+    }
+
+}

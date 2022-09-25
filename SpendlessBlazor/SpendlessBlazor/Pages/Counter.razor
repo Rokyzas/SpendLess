@@ -1,0 +1,54 @@
+﻿@*@page "/counter"
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @aName</p>
+
+<button class="btn btn-primary" @onclick="writeToJson">Save</button>
+
+@code {
+    [Parameter]
+    public List<Info>? info { get; set; }
+
+    [Parameter]
+    public String? aName { get; set; }
+
+    public class Info
+    {
+        public string? name { get; set; }
+
+        public int age { get; set; }
+
+        public Info(String name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+    }
+
+    private void readJson()
+    {
+        String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
+        info = JsonSerializer.Deserialize<List<Info>>(someString)!;
+        aName = info.ElementAt(1).name;
+    }
+
+    public void writeToJson()
+    {
+        info.Add(new Info("guy", 25));
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(info, options);
+
+        System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        readJson();
+    }
+}*@
