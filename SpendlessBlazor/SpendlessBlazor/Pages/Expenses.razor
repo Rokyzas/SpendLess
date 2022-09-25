@@ -6,8 +6,7 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @aName</p>
-
+<p role="status">Current count:</p>
 
 <MudTextField @bind-Value="expenseValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
 @code {
@@ -15,7 +14,7 @@
 }
 <MudTextField @bind-Value="categoryValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
 @code {
-    public string categoryValue { get; set; }
+    public string? categoryValue { get; set; }
 }
 <MudTextField @bind-Value="dateValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
 @code {
@@ -24,54 +23,82 @@
 
 <button class="btn btn-primary" @onclick="writeToJson">Save</button>
 
+<MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            @foreach (var h in headings)
+            {
+                <th>@h</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+			if (info != null)
+				for (int i = 0; i < info.Count; i++)
+				{
+					<tr>
+						<td>@info.ElementAt(i).expenseValue</td>
+						<td>@info.ElementAt(i).categoryValue</td>
+						<td>@info.ElementAt(i).dateValue</td>
+					</tr>
+				}
+        }
+    </tbody>
+</MudSimpleTable>
+<MudToolBar>
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+</MudToolBar>
+
 @code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
 
-    [Parameter]
-    public List<Info>? info { get; set; }
+    string[] headings = { "ID", "Name", "Email" };
+}
 
+@code {
     [Parameter]
-    public String? aName { get; set; }
+    public List<Info>? info { get; set; } = new List<Info>();
 
     public class Info
     {
         public int? expenseValue { get; set; }
 
-        public string? categoryValue { get; set;  }
+        public string? categoryValue { get; set; }
 
         public int? dateValue { get; set; }
-
-
-        public Info(int? x, string? y, int? z)
-        {
-            expenseValue = x;
-            categoryValue = y;
-            dateValue = z;
-        }
     }
 
     private void readJson()
     {
         String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
         info = JsonSerializer.Deserialize<List<Info>>(someString)!;
-        aName = info.ElementAt(1).categoryValue;
     }
 
     public void writeToJson()
     {
-        Info lol = new Info(expenseValue, categoryValue, dateValue);
-        info.Add(lol);
+        Info newInfo = new Info();
+        newInfo.expenseValue = expenseValue;
+        newInfo.dateValue = dateValue;
+        newInfo.categoryValue = categoryValue;
+
+        if(info != null)
+            info.Add(newInfo);
+
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
 
         System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
     }
-    
 
-
-
-    protected  async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         readJson();
     }
-
 }
