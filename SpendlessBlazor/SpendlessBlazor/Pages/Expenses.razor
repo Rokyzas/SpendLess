@@ -25,9 +25,8 @@
 <button class="btn btn-primary" @onclick="writeToJson">Save</button>
 
 @code {
-
     [Parameter]
-    public List<Info>? info { get; set; }
+    public List<Info>? info { get; set; } = new List<Info>();
 
     [Parameter]
     public String? aName { get; set; }
@@ -58,8 +57,7 @@
 
     public void writeToJson()
     {
-        Info lol = new Info(expenseValue, categoryValue, dateValue);
-        info.Add(lol);
+        info.Add(new Info(expenseValue, categoryValue, dateValue));
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
 
