@@ -23,5 +23,15 @@
     "expenseValue": 5,
     "categoryValue": "rat",
     "dateValue": 99
+  },
+  {
+    "expenseValue": 0,
+    "categoryValue": null,
+    "dateValue": 0
+  },
+  {
+    "expenseValue": 0,
+    "categoryValue": "tad",
+    "dateValue": 0
   }
 ]
