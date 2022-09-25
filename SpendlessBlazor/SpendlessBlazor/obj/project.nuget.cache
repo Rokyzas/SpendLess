@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9lAtw77DL4S9gaO8TTrvqnaCLPdZmrRJMMdRieAQuyAp/Pi1RQAwXrvonP83NCyexFxZZ29Vliha3tLxRE1Eng==",
+  "dgSpecHash": "jyFWDSig0+nuGzWRPVUY/vgZnZNwUyug4Cbt43lxx+I5VvWwQHXkVhY36ASCASBM8s9z7MATcs5A0qMP/2M4kw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
+  "projectFilePath": "C:\\Users\\Rokis\\source\\repos\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rokis\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.9\\microsoft.aspnetcore.authorization.6.0.9.nupkg.sha512",
     "C:\\Users\\Rokis\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.9\\microsoft.aspnetcore.components.6.0.9.nupkg.sha512",
