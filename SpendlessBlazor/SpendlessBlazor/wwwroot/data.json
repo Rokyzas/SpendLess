@@ -1,37 +1,17 @@
 [
   {
-    "expenseValue": 5,
-    "categoryValue": "dd",
-    "dateValue": 6
+    "expenseValue": 8,
+    "categoryValue": "8",
+    "dateValue": 8
   },
   {
-    "expenseValue": 123,
-    "categoryValue": "Dan",
-    "dateValue": 88
+    "expenseValue": 9,
+    "categoryValue": "9",
+    "dateValue": 9
   },
   {
-    "expenseValue": 123,
-    "categoryValue": "Dan",
-    "dateValue": 88
-  },
-  {
-    "expenseValue": 123456,
-    "categoryValue": "Danas",
-    "dateValue": 88
-  },
-  {
-    "expenseValue": 5,
-    "categoryValue": "rat",
-    "dateValue": 99
-  },
-  {
-    "expenseValue": 0,
-    "categoryValue": null,
-    "dateValue": 0
-  },
-  {
-    "expenseValue": 0,
-    "categoryValue": "tad",
-    "dateValue": 0
+    "expenseValue": 1,
+    "categoryValue": "1",
+    "dateValue": 1
   }
 ]
