@@ -25,7 +25,7 @@
     public int dateValue { get; set; }
 }
 
-<button class="btn btn-primary" @onclick="()=> InfoService.writeToJson(new Shared.Info (expenseValue, categoryValue, dateValue))">Save</button>
+<button class="btn btn-primary" @onclick="writeToJson">Save</button>
 
 
 <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
@@ -71,6 +71,16 @@
 
     [Parameter]
     public List<Info>? info { get; set; } = new List<Info>();
+
+    public void writeToJson()
+    {
+        info.Add(new Shared.Info(expenseValue, categoryValue, dateValue));
+
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(info, options);
+
+        System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
+    }
 
     protected override async Task OnInitializedAsync()
     {

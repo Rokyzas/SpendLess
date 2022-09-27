@@ -6,7 +6,5 @@ namespace SpendlessBlazor.Services
     {
         List<Info> readJson();
 
-        void writeToJson(Shared.Info info);
-
     }
 }
