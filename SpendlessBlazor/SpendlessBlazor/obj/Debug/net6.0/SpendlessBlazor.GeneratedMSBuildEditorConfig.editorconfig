@@ -27,16 +27,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhwZW5zZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Univeras/3-semestras/PSI/SpendLess/SpendlessBlazor/SpendlessBlazor/Pages/ExpensesTest.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhwZW5zZXNUZXN0LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Univeras/3-semestras/PSI/SpendLess/SpendlessBlazor/SpendlessBlazor/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Univeras/3-semestras/PSI/SpendLess/SpendlessBlazor/SpendlessBlazor/Pages/Test.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Univeras/3-semestras/PSI/SpendLess/SpendlessBlazor/SpendlessBlazor/Shared/SurveyPrompt.razor]

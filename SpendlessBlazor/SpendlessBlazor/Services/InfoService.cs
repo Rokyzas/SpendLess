@@ -4,7 +4,6 @@ using System.Text.Json;
 
 using System.Text.Json.Serialization;
 using static SpendlessBlazor.Pages.Expenses;
-using Info = SpendlessBlazor.Pages.Expenses.Info;
 
 namespace SpendlessBlazor.Services
 {

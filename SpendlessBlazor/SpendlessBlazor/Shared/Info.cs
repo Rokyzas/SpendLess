@@ -2,17 +2,18 @@
 {
     public class Info
     {
-        public int? expenseValue { get; set; }
+        public DateTime? date { get; set; } = DateTime.Today;
+        public string? textValue { get; set; }
+        public double? amount { get; set; }
 
         public string? categoryValue { get; set; }
 
-        public int? dateValue { get; set; }
-
-        public Info(int? expenseValue, string? categoryValue, int? dateValue)
+        public Info(string? textValue, double? amount, string? categoryValue, DateTime? date)
         {
-            this.expenseValue = expenseValue;
+            this.textValue = textValue;
+            this.amount = amount;
             this.categoryValue = categoryValue;
-            this.dateValue = dateValue;
+            this.date = date;
         }
     }
 }
