@@ -1,105 +1,113 @@
 ﻿@page "/expenses"
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
+@using SpendlessBlazor.Shared
+@using SpendlessBlazor.Services
+@using System.Net.Http.Json
 
-<PageTitle>Counter</PageTitle>
+@inject SpendlessBlazor.Services.IInfoService InfoService
+@inject HttpClient httpClient
 
-<h1>Counter</h1>
+<h3>Where did you spend your money?</h3>
 
-<p role="status">Current count:</p>
+<br />
 
-@code {
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
+<div class="gap-4 d-flex flex-wrap">
+    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+    @code {
+        public string? textValue { get; set; }
+    }
+    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
+    @code {
+        private string? categoryValue;
+    }
+    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+    @code {
+        public double? amount { get; set; }
+    }
+    <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+    @code {
+        DateTime? date = DateTime.Today;
+    }
+</div>
 
-    string[] headings = { "ID", "Name", "Email" };
-}
+<br />
 
+<button class="btn btn-primary" @onclick="WriteToJson">Save</button>
+
+<br />
+
+<br />
 
 <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
     <thead>
         <tr>
             @foreach (var h in headings)
             {
-                    <th>@h</th>
+                <th>@h</th>
             }
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < info.Count; i++)
-        {
-                <tr>
-                    <td>@info.ElementAt(i).expenseValue</td>
-                    <td>@info.ElementAt(i).categoryValue</td>
-                    <td>@info.ElementAt(i).dateValue</td>
-                </tr>
+        @{
+            if (info != null)
+                for (int i = 0; i < info.Count; i++)
+                {
+                    <tr>
+                        <td>@info.ElementAt(i).textValue</td>
+                        <td>@info.ElementAt(i).categoryValue</td>
+                        <td>@info.ElementAt(i).amount</td>
+                        <td>@info.ElementAt(i).date</td>
+                    </tr>
+                }
         }
     </tbody>
 </MudSimpleTable>
-<MudToolBar>
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-</MudToolBar>
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
 
-
-<MudTextField @bind-Value="expenseValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
-@code {
-    public int expenseValue { get; set; }
-}
-<MudTextField @bind-Value="categoryValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
-@code {
-    public string categoryValue { get; set; }
-}
-<MudTextField @bind-Value="dateValue" Label="Filled" Variant="Variant.Filled"></MudTextField>
-@code {
-    public int dateValue { get; set; }
+    string[] headings = { "Item", "Category", "Amount", "Date" };
 }
 
-<button class="btn btn-primary" @onclick="writeToJson">Save</button>
-
 @code {
+
     [Parameter]
-    public List<Info>? info { get; set; } = new List<Info>();
+    public List<Info> info { get; set; } = new List<Info>();
 
-
-    public class Info
+    private string[] categoryValues =
     {
-        public int? expenseValue { get; set; }
+        "Housing", "Transportation", "Food", "Utilities", "Investing",
+        "Household", "Personal", "Personal Development", "Gifts/Donations",
+        "Entertainment", "Medical/Healthcare", "Insurance", "Kids",
+        "Pets", "Subscriptions", "Clothing", "Travel", "Technology"
+    };
 
-        public string? categoryValue { get; set;  }
-
-        public int? dateValue { get; set; }
-    }
-
-    private void readJson()
+    public void WriteToJson()
     {
-        String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
-        info = JsonSerializer.Deserialize<List<Info>>(someString);
-    }
-
-    public void writeToJson()
-    {
-        Info newInfo = new Info();
-        newInfo.expenseValue = expenseValue;
-        newInfo.dateValue = dateValue;
-        newInfo.categoryValue = categoryValue;
-
-        info.Add(newInfo);
+        info.Add(new Shared.Info(textValue, amount, categoryValue, date));
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
 
         System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
     }
-    
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        readJson();
+        info = InfoService.ReadJson();
     }
 
+    private async Task<IEnumerable<string>> Search1(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return categoryValues;
+        return categoryValues.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
 }

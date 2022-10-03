@@ -1,32 +1,44 @@
 [
   {
-    "expenseValue": 1,
-    "categoryValue": "2",
-    "dateValue": 3
+    "date": "2022-09-26T00:00:00",
+    "textValue": "\u0160nicelis",
+    "amount": 3.55,
+    "categoryValue": "Food"
   },
   {
-    "expenseValue": 2,
-    "categoryValue": "3",
-    "dateValue": 4
+    "date": "2022-09-24T00:00:00",
+    "textValue": "M\u0117nesinis bilietas",
+    "amount": 5.8,
+    "categoryValue": "Transportation"
   },
   {
-    "expenseValue": 5,
-    "categoryValue": "35",
-    "dateValue": 45
+    "date": "2022-09-14T00:00:00",
+    "textValue": "Blue/Yellow",
+    "amount": 5,
+    "categoryValue": "Gifts/Donations"
   },
   {
-    "expenseValue": 5,
-    "categoryValue": "355",
-    "dateValue": 45
+    "date": "2022-09-27T00:00:00+03:00",
+    "textValue": "Car ",
+    "amount": 10,
+    "categoryValue": "Transportation"
   },
   {
-    "expenseValue": 55,
-    "categoryValue": "355",
-    "dateValue": 455
+    "date": "2022-09-27T00:00:00+03:00",
+    "textValue": "Pomidoras",
+    "amount": 5.55,
+    "categoryValue": "Food"
   },
   {
-    "expenseValue": 60,
-    "categoryValue": "70",
-    "dateValue": 80
+    "date": "2022-09-27T00:00:00+03:00",
+    "textValue": "Agurkas",
+    "amount": 4.55,
+    "categoryValue": "Food"
+  },
+  {
+    "date": "2022-10-03T00:00:00+03:00",
+    "textValue": "Pills",
+    "amount": 5,
+    "categoryValue": "Entertainment"
   }
 ]
