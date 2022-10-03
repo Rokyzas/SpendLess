@@ -31,7 +31,13 @@
     }
 </div>
 
+<br />
+
 <button class="btn btn-primary" @onclick="writeToJson">Save</button>
+
+<br />
+
+<br />
 
 <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
     <thead>
@@ -57,13 +63,6 @@
         }
     </tbody>
 </MudSimpleTable>
-<MudToolBar>
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-</MudToolBar>
-
 @code {
     private bool dense = false;
     private bool hover = true;
