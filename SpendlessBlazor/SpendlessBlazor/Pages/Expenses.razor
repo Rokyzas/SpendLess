@@ -92,7 +92,17 @@
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
 
-        System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
+        //System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
+
+        String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
+
+        using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+        {
+            using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fileStream))
+            {
+                streamWriter.Write(jsonString);
+            }
+        }
     }
 
     protected override async Task OnInitializedAsync()

@@ -27,11 +27,24 @@ namespace SpendlessBlazor.Services
 
         public List<Shared.Info> ReadJson()
         {
-            String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
+            //String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
+            String someString;
+            String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
+
+            //throws error if file not found
+            using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+
+                using (System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream))
+                {
+
+                    someString = streamReader.ReadToEnd();
+                }
+            }
 
             //deserialize fails on empty string
             //will probably become redundant when data is no longer deleted manually
-            if(someString == "")
+            if (someString == "")
             {
                 someString = "[]";
             }
