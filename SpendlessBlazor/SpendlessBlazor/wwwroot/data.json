@@ -34,5 +34,11 @@
     "textValue": "Agurkas",
     "amount": 4.55,
     "categoryValue": "Food"
+  },
+  {
+    "date": "2022-10-03T00:00:00+03:00",
+    "textValue": "Pills",
+    "amount": 5,
+    "categoryValue": "Entertainment"
   }
 ]

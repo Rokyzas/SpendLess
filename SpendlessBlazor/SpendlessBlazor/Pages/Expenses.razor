@@ -33,7 +33,7 @@
 
 <br />
 
-<button class="btn btn-primary" @onclick="writeToJson">Save</button>
+<button class="btn btn-primary" @onclick="WriteToJson">Save</button>
 
 <br />
 
@@ -85,7 +85,7 @@
         "Pets", "Subscriptions", "Clothing", "Travel", "Technology"
     };
 
-    public void writeToJson()
+    public void WriteToJson()
     {
         info.Add(new Shared.Info(textValue, amount, categoryValue, date));
 
@@ -97,7 +97,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        info = InfoService.readJson();
+        info = InfoService.ReadJson();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

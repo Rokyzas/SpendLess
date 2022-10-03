@@ -25,7 +25,7 @@ namespace SpendlessBlazor.Services
         }
         */
 
-        public List<Shared.Info> readJson()
+        public List<Shared.Info> ReadJson()
         {
             String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
 

@@ -4,7 +4,7 @@ namespace SpendlessBlazor.Services
 {
     public interface IInfoService
     {
-        List<Info> readJson();
+        List<Info> ReadJson();
 
     }
 }
