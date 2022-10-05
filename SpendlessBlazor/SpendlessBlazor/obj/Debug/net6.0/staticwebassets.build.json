@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uy2183GugYHeaoFY0+qjdMRcstDE29GeqknlxvBri9Y=",
+  "Hash": "j287Y8jHj0au4H4W0jxLSV3b+1zl7UaDtNMZ5yQYjJo=",
   "Source": "SpendlessBlazor",
   "BasePath": "_content/SpendlessBlazor",
   "Mode": "Default",
@@ -304,6 +304,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\Images\\Pickle_Rick.jpg",
+      "SourceId": "SpendlessBlazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "BasePath": "_content/SpendlessBlazor",
+      "RelativePath": "Images/Pickle_Rick.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Pickle_Rick.jpg"
     },
     {
       "Identity": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.css",

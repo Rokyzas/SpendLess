@@ -12,33 +12,15 @@
     "categoryValue": "Transportation"
   },
   {
-    "date": "2022-09-14T00:00:00",
-    "textValue": "Blue/Yellow",
-    "amount": 5,
-    "categoryValue": "Gifts/Donations"
-  },
-  {
-    "date": "2022-09-27T00:00:00+03:00",
-    "textValue": "Car ",
-    "amount": 10,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-09-27T00:00:00+03:00",
-    "textValue": "Pomidoras",
-    "amount": 5.55,
-    "categoryValue": "Food"
-  },
-  {
-    "date": "2022-09-27T00:00:00+03:00",
-    "textValue": "Agurkas",
-    "amount": 4.55,
-    "categoryValue": "Food"
-  },
-  {
     "date": "2022-10-03T00:00:00+03:00",
     "textValue": "Pills",
     "amount": 5,
+    "categoryValue": "Entertainment"
+  },
+  {
+    "date": "2022-10-05T00:00:00+03:00",
+    "textValue": "Pills",
+    "amount": 0,
     "categoryValue": "Entertainment"
   }
 ]
