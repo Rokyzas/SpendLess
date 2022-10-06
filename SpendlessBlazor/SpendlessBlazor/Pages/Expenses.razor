@@ -4,9 +4,13 @@
 @using SpendlessBlazor.Shared
 @using SpendlessBlazor.Services
 @using System.Net.Http.Json
+@using MudBlazor.Services;
+
 
 @inject SpendlessBlazor.Services.IInfoService InfoService
 @inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
 
 <h3>Where did you spend your money?</h3>
 
@@ -91,9 +95,10 @@
         {
             info.Add(new Shared.Info(textValue, amount, categoryValue, date));
         } else{
-            //TODO: add notification
+            WarningMsg("Fields can not be empty!");
             return;
         }
+
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
@@ -109,15 +114,28 @@
                 }
             }
         }
-        catch (FileNotFoundException)
-        {
-            //TODO: add notification
-        }
         catch (Exception)
         {
-            //TODO: add notification
+            ErrorMsg("Failed to save data");
         }
+
+        SuccessMsg("Succsesfully saved data");
     }
+
+    public void SuccessMsg(String msg){
+        Snackbar.Add(msg, Severity.Success, config => { config.VisibleStateDuration = 1000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
+    }
+
+    public void WarningMsg(String msg)
+    {
+        Snackbar.Add(msg, Severity.Warning, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
+    }
+
+    public void ErrorMsg(String msg)
+    {
+        Snackbar.Add(msg, Severity.Error, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
