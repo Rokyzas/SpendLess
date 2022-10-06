@@ -87,21 +87,35 @@
 
     public void WriteToJson()
     {
-        info.Add(new Shared.Info(textValue, amount, categoryValue, date));
+        if (amount != null && categoryValue != null && date != null)
+        {
+            info.Add(new Shared.Info(textValue, amount, categoryValue, date));
+        } else{
+            //TODO: add notification
+            return;
+        }
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
+        string path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
 
-        //System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
-
-        String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
-
-        using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+        try
         {
-            using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fileStream))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                streamWriter.Write(jsonString);
+                using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fileStream))
+                {
+                    streamWriter.Write(jsonString);
+                }
             }
+        }
+        catch (FileNotFoundException)
+        {
+            //TODO: add notification
+        }
+        catch (Exception)
+        {
+            //TODO: add notification
         }
     }
 

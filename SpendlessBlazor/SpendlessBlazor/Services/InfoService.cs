@@ -32,15 +32,29 @@ namespace SpendlessBlazor.Services
             String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
 
             //throws error if file not found
-            using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            try
             {
-
-                using (System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream))
+                using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
                 {
 
-                    someString = streamReader.ReadToEnd();
+                    using (System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream))
+                    {
+
+                        someString = streamReader.ReadToEnd();
+                    }
                 }
             }
+            catch (FileNotFoundException)
+            {
+                //TODO: add notification
+                return null;
+            }
+            catch (Exception)
+            {
+                //TODO: add notification
+                return null;
+            }
+
 
             //deserialize fails on empty string
             //will probably become redundant when data is no longer deleted manually
