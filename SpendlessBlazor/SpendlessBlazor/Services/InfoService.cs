@@ -25,7 +25,7 @@ namespace SpendlessBlazor.Services
         }
         */
 
-        public List<Shared.Info> ReadJson()
+        public List<Shared.Info> ReadJson(SnackBarService snackbar)
         {
             //String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
             String someString;
@@ -34,24 +34,14 @@ namespace SpendlessBlazor.Services
             //throws error if file not found
             try
             {
-                using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
+                using FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
+                using System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream);
 
-                    using (System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream))
-                    {
-
-                        someString = streamReader.ReadToEnd();
-                    }
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                //TODO: add notification
-                return null;
+                someString = streamReader.ReadToEnd();
             }
             catch (Exception)
             {
-                //TODO: add notification
+                snackbar.ErrorMsg("Failed to load data!");
                 return null;
             }
 

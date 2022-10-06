@@ -80,6 +80,7 @@
 
     [Parameter]
     public List<Info> info { get; set; } = new List<Info>();
+    public SnackBarService snackbar;
 
     private string[] categoryValues =
     {
@@ -95,7 +96,7 @@
         {
             info.Add(new Shared.Info(textValue, amount, categoryValue, date));
         } else{
-            WarningMsg("Fields can not be empty!");
+            snackbar.WarningMsg("Fields can not be empty!");
             return;
         }
 
@@ -116,30 +117,17 @@
         }
         catch (Exception)
         {
-            ErrorMsg("Failed to save data");
+            snackbar.ErrorMsg("Failed to save data");
         }
 
-        SuccessMsg("Succsesfully saved data");
-    }
-
-    public void SuccessMsg(String msg){
-        Snackbar.Add(msg, Severity.Success, config => { config.VisibleStateDuration = 1000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
-    }
-
-    public void WarningMsg(String msg)
-    {
-        Snackbar.Add(msg, Severity.Warning, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
-    }
-
-    public void ErrorMsg(String msg)
-    {
-        Snackbar.Add(msg, Severity.Error, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
+        snackbar.SuccessMsg("Succsesfully saved data");
     }
 
 
     protected override async Task OnInitializedAsync()
     {
-        info = InfoService.ReadJson();
+        snackbar = new SnackBarService(Snackbar);
+        info = InfoService.ReadJson(snackbar);
     }
 
     private async Task<IEnumerable<string>> Search1(string value)
