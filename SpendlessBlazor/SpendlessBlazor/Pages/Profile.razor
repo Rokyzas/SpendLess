@@ -24,19 +24,62 @@
 
 <h3>Balance: @Balance()</h3>
 
+<br />
+<br />
+
+<MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            @foreach (var h in headings)
+            {
+                <th>@h</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (infoList != null)
+                foreach (var tempCategory in Expenses.categoryValues)
+                {
+                    if (categoryExpenses(tempCategory, infoList) != 0)
+                    {
+                        <tr>
+                            <td>@tempCategory</td>
+                            <td>@categoryExpenses(tempCategory, infoList)</td>
+                        </tr>
+                    }
+                }
+        }
+    </tbody>
+</MudSimpleTable>
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+
+    string[] headings = { "Category", "Total expenses" };
+}
+
 
 @code {
 
     public List<Info> infoList { get; set; } = Expenses.info;
 
+
     public double TotalExpenses(List<Info> info)
     {
-        return info.Sum(item => item.amount);
+        return info.Where(item => item.amount > 0).Sum(item => item.amount);
+    }
+
+    public double categoryExpenses(String category, List<Info> info)
+    {
+        return Math.Round(info.Where(item => item.categoryValue == category && item.amount > 0).Sum(item => item.amount));
     }
 
     public double Balance()
     {
-        return income - TotalExpenses(infoList);
+        return Math.Round(income - TotalExpenses(infoList), 2);
     }
 
     protected override async Task OnInitializedAsync()

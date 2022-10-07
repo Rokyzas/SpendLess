@@ -22,5 +22,11 @@
     "textValue": "Pills",
     "amount": 0,
     "categoryValue": "Entertainment"
+  },
+  {
+    "date": "2022-10-07T00:00:00+03:00",
+    "textValue": "Food",
+    "amount": 111,
+    "categoryValue": "Food"
   }
 ]
