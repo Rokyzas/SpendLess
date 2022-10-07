@@ -74,7 +74,7 @@
 
     public double categoryExpenses(String category, List<Info> info)
     {
-        return Math.Round(info.Where(item => item.categoryValue == category && item.amount > 0).Sum(item => item.amount));
+        return Math.Round(info.Where(item => item.categoryValue == category && item.amount > 0).Sum(item => item.amount), 2);
     }
 
     public double Balance()

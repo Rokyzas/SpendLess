@@ -28,5 +28,17 @@
     "textValue": "Food",
     "amount": 111,
     "categoryValue": "Food"
+  },
+  {
+    "date": "2022-10-07T00:00:00+03:00",
+    "textValue": "Music",
+    "amount": 99,
+    "categoryValue": "Entertainment"
+  },
+  {
+    "date": "2022-10-07T00:00:00+03:00",
+    "textValue": "food",
+    "amount": 1,
+    "categoryValue": "Food"
   }
 ]
