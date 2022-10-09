@@ -24,10 +24,10 @@
     <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
     @code {
         private string? categoryValue;
-    }
+}
     <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
     @code {
-        public double? amount { get; set; }
+        public double amount { get; set; } = 0;
     }
     <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
     @code {
@@ -79,10 +79,11 @@
 @code {
 
     [Parameter]
-    public List<Info> info { get; set; } = new List<Info>();
+    public static List<Info> info { get; set; } = new List<Info>();
     public SnackBarService snackbar;
 
-    private string[] categoryValues =
+
+    public static string[] categoryValues { get; set; } =
     {
         "Housing", "Transportation", "Food", "Utilities", "Investing",
         "Household", "Personal", "Personal Development", "Gifts/Donations",
@@ -128,6 +129,7 @@
     {
         snackbar = new SnackBarService(Snackbar);
         info = InfoService.ReadJson(snackbar);
+        await Task.Delay(5);
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

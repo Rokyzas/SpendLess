@@ -17,6 +17,11 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Pickle_Rick.jpg" />
   </ItemGroup>
 
 </Project>
