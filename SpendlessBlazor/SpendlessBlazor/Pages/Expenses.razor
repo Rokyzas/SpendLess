@@ -4,9 +4,13 @@
 @using SpendlessBlazor.Shared
 @using SpendlessBlazor.Services
 @using System.Net.Http.Json
+@using MudBlazor.Services;
+
 
 @inject SpendlessBlazor.Services.IInfoService InfoService
 @inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
 
 <h3>Where did you spend your money?</h3>
 
@@ -76,6 +80,8 @@
 
     [Parameter]
     public static List<Info> info { get; set; } = new List<Info>();
+    public SnackBarService snackbar;
+
 
     public static string[] categoryValues { get; set; } =
     {
@@ -91,9 +97,10 @@
         {
             info.Add(new Shared.Info(textValue, amount, categoryValue, date));
         } else{
-            //TODO: add notification
+            snackbar.WarningMsg("Fields can not be empty!");
             return;
         }
+
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
@@ -109,20 +116,19 @@
                 }
             }
         }
-        catch (FileNotFoundException)
-        {
-            //TODO: add notification
-        }
         catch (Exception)
         {
-            //TODO: add notification
+            snackbar.ErrorMsg("Failed to save data");
         }
+
+        snackbar.SuccessMsg("Succsesfully saved data");
     }
+
 
     protected override async Task OnInitializedAsync()
     {
-        info = InfoService.ReadJson();
-        // In real life use an asynchronous function for fetching data from an api.
+        snackbar = new SnackBarService(Snackbar);
+        info = InfoService.ReadJson(snackbar);
         await Task.Delay(5);
     }
 
