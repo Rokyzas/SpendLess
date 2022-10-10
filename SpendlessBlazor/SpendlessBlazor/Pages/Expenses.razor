@@ -6,10 +6,8 @@
 @using System.Net.Http.Json
 @using MudBlazor.Services;
 
-
 @inject SpendlessBlazor.Services.IInfoService<Info> InfoService
 @inject HttpClient httpClient
-@inject ISnackbar Snackbar
 
 
 <h3>Where did you spend your money?</h3>
@@ -126,7 +124,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        SnackBarService.InitSnackBarService(Snackbar);
         info = InfoService.ReadJson();
         await Task.Delay(5);
     }
