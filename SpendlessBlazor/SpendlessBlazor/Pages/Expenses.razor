@@ -80,8 +80,6 @@
 
     [Parameter]
     public static List<Info> info { get; set; } = new List<Info>();
-    public SnackBarService snackbar;
-
 
     public static string[] categoryValues { get; set; } =
     {
@@ -95,10 +93,10 @@
     {
         if (amount != null && categoryValue != null && date != null)
         {
-            
+
             info.Add(new Shared.Info(textValue, amount, categoryValue, date));
         } else{
-            snackbar.WarningMsg("Fields can not be empty!");
+            SnackBarService.WarningMsg("Fields can not be empty!");
             return;
         }
 
@@ -119,17 +117,17 @@
         }
         catch (Exception)
         {
-            snackbar.ErrorMsg("Failed to save data");
+            SnackBarService.ErrorMsg("Failed to save data");
         }
 
-        snackbar.SuccessMsg("Succsesfully saved data");
+        SnackBarService.SuccessMsg("Succsesfully saved data");
     }
 
 
     protected override async Task OnInitializedAsync()
     {
-        snackbar = new SnackBarService(Snackbar);
-        info = InfoService.ReadJson(snackbar);
+        SnackBarService.InitSnackBarService(Snackbar);
+        info = InfoService.ReadJson();
         await Task.Delay(5);
     }
 
