@@ -7,7 +7,7 @@ using static SpendlessBlazor.Pages.Expenses;
 
 namespace SpendlessBlazor.Services
 {
-    public class InfoService : IInfoService
+    public class InfoService : IInfoService <Info>
     {
         private List<Shared.Info>? infoList = new List<Shared.Info>();
         /*

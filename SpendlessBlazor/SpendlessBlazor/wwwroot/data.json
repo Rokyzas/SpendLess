@@ -40,5 +40,35 @@
     "textValue": "food",
     "amount": 1,
     "categoryValue": "Food"
+  },
+  {
+    "date": "2022-10-09T00:00:00+03:00",
+    "textValue": "asd",
+    "amount": 100,
+    "categoryValue": "Housing"
+  },
+  {
+    "date": "2022-10-09T00:00:00+03:00",
+    "textValue": "asd",
+    "amount": 12,
+    "categoryValue": "Housing"
+  },
+  {
+    "date": "2022-10-09T00:00:00+03:00",
+    "textValue": "asdf",
+    "amount": 50,
+    "categoryValue": "Transportation"
+  },
+  {
+    "date": "2022-10-09T00:00:00+03:00",
+    "textValue": "asdf",
+    "amount": 50,
+    "categoryValue": "Transportation"
+  },
+  {
+    "date": "2022-10-09T00:00:00+03:00",
+    "textValue": "Ads",
+    "amount": 50,
+    "categoryValue": "Transportation"
   }
 ]

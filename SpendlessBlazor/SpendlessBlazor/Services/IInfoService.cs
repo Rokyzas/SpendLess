@@ -2,9 +2,9 @@
 
 namespace SpendlessBlazor.Services
 {
-    public interface IInfoService
+    public interface IInfoService <T>
     {
-        List<Info> ReadJson(SnackBarService snackbar);
+        List<T> ReadJson(SnackBarService snackbar);
 
     }
 }

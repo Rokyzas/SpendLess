@@ -7,7 +7,7 @@
 @using MudBlazor.Services;
 
 
-@inject SpendlessBlazor.Services.IInfoService InfoService
+@inject SpendlessBlazor.Services.IInfoService<Info> InfoService
 @inject HttpClient httpClient
 @inject ISnackbar Snackbar
 
@@ -61,7 +61,7 @@
                         <td>@info.ElementAt(i).textValue</td>
                         <td>@info.ElementAt(i).categoryValue</td>
                         <td>@info.ElementAt(i).amount</td>
-                        <td>@info.ElementAt(i).date</td>
+                        <td>@info.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                     </tr>
                 }
         }
@@ -95,6 +95,7 @@
     {
         if (amount != null && categoryValue != null && date != null)
         {
+            
             info.Add(new Shared.Info(textValue, amount, categoryValue, date));
         } else{
             snackbar.WarningMsg("Fields can not be empty!");
