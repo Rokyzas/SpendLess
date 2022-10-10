@@ -6,9 +6,9 @@
         public string? textValue { get; set; }
         public double amount { get; set; }
 
-        public int? categoryValue { get; set; }
+        public CategoryValues categoryValue { get; set; }
 
-        public Info(string? textValue, double amount, int? categoryValue, DateTime? date)
+        public Info(string? textValue, double amount, CategoryValues categoryValue, DateTime? date)
         {
             this.textValue = textValue;
             this.amount = amount;
@@ -16,11 +16,11 @@
             this.date = date;
         }
     }
-    public enum categoryValues
+    public enum CategoryValues
     {
         Housing, Transportation, Food, Utilities, Investing,
-        Household, Personal, PersonalDevelopment, Gifts_Or_Donations,
-        Entertainment, Medical_Or_Healthcare, Insurance, Kids,
+        Household, PersonalDevelopment, Gifts,
+        Entertainment, Healthcare, Insurance, Kids,
         Pets, Subscriptions, Clothing, Travel, Technology
     }
 }
