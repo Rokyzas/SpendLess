@@ -89,10 +89,15 @@
 
     public void WriteToJson()
     {
-        if (amount != null && categoryValue != null && date != null)
+        if (amount <= 0)
         {
+            SnackBarService.WarningMsg("Amount can not be negative!");
+            return;
+        }
 
-            info.Add(new Shared.Info(textValue, amount, categoryValue, date));
+        if (textValue != null && categoryValue != null && date != null)
+        {
+            info.Add(new Shared.Info(textValue, Math.Floor(100 * amount) / 100, categoryValue, date));
         } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
             return;
