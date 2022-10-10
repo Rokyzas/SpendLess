@@ -22,7 +22,7 @@
     <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
     @code {
         private string? categoryValue;
-}
+    }
     <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
     @code {
         public double amount { get; set; } = 0;
@@ -35,7 +35,9 @@
 
 <br />
 
+<div>
 <button class="btn btn-primary" @onclick="WriteToJson">Save</button>
+</div>
 
 <br />
 
@@ -44,22 +46,48 @@
 <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
     <thead>
         <tr>
+            <th></th>
+            <th></th>
+            <th width="20%">
+                <MudDatePicker Label="DateFilterFrom" Editable="true" @bind-Date="dateFilterFrom" Variant="Variant.Outlined"/>
+                @code {
+                    DateTime? dateFilterFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                }
+            </th>
+            <th width="20%">
+                <MudDatePicker Label="DateFilterTo" Editable="true" @bind-Date="dateFilterTo" Variant="Variant.Outlined" />
+                @code {
+                    DateTime? dateFilterTo = DateTime.Today;
+                }
+            </th>
+        </tr>
+        <tr>
             @foreach (var h in headings)
             {
                 <th>@h</th>
             }
         </tr>
+
     </thead>
     <tbody>
         @{
-            if (info != null)
-                for (int i = 0; i < info.Count; i++)
+            List<Info> filteredInfo = info;
+
+            if(dateFilterTo != null)
+                filteredInfo = filteredInfo.Where(x => x.date <= dateFilterTo).ToList();
+
+            if(dateFilterFrom != null)
+                filteredInfo = filteredInfo.Where(x => x.date >= dateFilterFrom).ToList();
+
+
+            if (filteredInfo != null)
+                for (int i = 0; i < filteredInfo.Count; i++)
                 {
                     <tr>
-                        <td>@info.ElementAt(i).textValue</td>
-                        <td>@info.ElementAt(i).categoryValue</td>
-                        <td>@info.ElementAt(i).amount</td>
-                        <td>@info.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
+                        <td>@filteredInfo.ElementAt(i).textValue</td>
+                        <td>@filteredInfo.ElementAt(i).categoryValue</td>
+                        <td>@filteredInfo.ElementAt(i).amount</td>
+                        <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                     </tr>
                 }
         }
