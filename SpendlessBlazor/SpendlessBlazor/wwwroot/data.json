@@ -1,74 +1,44 @@
 [
   {
-    "date": "2022-09-26T00:00:00",
-    "textValue": "\u0160nicelis",
-    "amount": 3.55,
-    "categoryValue": "Food"
-  },
-  {
-    "date": "2022-09-24T00:00:00",
-    "textValue": "M\u0117nesinis bilietas",
-    "amount": 5.8,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-03T00:00:00+03:00",
-    "textValue": "Pills",
-    "amount": 5,
-    "categoryValue": "Entertainment"
-  },
-  {
-    "date": "2022-10-05T00:00:00+03:00",
-    "textValue": "Pills",
+    "textValue": "asd",
     "amount": 0,
-    "categoryValue": "Entertainment"
+    "categoryValue": "Income",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "Food",
-    "amount": 111,
-    "categoryValue": "Food"
+    "textValue": "500",
+    "amount": -456,
+    "categoryValue": "Transportation",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "Music",
-    "amount": 99,
-    "categoryValue": "Entertainment"
+    "textValue": "500",
+    "amount": 0,
+    "categoryValue": "Utilities",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "food",
-    "amount": 1,
-    "categoryValue": "Food"
+    "textValue": "500",
+    "amount": -500,
+    "categoryValue": "Transportation",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asd",
-    "amount": 100,
-    "categoryValue": "Housing"
+    "textValue": "1",
+    "amount": 2,
+    "categoryValue": "Income",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asd",
-    "amount": 12,
-    "categoryValue": "Housing"
+    "textValue": "2",
+    "amount": 3,
+    "categoryValue": "Income",
+    "date": "2022-10-10T00:00:00+03:00"
   },
   {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asdf",
-    "amount": 50,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asdf",
-    "amount": 50,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "Ads",
-    "amount": 50,
-    "categoryValue": "Transportation"
+    "textValue": "3",
+    "amount": 4,
+    "categoryValue": "Income",
+    "date": "2022-10-10T00:00:00+03:00"
   }
 ]

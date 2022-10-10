@@ -7,6 +7,11 @@
         public string? categoryValue { get; set; }
         public DateTime? date { get; set; } = DateTime.Today;
 
+        public void Delete()
+        {
+
+        }
+
 
         public Info(string? textValue, double amount, string? categoryValue, DateTime? date)
         {

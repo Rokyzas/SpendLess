@@ -10,26 +10,32 @@
 @inject HttpClient httpClient
 
 
-<h3>Where did you spend your money?</h3>
+<h3>Have you done any transactions recently?</h3>
 
 <br />
 
 <div class="gap-4 d-flex flex-wrap">
-    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+    @{
+        if(toggleExpenseIncome == false)
+        {
+                    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+                    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
+                    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        }
+        else
+        {
+                <MudTextField @bind-Value="textValue" Label="I made money from..." Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        }
+
+            <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+    }
     @code {
         public string? textValue { get; set; }
-    }
-    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
-    @code {
         private string? categoryValue;
-    }
-    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-    @code {
         public double amount { get; set; } = 0;
-    }
-    <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
-    @code {
         DateTime? date = DateTime.Today;
+
     }
 </div>
 
@@ -37,6 +43,14 @@
 
 <div>
 <button class="btn btn-primary" @onclick="WriteToJson">Save</button>
+<MudToggleIconButton @bind-Toggled="@toggleExpenseIncome"
+                         Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off"
+                         ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
+
+    <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
+@code {
+    public bool toggleExpenseIncome { get; set; }
+}
 </div>
 
 <br />
@@ -60,12 +74,14 @@
                     DateTime? dateFilterTo = DateTime.Today;
                 }
             </th>
+            <th></th>
         </tr>
         <tr>
             @foreach (var h in headings)
             {
                 <th>@h</th>
             }
+            <th width="3%"></th>
         </tr>
 
     </thead>
@@ -83,12 +99,15 @@
             if (filteredInfo != null)
                 for (int i = 0; i < filteredInfo.Count; i++)
                 {
-                    <tr>
-                        <td>@filteredInfo.ElementAt(i).textValue</td>
-                        <td>@filteredInfo.ElementAt(i).categoryValue</td>
-                        <td>@filteredInfo.ElementAt(i).amount</td>
-                        <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
-                    </tr>
+                        <tr>
+                            <td>@filteredInfo.ElementAt(i).textValue</td>
+                            <td>@filteredInfo.ElementAt(i).categoryValue</td>
+                            <td>@filteredInfo.ElementAt(i).amount</td>
+                            <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
+                            <td>
+                            <button class="btn btn-primary">Delete</button>
+                            </td>
+                        </tr>
                 }
         }
     </tbody>
@@ -115,17 +134,42 @@
         "Pets", "Subscriptions", "Clothing", "Travel", "Technology"
     };
 
+
+    //neveikia
+    public void DeleteInput(string i)
+    {
+        int c = 0;
+        foreach(var lol in info) 
+        {
+            if (lol.textValue.Equals(i))
+                info.RemoveAt(c);
+            c++;
+        }
+    }
+
     public void WriteToJson()
     {
-        if (amount <= 0)
+        if (amount < 0)
         {
             SnackBarService.WarningMsg("Amount can not be negative!");
             return;
         }
 
+        if (toggleExpenseIncome == false)
+        {
+            amount = -amount;
+        }
+        else
+        {
+            categoryValue = "Income";
+        }
+
         if (textValue != null && categoryValue != null && date != null)
         {
+
             info.Add(new Shared.Info(textValue, Math.Floor(100 * amount) / 100, categoryValue, date));
+            categoryValue = null;
+            amount = 0;
         } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
             return;

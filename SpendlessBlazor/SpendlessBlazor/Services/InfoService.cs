@@ -27,7 +27,6 @@ namespace SpendlessBlazor.Services
 
         public List<Shared.Info> ReadJson()
         {
-            //String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
             String someString;
             String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
 
@@ -46,8 +45,6 @@ namespace SpendlessBlazor.Services
             }
 
 
-            //deserialize fails on empty string
-            //will probably become redundant when data is no longer deleted manually
             if (someString == "")
             {
                 someString = "[]";
