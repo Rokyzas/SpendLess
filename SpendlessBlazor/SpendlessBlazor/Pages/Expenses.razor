@@ -6,10 +6,8 @@
 @using System.Net.Http.Json
 @using MudBlazor.Services;
 
-
 @inject SpendlessBlazor.Services.IInfoService<Info> InfoService
 @inject HttpClient httpClient
-@inject ISnackbar Snackbar
 
 
 <h3>Where did you spend your money?</h3>
@@ -108,7 +106,6 @@
 
     [Parameter]
     public static List<Info> info { get; set; } = new List<Info>();
-    public SnackBarService snackbar;
 
     public static string[] categoryValues { get; set; } =
     {
@@ -120,12 +117,17 @@
 
     public void WriteToJson()
     {
-        if (amount != null && categoryValue != null && date != null)
+        if (amount <= 0)
         {
-            
-            info.Add(new Shared.Info(textValue, amount, categoryValue, date));
+            SnackBarService.WarningMsg("Amount can not be negative!");
+            return;
+        }
+
+        if (textValue != null && categoryValue != null && date != null)
+        {
+            info.Add(new Shared.Info(textValue, Math.Floor(100 * amount) / 100, categoryValue, date));
         } else{
-            snackbar.WarningMsg("Fields can not be empty!");
+            SnackBarService.WarningMsg("Fields can not be empty!");
             return;
         }
 
@@ -146,17 +148,16 @@
         }
         catch (Exception)
         {
-            snackbar.ErrorMsg("Failed to save data");
+            SnackBarService.ErrorMsg("Failed to save data");
         }
 
-        snackbar.SuccessMsg("Succsesfully saved data");
+        SnackBarService.SuccessMsg("Succsesfully saved data");
     }
 
 
     protected override async Task OnInitializedAsync()
     {
-        snackbar = new SnackBarService(Snackbar);
-        info = InfoService.ReadJson(snackbar);
+        info = InfoService.ReadJson();
         await Task.Delay(5);
     }
 

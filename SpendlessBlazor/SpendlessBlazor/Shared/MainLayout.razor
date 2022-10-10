@@ -1,4 +1,7 @@
 ﻿    @inherits LayoutComponentBase
+@using SpendlessBlazor.Services
+@inject ISnackbar Snackbar
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -20,3 +23,11 @@
         </article>
     </main>
 </div>
+
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        SnackBarService.InitSnackBarService(Snackbar);
+    }
+}
