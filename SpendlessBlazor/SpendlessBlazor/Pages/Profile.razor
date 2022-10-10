@@ -2,7 +2,7 @@
 
 @using SpendlessBlazor.Pages
 @using System.Linq
-@inject SpendlessBlazor.Services.IInfoService InfoService
+@inject SpendlessBlazor.Services.IInfoService<Info> InfoService
 
 <h1>Profile (dummy)</h1>
 
@@ -38,14 +38,14 @@
     </thead>
     <tbody>
         @{
-            if (infoList != null)
+            if (Expenses.info != null)
                 foreach (var tempCategory in Expenses.categoryValues)
                 {
-                    if (categoryExpenses(tempCategory, infoList) != 0)
+                    if (categoryExpenses(tempCategory, Expenses.info) != 0)
                     {
                         <tr>
                             <td>@tempCategory</td>
-                            <td>@categoryExpenses(tempCategory, infoList)</td>
+                            <td>@categoryExpenses(tempCategory, Expenses.info)</td>
                         </tr>
                     }
                 }
@@ -64,12 +64,11 @@
 
 @code {
 
-    public List<Info> infoList { get; set; } = Expenses.info;
 
 
     public double TotalExpenses(List<Info> info)
     {
-        return info.Where(item => item.amount > 0).Sum(item => item.amount);
+        return Expenses.info.Where(item => item.amount > 0).Sum(item => item.amount);
     }
 
     public double categoryExpenses(String category, List<Info> info)
@@ -79,12 +78,12 @@
 
     public double Balance()
     {
-        return Math.Round(income - TotalExpenses(infoList), 2);
+        return Math.Round(income - TotalExpenses(Expenses.info), 2);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        infoList = InfoService.ReadJson();
+        Expenses.info = InfoService.ReadJson(null);
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }
