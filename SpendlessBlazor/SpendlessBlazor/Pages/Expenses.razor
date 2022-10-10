@@ -48,13 +48,15 @@
 <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
     <thead>
         <tr>
-            <th>
-                <MudDatePicker Label="DateFilterFrom" Editable="true" @bind-Date="dateFilterFrom" Variant="Variant.Outlined" />
+            <th></th>
+            <th></th>
+            <th width="20%">
+                <MudDatePicker Label="DateFilterFrom" Editable="true" @bind-Date="dateFilterFrom" Variant="Variant.Outlined"/>
                 @code {
                     DateTime? dateFilterFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
                 }
             </th>
-            <th>
+            <th width="20%">
                 <MudDatePicker Label="DateFilterTo" Editable="true" @bind-Date="dateFilterTo" Variant="Variant.Outlined" />
                 @code {
                     DateTime? dateFilterTo = DateTime.Today;
