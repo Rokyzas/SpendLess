@@ -10,33 +10,48 @@
 @inject HttpClient httpClient
 
 
-<h3>Where did you spend your money?</h3>
+<h3>Have you done any transactions recently?</h3>
 
 <br />
 
 <div class="gap-4 d-flex flex-wrap">
-    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+    @{
+        if(toggleExpenseIncome == false)
+        {
+                    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+                    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
+                    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        }
+        else
+        {
+                <MudTextField @bind-Value="textValue" Label="I made money from..." Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        }
+
+            <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+    }
     @code {
+        public int sk { get; set; }
         public string? textValue { get; set; }
-    }
-    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
-    @code {
         private string? categoryValue;
-    }
-    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-    @code {
         public double amount { get; set; } = 0;
-    }
-    <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
-    @code {
         DateTime? date = DateTime.Today;
+
     }
 </div>
 
 <br />
 
 <div>
-<button class="btn btn-primary" @onclick="WriteToJson">Save</button>
+    <button class="btn btn-primary" @onclick="Savelist">Save</button>
+<MudToggleIconButton @bind-Toggled="@toggleExpenseIncome"
+                         Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off"
+                         ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
+
+    <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
+@code {
+    public bool toggleExpenseIncome { get; set; }
+}
 </div>
 
 <br />
@@ -60,12 +75,14 @@
                     DateTime? dateFilterTo = DateTime.Today;
                 }
             </th>
+            <th></th>
         </tr>
         <tr>
             @foreach (var h in headings)
             {
                 <th>@h</th>
             }
+            <th width="3%"></th>
         </tr>
 
     </thead>
@@ -83,12 +100,20 @@
             if (filteredInfo != null)
                 for (int i = 0; i < filteredInfo.Count; i++)
                 {
+                    var nr = i;
                     <tr>
-                        <td>@info.ElementAt(i).textValue</td>
-                        <td>@((Shared.CategoryValues)(info.ElementAt(i).categoryValue))</td>
-                        <td>@info.ElementAt(i).amount</td>
-                        <td>@info.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
-                    </tr>
+
+                            <td>@filteredInfo.ElementAt(i).textValue</td>
+                            <td>@((Shared.CategoryValues)(info.ElementAt(i).categoryValue))</td>
+                            <td>@filteredInfo.ElementAt(i).amount</td>
+                            <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
+                            <td>
+                            <button class="btn btn-primary" @onclick="() => DeleteRow(filteredInfo.ElementAt(nr))">Delete</button>
+                            
+                            
+                           
+                            </td>
+                        </tr>
                 }
         }
     </tbody>
@@ -107,12 +132,41 @@
     [Parameter]
     public static List<Info> info { get; set; } = new List<Info>();
 
-    public void WriteToJson()
+    public void DeleteRow(Info element)
     {
+
+        SnackBarService.SuccessMsg("Element was successfully deleted");
+        int c = 0;
+        foreach (var row in info)
+        {
+            if (row.elementID.Equals(element.elementID)){
+                info.RemoveAt(c);
+                WriteToJson();
+                break;
+            }
+
+            c++;
+        }
+
+    }
+
+
+   
+    public void Savelist(){
+        //buvo amount < 0
         if (amount <= 0)
         {
             SnackBarService.WarningMsg("Amount can not be negative!");
             return;
+        }
+
+        if (toggleExpenseIncome == false)
+        {
+            amount = -amount;
+        }
+        else
+        {
+            categoryValue = "Income";
         }
 
         if (textValue != null && categoryValue != null && date != null)
@@ -120,14 +174,18 @@
             Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(categoryValue, out tempEnum))
                 SnackBarService.WarningMsg("Parse error!");
-            info.Add(new Shared.Info(textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
+            info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
 
         } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
             return;
         }
+        WriteToJson();
+        SnackBarService.SuccessMsg("Succsesfully saved data");
 
-
+    }
+    public void WriteToJson()
+    {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(info, options);
         string path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
@@ -147,7 +205,7 @@
             SnackBarService.ErrorMsg("Failed to save data");
         }
 
-        SnackBarService.SuccessMsg("Succsesfully saved data");
+        
     }
 
 
