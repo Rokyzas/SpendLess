@@ -70,7 +70,6 @@
 
 @code {
 
-    public SnackBarService snackbar;
 
     public double TotalExpenses(List<Info> info)
     {
@@ -81,7 +80,7 @@
     {
        Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(category, out tempEnum))
-                snackbar.WarningMsg("Fields can not be empty!");
+            SnackBarService.WarningMsg("Fields can not be empty!");
         return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount > 0).Sum(item => item.amount), 2);
     }
 

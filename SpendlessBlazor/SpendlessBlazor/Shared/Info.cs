@@ -9,14 +9,10 @@
         public CategoryValues categoryValue { get; set; }
         public DateTime? date { get; set; } = DateTime.Today;
 
-        public void Delete()
-        {
-
-        }
-
 
 
         public Info(int? elementID, string? textValue, double amount, CategoryValues categoryValue, DateTime? date)
+        {
             this.elementID = elementID;
             this.textValue = textValue;
             this.amount = amount;
