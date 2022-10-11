@@ -102,8 +102,9 @@
                 {
                     var nr = i;
                     <tr>
+
                             <td>@filteredInfo.ElementAt(i).textValue</td>
-                            <td>@filteredInfo.ElementAt(i).categoryValue</td>
+                            <td>@((Shared.CategoryValues)(info.ElementAt(i).categoryValue))</td>
                             <td>@filteredInfo.ElementAt(i).amount</td>
                             <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                             <td>
@@ -131,14 +132,6 @@
     [Parameter]
     public static List<Info> info { get; set; } = new List<Info>();
 
-    public static string[] categoryValues { get; set; } =
-    {
-        "Housing", "Transportation", "Food", "Utilities", "Investing",
-        "Household", "Personal", "Personal Development", "Gifts/Donations",
-        "Entertainment", "Medical/Healthcare", "Insurance", "Kids",
-        "Pets", "Subscriptions", "Clothing", "Travel", "Technology"
-    };
-
     public void DeleteRow(Info element)
     {
 
@@ -157,17 +150,8 @@
 
     }
 
-    //neveikia
-    public void DeleteInput(string i)
-    {
-        int c = 0;
-        foreach(var lol in info) 
-        {
-            if (lol.textValue.Equals(i))
-                info.RemoveAt(c);
-            c++;
-        }
-    }
+
+   
     public void Savelist(){
         //buvo amount < 0
         if (amount <= 0)
@@ -187,13 +171,12 @@
 
         if (textValue != null && categoryValue != null && date != null)
         {
+            Shared.CategoryValues tempEnum;
+            if (!Enum.TryParse(categoryValue, out tempEnum))
+                SnackBarService.WarningMsg("Parse error!");
+            info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
 
-            info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, categoryValue, date));
-            categoryValue = null;
-            amount = 0;
-        }
-        else
-        {
+        } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
             return;
         }
@@ -237,9 +220,14 @@
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
 
+        string[] categoryVal = Enum.GetValues(typeof(Shared.CategoryValues))
+            .Cast<Shared.CategoryValues>()
+            .Select(x => x.ToString())
+            .ToArray();
+
         // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
-            return categoryValues;
-        return categoryValues.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+            return categoryVal;
+        return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 }
