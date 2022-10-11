@@ -1,74 +1,14 @@
 [
   {
-    "date": "2022-09-26T00:00:00",
-    "textValue": "\u0160nicelis",
-    "amount": 3.55,
-    "categoryValue": "Food"
-  },
-  {
-    "date": "2022-09-24T00:00:00",
-    "textValue": "M\u0117nesinis bilietas",
-    "amount": 5.8,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-03T00:00:00+03:00",
+    "date": "2022-10-10T00:00:00+03:00",
     "textValue": "Pills",
-    "amount": 5,
-    "categoryValue": "Entertainment"
-  },
-  {
-    "date": "2022-10-05T00:00:00+03:00",
-    "textValue": "Pills",
-    "amount": 0,
-    "categoryValue": "Entertainment"
-  },
-  {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "Food",
-    "amount": 111,
-    "categoryValue": "Food"
-  },
-  {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "Music",
     "amount": 99,
-    "categoryValue": "Entertainment"
+    "categoryValue": 4
   },
   {
-    "date": "2022-10-07T00:00:00+03:00",
-    "textValue": "food",
-    "amount": 1,
-    "categoryValue": "Food"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asd",
-    "amount": 100,
-    "categoryValue": "Housing"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asd",
-    "amount": 12,
-    "categoryValue": "Housing"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asdf",
-    "amount": 50,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "asdf",
-    "amount": 50,
-    "categoryValue": "Transportation"
-  },
-  {
-    "date": "2022-10-09T00:00:00+03:00",
-    "textValue": "Ads",
-    "amount": 50,
-    "categoryValue": "Transportation"
+    "date": "2022-10-10T00:00:00+03:00",
+    "textValue": "Darts",
+    "amount": 11,
+    "categoryValue": 9
   }
 ]

@@ -2,7 +2,9 @@
 
 @using SpendlessBlazor.Pages
 @using System.Linq
+@using SpendlessBlazor.Services
 @inject SpendlessBlazor.Services.IInfoService<Info> InfoService
+@inject ISnackbar Snackbar
 
 <h1>Profile (dummy)</h1>
 
@@ -27,7 +29,7 @@
 <br />
 <br />
 
-<MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
+<MudSimpleTable dense="@dense" hover="@hover" bordered="@bordered" striped="@striped" style="overflow-x: auto;">
     <thead>
         <tr>
             @foreach (var h in headings)
@@ -36,12 +38,16 @@
             }
         </tr>
     </thead>
-    <tbody>
+   <tbody>
+    
         @{
             if (Expenses.info != null)
-                foreach (var tempCategory in Expenses.categoryValues)
+                foreach (var tempCategory in Enum.GetValues(typeof(Shared.CategoryValues))
+                                                .Cast<Shared.CategoryValues>()
+                                                .Select(x => x.ToString())
+                                                .ToArray())
                 {
-                    if (categoryExpenses(tempCategory, Expenses.info) != 0)
+                   if (categoryExpenses(tempCategory, Expenses.info) != 0)
                     {
                         <tr>
                             <td>@tempCategory</td>
@@ -64,7 +70,7 @@
 
 @code {
 
-
+    public SnackBarService snackbar;
 
     public double TotalExpenses(List<Info> info)
     {
@@ -73,7 +79,10 @@
 
     public double categoryExpenses(String category, List<Info> info)
     {
-        return Math.Round(info.Where(item => item.categoryValue == category && item.amount > 0).Sum(item => item.amount), 2);
+       Shared.CategoryValues tempEnum;
+            if (!Enum.TryParse(category, out tempEnum))
+                snackbar.WarningMsg("Fields can not be empty!");
+        return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount > 0).Sum(item => item.amount), 2);
     }
 
     public double Balance()
