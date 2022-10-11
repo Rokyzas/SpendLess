@@ -25,7 +25,7 @@ namespace SpendlessBlazor.Services
         }
         */
 
-        public List<Shared.Info> ReadJson(SnackBarService snackbar)
+        public List<Shared.Info> ReadJson()
         {
             //String someString = System.IO.File.ReadAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}");
             String someString;
@@ -41,7 +41,7 @@ namespace SpendlessBlazor.Services
             }
             catch (Exception)
             {
-                snackbar.ErrorMsg("Failed to load data!");
+                SnackBarService.ErrorMsg("Failed to load data!");
                 return null;
             }
 

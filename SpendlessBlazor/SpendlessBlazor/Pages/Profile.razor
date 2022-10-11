@@ -92,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Expenses.info = InfoService.ReadJson(null);
+        Expenses.info = InfoService.ReadJson();
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }

@@ -2,11 +2,12 @@
 {
     public class Info
     {
-        public DateTime? date { get; set; } = DateTime.Today;
         public string? textValue { get; set; }
         public double amount { get; set; }
 
         public CategoryValues categoryValue { get; set; }
+        public DateTime? date { get; set; } = DateTime.Today;
+
 
         public Info(string? textValue, double amount, CategoryValues categoryValue, DateTime? date)
         {
