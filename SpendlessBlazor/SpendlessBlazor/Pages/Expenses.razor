@@ -160,17 +160,18 @@
             return;
         }
 
-        if (toggleExpenseIncome == false)
-        {
-            amount = -amount;
-        }
-        else
+        if(toggleExpenseIncome == true)
         {
             categoryValue = "Income";
         }
 
         if (textValue != null && categoryValue != null && date != null)
         {
+            if (toggleExpenseIncome == false)
+            {
+                amount = -amount;
+            }
+            
             Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(categoryValue, out tempEnum))
             {
