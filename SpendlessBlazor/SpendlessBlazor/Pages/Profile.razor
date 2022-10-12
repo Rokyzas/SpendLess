@@ -81,7 +81,7 @@
        Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(category, out tempEnum))
             SnackBarService.WarningMsg("Fields can not be empty!");
-        return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount > 0).Sum(item => item.amount), 2);
+        return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount != 0).Sum(item => item.amount), 2);
     }
 
     public double Balance()
