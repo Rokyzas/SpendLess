@@ -151,10 +151,10 @@
     }
 
 
-   
+
     public void Savelist(){
         //buvo amount < 0
-        if (amount <= 0)
+        if (amount < 0)
         {
             SnackBarService.WarningMsg("Amount can not be negative!");
             return;
@@ -175,6 +175,10 @@
             if (!Enum.TryParse(categoryValue, out tempEnum))
                 SnackBarService.WarningMsg("Parse error!");
             info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
+
+            categoryValue = null;
+            amount = 0;
+
 
         } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
