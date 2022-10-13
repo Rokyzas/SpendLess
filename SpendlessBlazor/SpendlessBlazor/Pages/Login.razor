@@ -1,0 +1,76 @@
+﻿@page "/login"
+@using SpendlessBlazor.Data;
+@using SpendlessBlazor.Services
+@using System.Text.RegularExpressions
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+
+<MudGrid>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-5">
+            <MudForm @bind-IsValid="@success">
+                    <MudTextField @bind-Value="username" T="string" Label="Username" Required="true" RequiredError="User name is required!"/>
+                    <MudTextField @bind-Value="email" T="string" Label="Email" Required="true"
+                                  Validation="@(new Func<string, IEnumerable<string>>(EmailCorrect))"/>
+                    <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must contain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                                  InputType="InputType.Password"
+                                  Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"/>
+            </MudForm>   
+  
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="()=>ValidateLogin(success)">Next</MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+@code {
+    private bool success;
+    private String? username;
+    private String? email;
+    private String? password;
+
+
+    private IEnumerable<string> PasswordStrength(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            yield return "Password is required!";
+            yield break;
+        }
+        if (password.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(password, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(password, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(password, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+
+    private IEnumerable<string> EmailCorrect(string email)
+    {
+        if (email == null){
+            yield return "Email is required";
+            yield break;
+        }
+        if(!Regex.IsMatch(email,@"^([\w]+)@([\w]+)((\.(\w){2,3})+)$",RegexOptions.IgnoreCase))
+            yield return "Email format is incorrect";
+
+    }
+
+    private  void ValidateLogin(bool success = false) 
+    {
+        if(success){
+            SnackBarService.SuccessMsg("Logged in");
+            User.username = username;
+            User.emailAddress = email;
+            User.password = password;
+            NavigationManager.NavigateTo("");
+                return;
+            }
+            SnackBarService.ErrorMsg("Could not login, try again");
+            return;
+
+    }
+
+
+}
