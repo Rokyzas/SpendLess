@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "j287Y8jHj0au4H4W0jxLSV3b+1zl7UaDtNMZ5yQYjJo=",
+  "Hash": "BSR0ih7WB6t+Sd/1VMiZuzQ2qqwGv0QSstsaDHmhfE0=",
   "Source": "SpendlessBlazor",
   "BasePath": "_content/SpendlessBlazor",
   "Mode": "Default",
@@ -10,17 +10,51 @@
     {
       "Name": "SpendlessBlazor\\wwwroot",
       "Source": "SpendlessBlazor",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\SpendlessBlazor.styles.css",
+      "Identity": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.css",
+      "SourceId": "MudBlazor",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\",
+      "BasePath": "_content/MudBlazor",
+      "RelativePath": "MudBlazor.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.js",
+      "SourceId": "MudBlazor",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\",
+      "BasePath": "_content/MudBlazor",
+      "RelativePath": "MudBlazor.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\User\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.js"
+    },
+    {
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\SpendlessBlazor.styles.css",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "SpendlessBlazor.styles.css",
       "AssetKind": "All",
@@ -31,13 +65,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\SpendlessBlazor.styles.css"
+      "OriginalItemSpec": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\SpendlessBlazor.styles.css"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SpendlessBlazor.bundle.scp.css",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SpendlessBlazor.bundle.scp.css",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "SpendlessBlazor.bundle.scp.css",
       "AssetKind": "All",
@@ -48,13 +82,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SpendlessBlazor.bundle.scp.css"
+      "OriginalItemSpec": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\SpendlessBlazor.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -68,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -85,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -102,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -119,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -136,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -153,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -170,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -187,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -204,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -221,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -238,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\site.css",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\css\\site.css",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -255,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\data.json",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\data.json",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "data.json",
       "AssetKind": "All",
@@ -272,10 +306,10 @@
       "OriginalItemSpec": "wwwroot\\data.json"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\expenses.json",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\expenses.json",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "expenses.json",
       "AssetKind": "All",
@@ -289,10 +323,10 @@
       "OriginalItemSpec": "wwwroot\\expenses.json"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\favicon.ico",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\favicon.ico",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -306,10 +340,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\Images\\Pickle_Rick.jpg",
+      "Identity": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\Images\\Pickle_Rick.jpg",
       "SourceId": "SpendlessBlazor",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
+      "ContentRoot": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\wwwroot\\",
       "BasePath": "_content/SpendlessBlazor",
       "RelativePath": "Images/Pickle_Rick.jpg",
       "AssetKind": "All",
@@ -321,40 +355,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Pickle_Rick.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.css",
-      "SourceId": "MudBlazor",
-      "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\",
-      "BasePath": "_content/MudBlazor",
-      "RelativePath": "MudBlazor.min.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.css"
-    },
-    {
-      "Identity": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.js",
-      "SourceId": "MudBlazor",
-      "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\",
-      "BasePath": "_content/MudBlazor",
-      "RelativePath": "MudBlazor.min.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\danie\\.nuget\\packages\\mudblazor\\6.0.16\\staticwebassets\\MudBlazor.min.js"
     }
   ]
 }
