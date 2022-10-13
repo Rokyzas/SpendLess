@@ -22,7 +22,7 @@
     }
     public enum CategoryValues
     {
-        Housing, Transportation, Food, Utilities, Investing,
+        Income, Housing, Transportation, Food, Utilities, Investing,
         Household, PersonalDevelopment, Gifts,
         Entertainment, Healthcare, Insurance, Kids,
         Pets, Subscriptions, Clothing, Travel, Technology

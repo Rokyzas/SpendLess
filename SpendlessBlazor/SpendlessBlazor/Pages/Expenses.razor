@@ -160,21 +160,28 @@
             return;
         }
 
-        if (toggleExpenseIncome == false)
-        {
-            amount = -amount;
-        }
-        else
+        if(toggleExpenseIncome == true)
         {
             categoryValue = "Income";
         }
 
         if (textValue != null && categoryValue != null && date != null)
         {
+            if (toggleExpenseIncome == false)
+            {
+                amount = -amount;
+            }
+            
             Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(categoryValue, out tempEnum))
-                SnackBarService.WarningMsg("Parse error!");
-            info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
+            {
+                SnackBarService.WarningMsg("This category was not found!");
+                return;
+
+            } else{
+                info.Add(new Shared.Info(info.Count(), textValue, Math.Floor(100 * amount) / 100, tempEnum, date));
+            }
+                
 
             categoryValue = null;
             amount = 0;
@@ -231,7 +238,7 @@
 
         // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
-            return categoryVal;
-        return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+            return categoryVal.Where(x => x != "Income");
+        return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase) && x != "Income");
     }
 }
