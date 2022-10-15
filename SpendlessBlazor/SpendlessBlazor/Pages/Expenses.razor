@@ -154,7 +154,7 @@
 
     public void Savelist(){
         //buvo amount < 0
-        if (amount <= 0)
+        if (amount < 0)
         {
             SnackBarService.WarningMsg("Amount can not be negative or zero!");
             return;
@@ -167,11 +167,12 @@
 
         if (textValue != null && categoryValue != null && date != null)
         {
-           /* if (toggleExpenseIncome == false)
+
+            if (toggleExpenseIncome == false)
             {
                 amount = -amount;
-            }*/
-
+            }
+            
             Shared.CategoryValues tempEnum;
             if (!Enum.TryParse(categoryValue, out tempEnum))
             {
@@ -179,16 +180,15 @@
                 return;
 
             }
-            else
-            {
+            else{
                 for(int i = 0; i < info.Count;++i){
                     info.ElementAt(i).elementID = i;
                 }
                 info.Add(new Shared.Info(elementID: info.Count(), textValue: textValue, amount: Math.Floor(100 * amount) / 100, categoryValue: tempEnum, date: date));
             }
-            
+            categoryValue = null;
+            amount = 0;
 
-            
 
         } else{
             SnackBarService.WarningMsg("Fields can not be empty!");
