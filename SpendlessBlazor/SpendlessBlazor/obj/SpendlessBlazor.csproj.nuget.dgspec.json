@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {}
+    "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {}
   },
   "projects": {
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {
+    "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
+        "projectUniqueName": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
         "projectName": "SpendlessBlazor",
-        "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\",
+        "projectPath": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\SpendlessBlazor.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\SpendLess\\SpendlessBlazor\\SpendlessBlazor\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
