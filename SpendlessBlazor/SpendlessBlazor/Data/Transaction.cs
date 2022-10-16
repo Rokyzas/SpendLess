@@ -1,23 +1,17 @@
 ﻿namespace SpendlessBlazor.Data
 {
-    public class Transaction
+    public struct Transaction
     {
         public int? elementID { get; set; }
         public string? textValue { get; set; }
-        public double amount { get; set; }
+        public double amount { get {return amount;} set { amount = Math.Floor(100 * value) / 100;} }
         public CategoryValues categoryValue { get; set; }
-        public DateTime? date { get; set; } = DateTime.Today;
+        public DateTime? date { get; set; } = DateTime.Today; 
 
+        public Transaction() { }
 
-        public Transaction(int? elementID, string? textValue, double amount, CategoryValues categoryValue, DateTime? date)
-        {
-            this.elementID = elementID;
-            this.textValue = textValue;
-            this.amount = amount;
-            this.categoryValue = categoryValue;
-            this.date = date;
-        }
     }
+
     public enum CategoryValues
     {
         Income, Housing, Transportation, Food, Utilities, Investing,

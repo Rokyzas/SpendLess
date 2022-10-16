@@ -9,18 +9,18 @@
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-5">
             <MudForm @bind-IsValid="@success">
-                    <MudTextField @bind-Value="username" T="string" Label="Username" Required="true" RequiredError="User name is required!"/>
-                    <MudTextField @bind-Value="email" T="string" Label="Email" Required="true"
-                                  Validation="@(new Func<string, IEnumerable<string>>(EmailCorrect))"/>
-                    <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
-                                  InputType="InputType.Password"
-                                  Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"/>
+                <MudTextField @bind-Value="username" T="string" Label="Username" Required="true" RequiredError="User name is required!"/>
+                <MudTextField @bind-Value="email" T="string" Label="Email" Required="true"
+                                    Validation="@(new Func<string, IEnumerable<string>>(EmailCorrect))"/>
+                <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                                    InputType="InputType.Password"
+                                    Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"/>
             </MudForm>   
-  
             <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="()=>ValidateLogin(success)">Next</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>
+
 @code {
     private bool success;
     private String? username;
@@ -48,7 +48,8 @@
 
     private IEnumerable<string> EmailCorrect(string email)
     {
-        if (email == null){
+        if (email == null)
+        {
             yield return "Email is required";
             yield break;
         }
@@ -59,18 +60,17 @@
 
     private  void ValidateLogin(bool success = false) 
     {
-        if(success){
+        if(success)
+        {
             SnackBarService.SuccessMsg("Logged in");
             User.username = username;
             User.emailAddress = email;
             User.password = password;
             NavigationManager.NavigateTo("");
-                return;
-        }
-            SnackBarService.ErrorMsg("Could not login, try again");
             return;
-
+        }
+        
+        SnackBarService.ErrorMsg("Could not login, try again");
+        return;
     }
-
-
 }

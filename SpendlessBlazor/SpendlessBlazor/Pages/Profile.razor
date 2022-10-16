@@ -4,29 +4,27 @@
 @using SpendlessBlazor.Pages
 @using System.Linq
 @using SpendlessBlazor.Services
-@inject SpendlessBlazor.Services.ITransactionService<Transaction> InfoService
+
 @inject ISnackbar Snackbar
 
 <h1>@User.username</h1>
 
 
+<!--Profile data-->
 <div class="gap-4 d-flex flex-wrap">
-    <MudTextField @bind-Value="textValue" Label="Enter your name" Variant="Variant.Outlined"></MudTextField>
-    @code {
-        public string? textValue { get; set; }
-}
-    <MudTextField @bind-Value="income" Label="Income" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-    @code {
-        public double income { get; set; } = 0;
-}
+    <MudTextField @bind-Value="balance" Label="Balance" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
 </div>
-<br />
-<button class="btn btn-primary" >Save</button>
-<br />
+
+@code { 
+    public static double balance = User.balance;
+}
+
 <br />
 
-<h3>Balance: @Balance()</h3>
+<button class="btn btn-primary" @onclick="SaveToProfile">Save</button>
 
+<br />
+<br />
 <br />
 <br />
 
@@ -71,29 +69,29 @@
 
 
 @code {
-
-
-    public double TotalExpenses(List<Transaction> info)
+    public static double TotalExpenses(List<Transaction> info)
     {
-        return Expenses.transactions.Where(item => item.amount > 0).Sum(item => item.amount);
+        return Expenses.transactions.Sum(item => item.amount);
     }
 
     public double categoryExpenses(String category, List<Transaction> info)
     {
-       CategoryValues tempEnum;
-            if (!Enum.TryParse(category, out tempEnum))
+        CategoryValues tempEnum;
+        if (!Enum.TryParse(category, out tempEnum))
             SnackBarService.WarningMsg("Fields can not be empty!");
         return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount != 0).Sum(item => item.amount), 2);
     }
 
-    public double Balance()
+    public void SaveToProfile()
     {
-        return Math.Round(income - TotalExpenses(Expenses.transactions), 2);
+        User.balance = balance;
+
+        NavMenu.Balance();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        Expenses.transactions = InfoService.ReadJson();
+        Expenses.transactions = TransactionService.ReadJson();
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }

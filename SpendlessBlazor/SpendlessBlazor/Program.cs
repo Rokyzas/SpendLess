@@ -11,7 +11,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddMudServices();
-builder.Services.AddScoped<ITransactionService<Transaction> , TransactionService>();
 
 
 var app = builder.Build();
