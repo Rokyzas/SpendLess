@@ -8,7 +8,6 @@
         public static double balance { get; set; } = 0;
 
 
-
     }
 
 }

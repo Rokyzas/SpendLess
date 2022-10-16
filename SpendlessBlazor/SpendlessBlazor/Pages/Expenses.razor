@@ -186,13 +186,12 @@
                     transactions[i] = temp;
                 }
 
-                transactions.Add(new Data.Transaction { elementID= transactions.Count(), textValue= textValue, amount= amount, categoryValue= tempEnum, date= date });
+                transactions.Add(new Data.Transaction { elementID = transactions.Count(), textValue = textValue, amount = amount, categoryValue = tempEnum, date = date });
             }
             categoryValue = null;
             amount = 0;
-
-
         } 
+
         else
         {
             SnackBarService.WarningMsg("Fields can not be empty!");
@@ -210,6 +209,7 @@
     {
         transactions = TransactionService.ReadJson();
         await Task.Delay(5);
+
     }
 
     private async Task<IEnumerable<string>> Search1(string value)
