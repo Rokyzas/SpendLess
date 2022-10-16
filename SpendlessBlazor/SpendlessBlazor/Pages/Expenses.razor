@@ -1,12 +1,12 @@
 ﻿@page "/expenses"
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
-@using SpendlessBlazor.Shared
+@using SpendlessBlazor.Data
 @using SpendlessBlazor.Services
 @using System.Net.Http.Json
 @using MudBlazor.Services;
 
-@inject SpendlessBlazor.Services.IInfoService<Info> InfoService
+@inject SpendlessBlazor.Services.ITransactionService<Transaction> InfoService
 @inject HttpClient httpClient
 
 
@@ -88,27 +88,27 @@
     </thead>
     <tbody>
         @{
-            List<Info> filteredInfo = info;
+            List<Transaction> filteredTransactions = transactions;
 
             if(dateFilterTo != null)
-                filteredInfo = filteredInfo.Where(x => x.date <= dateFilterTo).ToList();
+                filteredTransactions = filteredTransactions.Where(x => x.date <= dateFilterTo).ToList();
 
             if(dateFilterFrom != null)
-                filteredInfo = filteredInfo.Where(x => x.date >= dateFilterFrom).ToList();
+                filteredTransactions = filteredTransactions.Where(x => x.date >= dateFilterFrom).ToList();
 
 
-            if (filteredInfo != null)
-                for (int i = 0; i < filteredInfo.Count; i++)
+            if (filteredTransactions != null)
+                for (int i = 0; i < filteredTransactions.Count; i++)
                 {
                     var nr = i;
                     <tr>
 
-                            <td>@filteredInfo.ElementAt(i).textValue</td>
-                            <td>@((Shared.CategoryValues)(info.ElementAt(i).categoryValue))</td>
-                            <td>@filteredInfo.ElementAt(i).amount</td>
-                            <td>@filteredInfo.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
+                            <td>@filteredTransactions.ElementAt(i).textValue</td>
+                            <td>@((Data.CategoryValues)(transactions.ElementAt(i).categoryValue))</td>
+                            <td>@filteredTransactions.ElementAt(i).amount</td>
+                            <td>@filteredTransactions.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                             <td>
-                            <button class="btn btn-primary" @onclick="() => DeleteRow(filteredInfo.ElementAt(nr))">Delete</button>
+                            <button class="btn btn-primary" @onclick="() => DeleteRow(filteredTransactions.ElementAt(nr))">Delete</button>
                             
                             
                            
@@ -130,17 +130,17 @@
 @code {
 
     [Parameter]
-    public static List<Info> info { get; set; } = new List<Info>();
+    public static List<Transaction> transactions { get; set; } = new List<Transaction>();
 
-    public void DeleteRow(Info element)
+    public void DeleteRow(Transaction element)
     {
 
         SnackBarService.SuccessMsg("Element was successfully deleted");
         int c = 0;
-        foreach (var row in info)
+        foreach (var row in transactions)
         {
             if (row.elementID.Equals(element.elementID)){
-                info.RemoveAt(c);
+                transactions.RemoveAt(c);
                 WriteToJson();
                 break;
             }
@@ -153,7 +153,7 @@
 
 
     public void Savelist(){
-        //buvo amount < 0
+        
         if (amount < 0)
         {
             SnackBarService.WarningMsg("Amount can not be negative or zero!");
@@ -173,35 +173,42 @@
                 amount = -amount;
             }
             
-            Shared.CategoryValues tempEnum;
+            Data.CategoryValues tempEnum;
             if (!Enum.TryParse(categoryValue, out tempEnum))
             {
                 SnackBarService.WarningMsg("This category was not found!");
                 return;
 
             }
-            else{
-                for(int i = 0; i < info.Count;++i){
-                    info.ElementAt(i).elementID = i;
+            else
+            {
+                for (int i = 0; i < transactions.Count; ++i)
+                {
+                    transactions.ElementAt(i).elementID = i;
                 }
-                info.Add(new Shared.Info(elementID: info.Count(), textValue: textValue, amount: Math.Floor(100 * amount) / 100, categoryValue: tempEnum, date: date));
+
+                transactions.Add(new Data.Transaction(elementID: transactions.Count(), textValue: textValue, amount: Math.Floor(100 * amount) / 100, categoryValue: tempEnum, date: date));
             }
             categoryValue = null;
             amount = 0;
 
 
-        } else{
+        } 
+        else
+        {
             SnackBarService.WarningMsg("Fields can not be empty!");
             return;
         }
+
         WriteToJson();
         SnackBarService.SuccessMsg("Succsesfully saved data");
 
     }
+
     public void WriteToJson()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(info, options);
+        string jsonString = JsonSerializer.Serialize(transactions, options);
         string path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
 
         try
@@ -219,13 +226,13 @@
             SnackBarService.ErrorMsg("Failed to save data");
         }
 
-        
+  
     }
 
 
     protected override async Task OnInitializedAsync()
     {
-        info = InfoService.ReadJson();
+        transactions = InfoService.ReadJson();
         await Task.Delay(5);
     }
 
@@ -234,8 +241,8 @@
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
 
-        string[] categoryVal = Enum.GetValues(typeof(Shared.CategoryValues))
-            .Cast<Shared.CategoryValues>()
+        string[] categoryVal = Enum.GetValues(typeof(Data.CategoryValues))
+            .Cast<Data.CategoryValues>()
             .Select(x => x.ToString())
             .ToArray();
 

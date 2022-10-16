@@ -12,7 +12,7 @@
                     <MudTextField @bind-Value="username" T="string" Label="Username" Required="true" RequiredError="User name is required!"/>
                     <MudTextField @bind-Value="email" T="string" Label="Email" Required="true"
                                   Validation="@(new Func<string, IEnumerable<string>>(EmailCorrect))"/>
-                    <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must contain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                    <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
                                   InputType="InputType.Password"
                                   Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"/>
             </MudForm>   
@@ -66,7 +66,7 @@
             User.password = password;
             NavigationManager.NavigateTo("");
                 return;
-            }
+        }
             SnackBarService.ErrorMsg("Could not login, try again");
             return;
 

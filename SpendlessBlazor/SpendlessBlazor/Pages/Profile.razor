@@ -4,7 +4,7 @@
 @using SpendlessBlazor.Pages
 @using System.Linq
 @using SpendlessBlazor.Services
-@inject SpendlessBlazor.Services.IInfoService<Info> InfoService
+@inject SpendlessBlazor.Services.ITransactionService<Transaction> InfoService
 @inject ISnackbar Snackbar
 
 <h1>@User.username</h1>
@@ -42,17 +42,17 @@
    <tbody>
     
         @{
-            if (Expenses.info != null)
-                foreach (var tempCategory in Enum.GetValues(typeof(Shared.CategoryValues))
-                                                .Cast<Shared.CategoryValues>()
+            if (Expenses.transactions != null)
+                foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues))
+                                                .Cast<CategoryValues>()
                                                 .Select(x => x.ToString())
                                                 .ToArray())
                 {
-                   if (categoryExpenses(tempCategory, Expenses.info) != 0)
+                    if (categoryExpenses(tempCategory, Expenses.transactions) != 0)
                     {
                         <tr>
                             <td>@tempCategory</td>
-                            <td>@categoryExpenses(tempCategory, Expenses.info)</td>
+                            <td>@categoryExpenses(tempCategory, Expenses.transactions)</td>
                         </tr>
                     }
                 }
@@ -73,14 +73,14 @@
 @code {
 
 
-    public double TotalExpenses(List<Info> info)
+    public double TotalExpenses(List<Transaction> info)
     {
-        return Expenses.info.Where(item => item.amount > 0).Sum(item => item.amount);
+        return Expenses.transactions.Where(item => item.amount > 0).Sum(item => item.amount);
     }
 
-    public double categoryExpenses(String category, List<Info> info)
+    public double categoryExpenses(String category, List<Transaction> info)
     {
-       Shared.CategoryValues tempEnum;
+       CategoryValues tempEnum;
             if (!Enum.TryParse(category, out tempEnum))
             SnackBarService.WarningMsg("Fields can not be empty!");
         return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount != 0).Sum(item => item.amount), 2);
@@ -88,12 +88,12 @@
 
     public double Balance()
     {
-        return Math.Round(income - TotalExpenses(Expenses.info), 2);
+        return Math.Round(income - TotalExpenses(Expenses.transactions), 2);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        Expenses.info = InfoService.ReadJson();
+        Expenses.transactions = InfoService.ReadJson();
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }

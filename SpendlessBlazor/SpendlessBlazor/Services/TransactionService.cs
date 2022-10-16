@@ -1,31 +1,15 @@
-﻿using SpendlessBlazor.Shared;
+﻿using SpendlessBlazor.Data;
 using System.Net.NetworkInformation;
 using System.Text.Json;
-
 using System.Text.Json.Serialization;
 using static SpendlessBlazor.Pages.Expenses;
 
 namespace SpendlessBlazor.Services
 {
-    public class InfoService : IInfoService <Info>
+    public class TransactionService : ITransactionService <Transaction>
     {
-        private List<Shared.Info>? infoList = new List<Shared.Info>();
-        /*
-        public void writeToJson(Shared.Info info)
-        {
 
-            infoList = readJson();
-            infoList.Add(info);
-
-
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(infoList, options);
-
-            System.IO.File.WriteAllText($"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}", jsonString);
-        }
-        */
-
-        public List<Shared.Info> ReadJson()
+        public List<Transaction> ReadJson()
         {
             String someString;
             String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
@@ -50,7 +34,7 @@ namespace SpendlessBlazor.Services
                 someString = "[]";
             }
 
-            List<Shared.Info> list = JsonSerializer.Deserialize<List<Shared.Info>>(someString)!;
+            List<Transaction> list = JsonSerializer.Deserialize<List<Transaction>>(someString)!;
 
             return list;
         }
