@@ -6,11 +6,11 @@ namespace SpendlessBlazor.Data
     public struct Transaction
     {
         private int elementID;
-        private string? textValue;
+        private string textValue;
         private double amount;
         private CategoryValues categoryValue;
         public DateTime? date { get; set; } = DateTime.Today;
-        public Transaction(int elementID, string textValue, double amount, CategoryValues categoryValue, DateTime dateTime) : this()
+        public Transaction(int elementID, string? textValue, double amount, CategoryValues categoryValue, DateTime dateTime) : this()
         {
             this.elementID = elementID;
             this.TextValue = textValue;
@@ -23,7 +23,7 @@ namespace SpendlessBlazor.Data
         public double Amount
         {
             get { return this.amount; }
-            set { this.amount = value; }
+            set { this.amount = Math.Round(value, 2); }
         }
 
         public string TextValue
@@ -69,11 +69,7 @@ namespace SpendlessBlazor.Data
 
             }
         }
-        public int ElementID
-        {
-            get { return this.elementID; }
-            set { elementID = value; }
-        }
+        public int ElementID { get; set; }
     }
 
     public enum CategoryValues
