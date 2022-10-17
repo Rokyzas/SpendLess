@@ -41,10 +41,7 @@
     
         @{
             if (Expenses.transactions != null)
-                foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues))
-                                                .Cast<CategoryValues>()
-                                                .Select(x => x.ToString())
-                                                .ToArray())
+                foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues)).Cast<CategoryValues>().Select(x => x.ToString()).ToArray())
                 {
                     if (categoryExpenses(tempCategory, Expenses.transactions) != 0)
                     {
@@ -58,7 +55,6 @@
     </tbody>
 </MudSimpleTable>
 @code {
-    private String? username = "User";
     private bool dense = false;
     private bool hover = true;
     private bool striped = false;
@@ -69,17 +65,17 @@
 
 
 @code {
-    public static double TotalExpenses(List<Transaction> info)
+    public static double TotalExpenses(List<Transaction> transactions)
     {
-        return Expenses.transactions.Sum(item => item.Amount);
+        return Expenses.transactions.Sum(item => (item.Amount ?? 0) );
     }
 
-    public double categoryExpenses(String category, List<Transaction> info)
+    public double categoryExpenses(String category, List<Transaction> transactions)
     {
         CategoryValues tempEnum;
         if (!Enum.TryParse(category, out tempEnum))
             SnackBarService.WarningMsg("Category parse error!");
-        return Math.Round(info.Where(item => item.CategoryValue == tempEnum && item.Amount != 0).Sum(item => item.Amount), 2);
+        return (from item in transactions where item.CategoryValue == tempEnum select ((item.Amount ?? 0))).Sum();
     }
 
     public void SaveToProfile()

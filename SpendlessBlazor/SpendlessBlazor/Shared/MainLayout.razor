@@ -28,6 +28,7 @@
 @code{
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(5);
         SnackBarService.InitSnackBarService(Snackbar);
         NavMenu.Balance();
     }

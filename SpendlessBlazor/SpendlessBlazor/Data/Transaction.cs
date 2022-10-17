@@ -3,14 +3,15 @@ using static MudBlazor.Colors;
 
 namespace SpendlessBlazor.Data
 {
-    public struct Transaction
+    public struct Transaction : IComparable<Transaction>
     {
         private int elementID;
-        private string textValue;
+        private string? textValue;
         private double amount;
         private CategoryValues categoryValue;
         public DateTime? date { get; set; } = DateTime.Today;
-        public Transaction(int elementID, string? textValue, double amount, CategoryValues categoryValue, DateTime dateTime) : this()
+
+        public Transaction(int elementID, double? amount, CategoryValues categoryValue, DateTime? dateTime, string textValue = "Transaction") : this()
         {
             this.elementID = elementID;
             this.TextValue = textValue;
@@ -20,33 +21,24 @@ namespace SpendlessBlazor.Data
         }
 
         // Properties
-        public double Amount
+        public double? Amount
         {
             get { return this.amount; }
-            set { this.amount = Math.Round(value, 2); }
+            set {
+                this.amount = Math.Round((value ?? 0), 2);
+            }
         }
 
-        public string TextValue
+        public string? TextValue
         {
             get
             {
-                if (this.textValue != null)
-                    return this.textValue;
-                else
-                {   
-                    return "Invalid item!";
-                }
-                    
+                return this.textValue;
             }
 
             set
             {
-                if (value != null)
-                    this.textValue = value;
-                else
-                {
-                    SnackBarService.WarningMsg("Item field is empty!");
-                }
+                this.textValue = value;
             }
         }
         public CategoryValues CategoryValue
@@ -58,23 +50,33 @@ namespace SpendlessBlazor.Data
 
             set 
             {
-                if (value <= Enum.GetValues(typeof(CategoryValues)).Cast<CategoryValues>().Max())
-                    this.categoryValue = value;
-
-                else
-                {
-                    SnackBarService.WarningMsg("Wrong category value!");
-                }
-                    
-
+                this.categoryValue = value;
             }
         }
         public int ElementID { get; set; }
+
+        public int CompareTo(Transaction x)
+        {
+            if (x.date < this.date)
+            {
+                return -1;
+            }
+            else if (x.date > this.date)
+            {
+                return 1;
+            }
+            else
+                return 0;
+
+            throw new NotImplementedException();
+        }
     }
 
+
+    [Flags]
     public enum CategoryValues
     {
-        Income, Housing, Transportation, Food, Utilities, Investing,
+        Income,Housing, Transportation , Food , Utilities, Investing,
         Household, PersonalDevelopment, Gifts,
         Entertainment, Healthcare, Insurance, Kids,
         Pets, Subscriptions, Clothing, Travel, Technology

@@ -8,6 +8,7 @@ namespace SpendlessBlazor.Services
 {
     public static class TransactionService
     {
+
         public static List<Transaction> ReadJson()
         {
             String someString;
@@ -24,7 +25,7 @@ namespace SpendlessBlazor.Services
             catch (Exception)
             {
                 SnackBarService.ErrorMsg("Failed to load data!");
-                return null;
+                return new List<Transaction>();
             }
 
 

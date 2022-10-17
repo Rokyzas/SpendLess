@@ -37,7 +37,7 @@
     public int sk;
     public string? textValue;
     private string? categoryValue;
-    public double amount = 0;
+    public double? amount = null;
     DateTime? date = DateTime.Today;
 }
 
@@ -100,7 +100,7 @@
                     var nr = i;
                     <tr>
                         <td>@filteredTransactions.ElementAt(i).TextValue</td>
-                        <td>@((Data.CategoryValues)(transactions.ElementAt(i).CategoryValue))</td>
+                        <td>@((transactions.ElementAt(i).CategoryValue))</td>
                         <td>@filteredTransactions.ElementAt(i).Amount</td>
                         <td>@filteredTransactions.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                         <td><button class="btn btn-primary" @onclick="() => DeleteRow(filteredTransactions.ElementAt(nr))">Delete</button></td>
@@ -162,7 +162,7 @@
             categoryValue = "Income";
         }
 
-        if (textValue != null && categoryValue != null && date != null)
+        if (categoryValue != null && date != null && amount != null)
         {
 
             if (toggleExpenseIncome == false)
@@ -177,6 +177,7 @@
                 return;
 
             }
+
             else
             {
                 for (int i = 0; i < transactions.Count; ++i)
@@ -186,10 +187,17 @@
                     transactions[i] = temp;
                 }
 
-                transactions.Add(new Data.Transaction { ElementID = transactions.Count(), TextValue = textValue, Amount = amount, CategoryValue = tempEnum, date = date });
+                if(textValue == null)
+                    transactions.Add(new Transaction(dateTime: date, elementID: transactions.Count(), amount: amount, categoryValue: tempEnum));
+
+                else
+                    transactions.Add(new Transaction(dateTime: date, elementID: transactions.Count(), amount: amount, categoryValue: tempEnum, textValue: textValue));
+
+                transactions.Sort();
             }
+
             categoryValue = null;
-            amount = 0;
+            amount = null;
         } 
 
         else
@@ -217,10 +225,10 @@
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
 
-        string[] categoryVal = Enum.GetValues(typeof(Data.CategoryValues))
-            .Cast<Data.CategoryValues>()
-            .Select(x => x.ToString())
-            .ToArray();
+        
+
+        string[] categoryVal = System.Enum.GetNames(typeof(Data.CategoryValues));
+
 
         // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
