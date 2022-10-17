@@ -6,10 +6,9 @@ using static SpendlessBlazor.Pages.Expenses;
 
 namespace SpendlessBlazor.Services
 {
-    public class TransactionService : ITransactionService <Transaction>
+    public static class TransactionService
     {
-
-        public List<Transaction> ReadJson()
+        public static List<Transaction> ReadJson()
         {
             String someString;
             String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
@@ -39,5 +38,26 @@ namespace SpendlessBlazor.Services
             return list;
         }
 
+        public static void WriteToJson()
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonString = JsonSerializer.Serialize(transactions, options);
+            string path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
+
+            try
+            {
+                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fileStream))
+                    {
+                        streamWriter.Write(jsonString);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                SnackBarService.ErrorMsg("Failed to save data");
+            }
+        }
     }
 }
