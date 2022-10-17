@@ -99,9 +99,9 @@
                 {
                     var nr = i;
                     <tr>
-                        <td>@filteredTransactions.ElementAt(i).textValue</td>
-                        <td>@((Data.CategoryValues)(transactions.ElementAt(i).categoryValue))</td>
-                        <td>@filteredTransactions.ElementAt(i).amount</td>
+                        <td>@filteredTransactions.ElementAt(i).TextValue</td>
+                        <td>@((Data.CategoryValues)(transactions.ElementAt(i).CategoryValue))</td>
+                        <td>@filteredTransactions.ElementAt(i).Amount</td>
                         <td>@filteredTransactions.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
                         <td><button class="btn btn-primary" @onclick="() => DeleteRow(filteredTransactions.ElementAt(nr))">Delete</button></td>
                     </tr>
@@ -130,7 +130,7 @@
         int c = 0;
         foreach (var row in transactions)
         {
-            if (row.elementID.Equals(element.elementID))
+            if (row.ElementID.Equals(element.ElementID))
             {
                 transactions.RemoveAt(c);
                 TransactionService.WriteToJson();
@@ -182,11 +182,11 @@
                 for (int i = 0; i < transactions.Count; ++i)
                 {
                     Transaction temp = transactions.ElementAt(i);
-                    temp.elementID = i;
+                    temp.ElementID = i;
                     transactions[i] = temp;
                 }
 
-                transactions.Add(new Data.Transaction { elementID = transactions.Count(), textValue = textValue, amount = amount, categoryValue = tempEnum, date = date });
+                transactions.Add(new Data.Transaction { ElementID = transactions.Count(), TextValue = textValue, Amount = amount, CategoryValue = tempEnum, date = date });
             }
             categoryValue = null;
             amount = 0;

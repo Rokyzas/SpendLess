@@ -71,15 +71,15 @@
 @code {
     public static double TotalExpenses(List<Transaction> info)
     {
-        return Expenses.transactions.Sum(item => item.amount);
+        return Expenses.transactions.Sum(item => item.Amount);
     }
 
     public double categoryExpenses(String category, List<Transaction> info)
     {
         CategoryValues tempEnum;
         if (!Enum.TryParse(category, out tempEnum))
-            SnackBarService.WarningMsg("Fields can not be empty!");
-        return Math.Round(info.Where(item => item.categoryValue == tempEnum && item.amount != 0).Sum(item => item.amount), 2);
+            SnackBarService.WarningMsg("Category parse error!");
+        return Math.Round(info.Where(item => item.CategoryValue == tempEnum && item.Amount != 0).Sum(item => item.Amount), 2);
     }
 
     public void SaveToProfile()
