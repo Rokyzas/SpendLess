@@ -1,37 +1,51 @@
 [
   {
-    "elementID": 0,
-    "textValue": "ktg",
-    "amount": 1000,
-    "categoryValue": 1,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-13T00:00:00+03:00",
+    "Amount": 2000,
+    "TextValue": "jyhftb",
+    "CategoryValue": 0,
+    "ElementID": 0
   },
   {
-    "elementID": 1,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": -452,
+    "TextValue": "car",
+    "CategoryValue": 2,
+    "ElementID": 1
   },
   {
-    "elementID": 2,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": -5,
+    "TextValue": "candy",
+    "CategoryValue": 3,
+    "ElementID": 2
   },
   {
-    "elementID": 3,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": -1.34,
+    "TextValue": "bread",
+    "CategoryValue": 3,
+    "ElementID": 3
   },
   {
-    "elementID": 4,
-    "textValue": "jhgf",
-    "amount": 10000,
-    "categoryValue": 0,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": 1523,
+    "TextValue": "asdasd",
+    "CategoryValue": 0,
+    "ElementID": 4
+  },
+  {
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": -13,
+    "TextValue": "Taxi",
+    "CategoryValue": 2,
+    "ElementID": 5
+  },
+  {
+    "date": "2022-10-17T00:00:00+03:00",
+    "Amount": -47,
+    "TextValue": "AAA",
+    "CategoryValue": 7,
+    "ElementID": 6
   }
 ]
