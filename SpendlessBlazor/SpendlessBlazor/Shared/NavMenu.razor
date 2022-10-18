@@ -23,8 +23,8 @@
             </NavLink>
         </div>     
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="expenses">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Expenses
+            <NavLink class="nav-link" href="transactions">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Transactions
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -51,7 +51,7 @@
 
     public static void Balance()
     {
-        balance = Math.Round(User.balance + Profile.TotalExpenses(Expenses.transactions), 2);
+        balance = Math.Round(User.balance + Profile.TotalExpenses(Transactions.transactions), 2);
 
     }
 }

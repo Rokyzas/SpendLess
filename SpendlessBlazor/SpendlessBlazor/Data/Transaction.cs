@@ -1,26 +1,83 @@
-﻿namespace SpendlessBlazor.Data
+﻿using SpendlessBlazor.Services;
+using static MudBlazor.Colors;
+
+namespace SpendlessBlazor.Data
 {
-    public struct Transaction
+    public struct Transaction : IComparable<Transaction>
     {
-        public int? elementID { get; set; }
-        public string? textValue { get; set; }
-        public double amount { get; set; }
-        public CategoryValues categoryValue { get; set; }
-        public DateTime? date { get; set; } = DateTime.Today; 
-        public Transaction(int elementID, string textValue, double amount, CategoryValues categoryValue, DateTime dateTime) : this()
+        private int elementID;
+        private string? textValue;
+        private double amount;
+        private CategoryValues categoryValue;
+        public DateTime? date { get; set; } = DateTime.Today;
+
+        public Transaction(int elementID, double? amount, CategoryValues categoryValue, DateTime? dateTime, string textValue = "Transaction") : this()
         {
             this.elementID = elementID;
-            this.textValue = textValue;
-            this.amount = amount;
-            this.categoryValue = categoryValue;
+            this.TextValue = textValue;
+            this.Amount = amount;
+            this.CategoryValue = categoryValue;
             this.date = dateTime;
+        }
+
+        // Properties
+        public double? Amount
+        {
+            get { return this.amount; }
+            set {
+                this.amount = Math.Round((value ?? 0), 2);
+            }
+        }
+
+        public string? TextValue
+        {
+            get
+            {
+                return this.textValue;
+            }
+
+            set
+            {
+                this.textValue = value;
+            }
+        }
+        public CategoryValues CategoryValue
+        {
+            get
+            {
+                return this.categoryValue; 
+            }
+
+            set 
+            {
+                this.categoryValue = value;
+            }
+        }
+        public int ElementID { get; set; }
+
+        public int CompareTo(Transaction x)
+        {
+            if (x.date < this.date)
+            {
+                return -1;
+            }
+            else if (x.date > this.date)
+            {
+                return 1;
+            }
+            else
+                return 0;
+
+            throw new NotImplementedException();
         }
     }
 
+
+    [Flags]
     public enum CategoryValues
     {
-        Income, Housing, Transportation, Food, Utilities, Investing,
-        Household, PersonalDevelopment, Gifts,
+        Income, Housing, Transportation , Food , Utilities, Investing,
+        Household, Personal, Gifts,
         Entertainment, Healthcare, Insurance, Kids,
         Pets, Subscriptions, Clothing, Travel, Technology
     }

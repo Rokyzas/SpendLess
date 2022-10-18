@@ -15,17 +15,17 @@ namespace SpendlessBlazor.Services
             snackbar.Configuration.SnackbarVariant = Variant.Outlined;
         }
 
-        public static void SuccessMsg(String msg)
+        public static void SuccessMsg(String msg = "Success")
         {
             snackbar.Add(msg, Severity.Success, config => { config.VisibleStateDuration = 1000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
         }
 
-        public static void WarningMsg(String msg)
+        public static void WarningMsg(String msg = "Warning")
         {
             snackbar.Add(msg, Severity.Warning, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
         }
 
-        public static void ErrorMsg(String msg)
+        public static void ErrorMsg(String msg = "Error")
         {
             snackbar.Add(msg, Severity.Error, config => { config.VisibleStateDuration = 2000; config.ShowTransitionDuration = 100; config.HideTransitionDuration = 500; });
         }

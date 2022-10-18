@@ -1,37 +1,51 @@
 [
   {
-    "elementID": 0,
-    "textValue": "ktg",
-    "amount": 1000,
-    "categoryValue": 1,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -44,
+    "TextValue": "Rent",
+    "CategoryValue": 1,
+    "ElementID": 0
   },
   {
-    "elementID": 1,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -5,
+    "TextValue": "Netflix",
+    "CategoryValue": 14,
+    "ElementID": 1
   },
   {
-    "elementID": 2,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -100,
+    "TextValue": "Bitcoin",
+    "CategoryValue": 5,
+    "ElementID": 0
   },
   {
-    "elementID": 3,
-    "textValue": "jyhftb",
-    "amount": 2000,
-    "categoryValue": 4,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-11T00:00:00",
+    "Amount": -20,
+    "TextValue": "Shoping",
+    "CategoryValue": 3,
+    "ElementID": 2
   },
   {
-    "elementID": 4,
-    "textValue": "jhgf",
-    "amount": 10000,
-    "categoryValue": 0,
-    "date": "2022-10-13T00:00:00+03:00"
+    "date": "2022-10-07T00:00:00",
+    "Amount": -50,
+    "TextValue": "Gas",
+    "CategoryValue": 2,
+    "ElementID": 3
+  },
+  {
+    "date": "2022-10-07T00:00:00",
+    "Amount": -150,
+    "TextValue": "Maintenance",
+    "CategoryValue": 2,
+    "ElementID": 4
+  },
+  {
+    "date": "2022-10-01T00:00:00",
+    "Amount": 1000,
+    "TextValue": "Salary",
+    "CategoryValue": 0,
+    "ElementID": 5
   }
 ]

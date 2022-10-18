@@ -2,12 +2,13 @@
 using System.Net.NetworkInformation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static SpendlessBlazor.Pages.Expenses;
+using static SpendlessBlazor.Pages.Transactions;
 
 namespace SpendlessBlazor.Services
 {
     public static class TransactionService
     {
+
         public static List<Transaction> ReadJson()
         {
             String someString;
@@ -24,7 +25,7 @@ namespace SpendlessBlazor.Services
             catch (Exception)
             {
                 SnackBarService.ErrorMsg("Failed to load data!");
-                return null;
+                return new List<Transaction>();
             }
 
 
