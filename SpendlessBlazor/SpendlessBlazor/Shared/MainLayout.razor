@@ -24,12 +24,14 @@
     </main>
 </div>
 
-
 @code{
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(5);
+
         SnackBarService.InitSnackBarService(Snackbar);
+
+        Pages.Expenses.transactions = TransactionService.ReadJson();
         NavMenu.Balance();
     }
 }
