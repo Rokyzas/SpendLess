@@ -40,14 +40,14 @@
    <tbody>
     
         @{
-            if (Expenses.transactions != null)
+            if (Transactions.transactions != null)
                 foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues)).Cast<CategoryValues>().Select(x => x.ToString()).ToArray())
                 {
-                    if (categoryExpenses(tempCategory, Expenses.transactions) != 0)
+                    if (categoryExpenses(tempCategory, Transactions.transactions) != 0)
                     {
                         <tr>
                             <td>@tempCategory</td>
-                            <td>@categoryExpenses(tempCategory, Expenses.transactions)</td>
+                            <td>@categoryExpenses(tempCategory, Transactions.transactions)</td>
                         </tr>
                     }
                 }
@@ -67,7 +67,7 @@
 @code {
     public static double TotalExpenses(List<Transaction> transactions)
     {
-        return Expenses.transactions.Sum(item => (item.Amount ?? 0) );
+        return Transactions.transactions.Sum(item => (item.Amount ?? 0));
     }
 
     public double categoryExpenses(String category, List<Transaction> transactions)
@@ -87,7 +87,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Expenses.transactions = TransactionService.ReadJson();
+        Transactions.transactions = TransactionService.ReadJson();
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }

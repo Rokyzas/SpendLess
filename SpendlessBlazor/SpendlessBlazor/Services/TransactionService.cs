@@ -2,7 +2,7 @@
 using System.Net.NetworkInformation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static SpendlessBlazor.Pages.Expenses;
+using static SpendlessBlazor.Pages.Transactions;
 
 namespace SpendlessBlazor.Services
 {
