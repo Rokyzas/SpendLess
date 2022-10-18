@@ -76,8 +76,8 @@ namespace SpendlessBlazor.Data
     [Flags]
     public enum CategoryValues
     {
-        Income,Housing, Transportation , Food , Utilities, Investing,
-        Household, PersonalDevelopment, Gifts,
+        Income, Housing, Transportation , Food , Utilities, Investing,
+        Household, Personal, Gifts,
         Entertainment, Healthcare, Insurance, Kids,
         Pets, Subscriptions, Clothing, Travel, Technology
     }

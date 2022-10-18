@@ -1,51 +1,51 @@
 [
   {
-    "date": "2022-10-13T00:00:00+03:00",
-    "Amount": 2000,
-    "TextValue": "jyhftb",
-    "CategoryValue": 0,
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -44,
+    "TextValue": "Rent",
+    "CategoryValue": 1,
     "ElementID": 0
   },
   {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": -452,
-    "TextValue": "car",
-    "CategoryValue": 2,
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -5,
+    "TextValue": "Netflix",
+    "CategoryValue": 14,
     "ElementID": 1
   },
   {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": -5,
-    "TextValue": "candy",
+    "date": "2022-10-18T00:00:00+03:00",
+    "Amount": -100,
+    "TextValue": "Bitcoin",
+    "CategoryValue": 5,
+    "ElementID": 0
+  },
+  {
+    "date": "2022-10-11T00:00:00",
+    "Amount": -20,
+    "TextValue": "Shoping",
     "CategoryValue": 3,
     "ElementID": 2
   },
   {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": -1.34,
-    "TextValue": "bread",
-    "CategoryValue": 3,
+    "date": "2022-10-07T00:00:00",
+    "Amount": -50,
+    "TextValue": "Gas",
+    "CategoryValue": 2,
     "ElementID": 3
   },
   {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": 1523,
-    "TextValue": "asdasd",
-    "CategoryValue": 0,
+    "date": "2022-10-07T00:00:00",
+    "Amount": -150,
+    "TextValue": "Maintenance",
+    "CategoryValue": 2,
     "ElementID": 4
   },
   {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": -13,
-    "TextValue": "Taxi",
-    "CategoryValue": 2,
+    "date": "2022-10-01T00:00:00",
+    "Amount": 1000,
+    "TextValue": "Salary",
+    "CategoryValue": 0,
     "ElementID": 5
-  },
-  {
-    "date": "2022-10-17T00:00:00+03:00",
-    "Amount": -47,
-    "TextValue": "AAA",
-    "CategoryValue": 7,
-    "ElementID": 6
   }
 ]
