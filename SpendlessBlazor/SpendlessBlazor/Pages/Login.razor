@@ -16,11 +16,11 @@
                                   InputType="InputType.Password"
                                   Validation="@(new Func<string, string?>(PasswordStrength))" Required="true"/>
             </MudForm>   
-  
             <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="()=>ValidateLogin(success)">Next</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>
+
 @code {
     private bool success;
     private String? username;
@@ -64,8 +64,10 @@
 
     private string? EmailCorrect(string email)
     {
-        if (email == null){
+        if (email == null)
+        {
             return "Email is required";
+
         }
         if (!Regex.IsMatch(email, @"^([\w]+)@([\w]+)\.(((\w){2,3})+)$"))
             return "Email format is incorrect";
@@ -76,19 +78,17 @@
 
     private  void ValidateLogin(bool success = false) 
     {
-        SnackBarService.SuccessMsg(success.ToString());
-        if(success){
+        if(success)
+        {
             SnackBarService.SuccessMsg("Logged in");
             User.username = username;
             User.emailAddress = email;
             User.password = password;
             NavigationManager.NavigateTo("");
-                return;
-        }
-            SnackBarService.ErrorMsg("Could not login, try again");
             return;
-
+        }
+        
+        SnackBarService.ErrorMsg("Could not login, try again");
+        return;
     }
-
-
 }
