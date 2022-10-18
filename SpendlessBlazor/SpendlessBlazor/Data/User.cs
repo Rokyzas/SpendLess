@@ -1,5 +1,7 @@
 ﻿using MudBlazor;
 using SpendlessBlazor.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SpendlessBlazor.Data
 {
@@ -24,31 +26,26 @@ namespace SpendlessBlazor.Data
                 if(value == null)   
                     value = String.Empty;
 
-                password = value.passwordHash();
+                password = value.PasswordHash();
             }
         }
     }
 
     public static class StringExtension
     {
-        public static string passwordHash(this string str)
+        public static string? PasswordHash(this string? str)
         {
             if (String.IsNullOrEmpty(str))
             {
                 return String.Empty;
             }
 
-            using (var sha = new System.Security.Cryptography.SHA256Managed())
-            {
-                byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(str);
-                byte[] hashBytes = sha.ComputeHash(textBytes);
+            using HashAlgorithm algorithm = SHA256.Create();
 
-                string hash = BitConverter
-                    .ToString(hashBytes)
-                    .Replace("-", String.Empty);
+            byte[] textData = Encoding.UTF8.GetBytes(str);
+            byte[] hash = algorithm.ComputeHash(textData);
 
-                return hash;
-            }
+            return Encoding.Default.GetString(hash);
         }
     }
 
