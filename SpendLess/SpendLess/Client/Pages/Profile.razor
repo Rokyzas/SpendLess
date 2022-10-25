@@ -1,0 +1,94 @@
+﻿@page "/profile"
+
+@using SpendLess.Shared;
+@using SpendLess.Client.Pages
+@using System.Linq
+@using SpendLess.Client.Services
+
+@inject ISnackbar Snackbar
+
+<h1>User</h1>
+
+
+<!--Profile data-->
+<div class="gap-4 d-flex flex-wrap">
+    <MudTextField @bind-Value="balance" Label="Balance" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+</div>
+
+@code { 
+    public static double balance = 0;
+}
+
+<br />
+
+<button class="btn btn-primary" @onclick="SaveToProfile">Save</button>
+
+<br />
+<br />
+<br />
+<br />
+
+<MudSimpleTable dense="@dense" hover="@hover" bordered="@bordered" striped="@striped" style="overflow-x: auto;">
+    <thead>
+        <tr>
+            @foreach (var h in headings)
+            {
+                    <th>@h</th>
+            }
+        </tr>
+    </thead>
+   <tbody>
+
+        @{
+            if (Transactions.transactions != null)
+                foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues)).Cast<CategoryValues>().Select(x => x.ToString()).ToArray())
+                {
+                    if (categoryExpenses(tempCategory, Transactions.transactions) != 0)
+                    {
+                                        <tr>
+                                            <td>@tempCategory</td>
+                                            <td>@categoryExpenses(tempCategory, Transactions.transactions)</td>
+                                        </tr>
+                    }
+                }
+        }
+    </tbody>
+</MudSimpleTable>
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+
+    string[] headings = { "Category", "Total expenses" };
+}
+
+
+@code {
+    public static double TotalExpenses(List<Transaction> transactions)
+    {
+        return Transactions.transactions.Sum(item => (item.Amount ?? 0));
+    }
+
+    public double categoryExpenses(String category, List<Transaction> transactions)
+    {
+        CategoryValues tempEnum;
+        if (!Enum.TryParse(category, out tempEnum))
+            SnackBarService.WarningMsg("Category parse error!");
+        return (from item in transactions where item.CategoryValue == tempEnum select ((item.Amount ?? 0))).Sum();
+    }
+
+    public void SaveToProfile()
+    {
+        //User.balance = balance;
+
+        NavMenu.Balance();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Transactions.transactions = TransactionService.ReadJson();
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+    }
+}

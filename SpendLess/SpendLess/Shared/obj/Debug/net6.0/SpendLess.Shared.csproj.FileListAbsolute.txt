@@ -1,0 +1,12 @@
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.deps.json
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.dll
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.pdb
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.csproj.AssemblyReference.cache
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.AssemblyInfoInputs.cache
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.AssemblyInfo.cs
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.csproj.CoreCompileInputs.cache
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.dll
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\refint\SpendLess.Shared.dll
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.pdb
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\ref\SpendLess.Shared.dll
