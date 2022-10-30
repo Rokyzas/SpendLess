@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using Newtonsoft.Json;
 using SpendLess.Client.Services;
@@ -10,38 +11,63 @@ namespace SpendLess.Server.Controllers
     [ApiController]
     public class UserController : Controller
     {
+        private readonly SpendLessContext _context;
+
+        public UserController (SpendLessContext context)
+        {
+            _context = context;
+        }  
+
         [HttpPost("CheckLogin")]
-        public async Task<ActionResult<bool>> CheckLogin([FromBody] User? userInfo)
+        public async Task<ActionResult<bool>> CheckLogin([FromBody] UserConnect? userInfo)
         {
             if (userInfo != null)
             {
-                //User userInfo = JsonConvert.DeserializeObject<User>(serializedUser);
                 if (userInfo.emailAddress == null || userInfo.password == null)
                 {
                     throw new ArgumentNullException(nameof(userInfo));
                 }
                 else
                 {
-                    // checking if user exists in database...
-                    return true;
+                    if (await _context.Users.AnyAsync(o => o.Email == userInfo.emailAddress) && await _context.Users.AnyAsync(o => o.Password == userInfo.password))
+                    {
+                        return true;
+                    }
+                    else return false;                      
                 }
             }
             else return false;
         }
 
         [HttpPost("CreateAccount")]
-        public async Task<ActionResult<bool>> CreateAccount(User? userInfo)
+        public async Task<ActionResult<bool>> CreateAccount(UserConnect? userInfo)
         {
             if (userInfo != null)
             {
-                if (userInfo.emailAddress == null || userInfo.password == null || userInfo.password == null)
+                if (userInfo.emailAddress == null || userInfo.password == null)
                 {
                     throw new ArgumentNullException(nameof(userInfo));
                 }
                 else
                 {
+
+                    if (!await _context.Users.AnyAsync(o => o.Email == userInfo.emailAddress))
+                    {
+                        User newUser = new User
+                        {
+                            Email = userInfo.emailAddress,
+                            Password = userInfo.password,
+                            Name = userInfo.username
+                        };
+                        _context.Users.Add(newUser);
+                        _context.SaveChanges();
+                        return true;
+                    }
+                    else return false;
+
+                    
                     // creating new account in database...
-                    return true;
+                    
                 }
             }
             else return false;

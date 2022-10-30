@@ -16,7 +16,7 @@ namespace SpendLess.Client.Services
             this.clientFactory = clientFactory;
         }
         private readonly IHttpClientFactory clientFactory;
-        private User? UserInfo;
+        private UserConnect? UserInfo;
 
         public string? CheckPassword(string password)
         {
@@ -52,7 +52,7 @@ namespace SpendLess.Client.Services
         }
         public async Task<bool> CreateAccount(string? username, string? email, string? password)
         {
-            User UserInfo = new User();
+            UserConnect UserInfo = new UserConnect();
             UserInfo.username = username;
             UserInfo.emailAddress = email;
             UserInfo.password = password;
@@ -74,7 +74,7 @@ namespace SpendLess.Client.Services
 
         public async Task<bool> GetLoginAuthentication(string? email, string? password)
         {
-            User UserInfo = new User();
+            UserConnect UserInfo = new UserConnect();
             UserInfo.emailAddress = email;
             UserInfo.password = password;
             string serializedUser = JsonConvert.SerializeObject(UserInfo);

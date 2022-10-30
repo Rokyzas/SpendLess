@@ -10,3 +10,5 @@ D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.dl
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\refint\SpendLess.Shared.dll
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.pdb
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\ref\SpendLess.Shared.dll
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.runtimeconfig.json
+D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.genruntimeconfig.cache

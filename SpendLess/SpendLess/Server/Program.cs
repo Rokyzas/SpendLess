@@ -1,3 +1,4 @@
+global using SpendLess.Server.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.ResponseCompression;
 using MudBlazor.Services;
@@ -14,6 +15,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddMudServices();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddAuthenticationCore();
+builder.Services.AddDbContext<SpendLessContext>();
 
 var app = builder.Build();
 

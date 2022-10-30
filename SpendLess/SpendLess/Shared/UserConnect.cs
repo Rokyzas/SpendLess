@@ -3,7 +3,7 @@ using System.Text;
 
 namespace SpendLess.Shared
 {
-    public class User
+    public class UserConnect
     {
 
         public string? username { get; set; } = "User";
