@@ -99,13 +99,13 @@
             {
                 for (int i = 0; i < filteredTransactions.Count; i++)
                 {
-                    //var nr = i;
+                    int id = filteredTransactions.ElementAt(i).Id ?? 0;
                                 <tr>
                                     <td>@filteredTransactions.ElementAt(i).Comment</td>
                                     <td>@((filteredTransactions.ElementAt(i).Category))</td>
                                     <td>@filteredTransactions.ElementAt(i).Amount</td>
                                     <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
-                                    <td><button class="btn btn-primary">Delete</button></td>
+                                    <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
                                 </tr>
                 }
             }
@@ -126,10 +126,11 @@
 
     string[] headings = { "Item", "Category", "Amount", "Date" };
 
-    public void DeleteRow(Transaction element)
+    public async Task DeleteRow(int id)
     {
-
-        SnackBarService.SuccessMsg("Element was successfully deleted");
+        await TransactionService.DeleteTransaction(id);
+        await UpdatePage();
+        /*
         int c = 0;
         foreach (var row in transactions)
         {
@@ -142,6 +143,7 @@
 
             c++;
         }
+        */
 
     }
 }

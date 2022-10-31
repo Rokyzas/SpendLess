@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using SpendLess.Client.Pages;
 using SpendLess.Shared;
+using static MudBlazor.CategoryTypes;
 
 namespace SpendLess.Server.Controllers
 {
@@ -25,12 +27,22 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddTransaction(Transaction transaction)
+        public async Task<ActionResult<int?>> AddTransaction(Transaction transaction)
         {
             _context.Transactions.Add(transaction);
+            _context.SaveChanges();
             await _context.SaveChangesAsync();
 
-            return Ok();
-        } 
+            return Ok(transaction.Id);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task DeleteTransaction(int id)
+        {
+            var transaction = new Transaction(id, 0, "null", DateTime.MinValue);
+            _context.Transactions.Attach(transaction);
+            _context.Transactions.Remove(transaction);
+            await _context.SaveChangesAsync();
+        }
     }
 }
