@@ -130,20 +130,6 @@
     {
         await TransactionService.DeleteTransaction(id);
         await UpdatePage();
-        /*
-        int c = 0;
-        foreach (var row in transactions)
-        {
-            if (row.Id.Equals(element.Id))
-            {
-                transactions.RemoveAt(c);
-                //TransactionService.WriteToJson();
-                break;
-            }
-
-            c++;
-        }
-        */
 
     }
 }
@@ -175,16 +161,6 @@
             {
                 amount = -amount;
             }
-
-            /*
-            SpendLess.Shared.CategoryValues tempEnum;
-            if (!Enum.TryParse(categoryValue, out tempEnum))
-                {
-                SnackBarService.WarningMsg("This category was not found!");
-            return;
-
-            }
-            */
 
             for (int i = 0; i < transactions.Count; ++i)
             {
@@ -236,8 +212,6 @@
     {
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
-
-
 
         string[] categoryVal = System.Enum.GetNames(typeof(SpendLess.Shared.CategoryValues));
 

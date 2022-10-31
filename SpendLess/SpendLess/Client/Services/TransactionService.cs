@@ -20,14 +20,14 @@ namespace SpendLess.Client.Services
 
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        public async Task<List<Transaction>> GetTransactions()
+        public async Task GetTransactions()
         {
             var result = await _httpClient.GetFromJsonAsync<List<Transaction>>("api/finance");
             if(result != null)
             {
                 Transactions = result;
+                SnackBarService.SuccessMsg("Data loaded");
             }
-            return result;
         }
 
         public async Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction")
@@ -71,58 +71,5 @@ namespace SpendLess.Client.Services
                 SnackBarService.WarningMsg("Failed to delete transaction");
             }
         }
-
-        /*
-public static List<Transaction> ReadJson()
-{
-   String someString;
-   String path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
-
-   //throws error if file not found
-   try
-   {
-       using FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
-       using System.IO.StreamReader streamReader = new System.IO.StreamReader(fileStream);
-
-       someString = streamReader.ReadToEnd();
-   }
-   catch (Exception)
-   {
-       SnackBarService.ErrorMsg("Failed to load data!");
-       return null;
-   }
-
-
-   if (someString == "")
-   {
-       someString = "[]";
-   }
-   List<Transaction> list = JsonSerializer.Deserialize<List<Transaction>>(someString)!;
-
-   return list;
-}
-
-public static void WriteToJson()
-{
-   var options = new JsonSerializerOptions { WriteIndented = true };
-   string jsonString = JsonSerializer.Serialize(transactions, options);
-   string path = $"{System.IO.Directory.GetCurrentDirectory()}{"\\wwwroot\\data.json"}";
-
-   try
-   {
-       using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
-       {
-           using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(fileStream))
-           {
-               streamWriter.Write(jsonString);
-           }
-       }
-   }
-   catch (Exception)
-   {
-       SnackBarService.ErrorMsg("Failed to save data");
-   }
-}
-*/
     }
 }

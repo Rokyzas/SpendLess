@@ -6,7 +6,7 @@ namespace SpendLess.Client.Services
     public interface ITransactionService
     {
         public List<Transaction> Transactions { get; set; }
-        Task<List<Transaction>> GetTransactions();
+        Task GetTransactions();
 
         Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction");
 
