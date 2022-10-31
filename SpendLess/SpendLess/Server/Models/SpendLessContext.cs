@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using SpendLess.Shared;
 
 namespace SpendLess.Server.Models
 {
@@ -16,7 +17,7 @@ namespace SpendLess.Server.Models
         {
         }
 
-        public virtual DbSet<Finance> Finances { get; set; } = null!;
+        public virtual DbSet<Transaction> Finances { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,7 +31,7 @@ namespace SpendLess.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Finance>(entity =>
+            modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -44,13 +45,7 @@ namespace SpendLess.Server.Models
                     .HasMaxLength(200)
                     .IsFixedLength();
 
-                entity.Property(e => e.FirstDate).HasColumnType("datetime");
-
-                entity.Property(e => e.FixedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Tag)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+                entity.Property(e => e.Date).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>

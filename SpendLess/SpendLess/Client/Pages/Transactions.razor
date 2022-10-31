@@ -7,6 +7,7 @@
 @using MudBlazor.Services;
 
 @inject HttpClient httpClient
+@inject ITransactionService TransactionService
 
 
 <h3>Have you done any transactions recently?</h3>
@@ -84,29 +85,31 @@
     </thead>
     <tbody>
         @{
-            List<Transaction> filteredTransactions = transactions;
 
+            List<Transaction> filteredTransactions = TransactionService.Transactions;
+            
             if (dateFilterTo != null)
-                filteredTransactions = filteredTransactions.Where(x => x.date <= dateFilterTo).ToList();
+                filteredTransactions = filteredTransactions.Where(x => x.Date <= dateFilterTo).ToList();
 
             if (dateFilterFrom != null)
-                filteredTransactions = filteredTransactions.Where(x => x.date >= dateFilterFrom).ToList();
-
+                filteredTransactions = filteredTransactions.Where(x => x.Date >= dateFilterFrom).ToList();
+            
 
             if (filteredTransactions != null)
             {
                 for (int i = 0; i < filteredTransactions.Count; i++)
                 {
-                    var nr = i;
+                    //var nr = i;
                                 <tr>
-                                    <td>@filteredTransactions.ElementAt(i).TextValue</td>
-                                    <td>@((transactions.ElementAt(i).CategoryValue))</td>
+                                    <td>@filteredTransactions.ElementAt(i).Comment</td>
+                                    <td>@((filteredTransactions.ElementAt(i).Category))</td>
                                     <td>@filteredTransactions.ElementAt(i).Amount</td>
-                                    <td>@filteredTransactions.ElementAt(i).date?.ToString("dd/MM/yyy")</td>
-                                    <td><button class="btn btn-primary" @onclick="() => DeleteRow(filteredTransactions.ElementAt(nr))">Delete</button></td>
+                                    <td>@filteredTransactions.ElementAt(i).Date.ToString("dd/MM/yyy")</td>
+                                    <td><button class="btn btn-primary">Delete</button></td>
                                 </tr>
                 }
             }
+            
         }
     </tbody>
 </MudSimpleTable>
@@ -130,10 +133,10 @@
         int c = 0;
         foreach (var row in transactions)
         {
-            if (row.ElementID.Equals(element.ElementID))
+            if (row.Id.Equals(element.Id))
             {
                 transactions.RemoveAt(c);
-                TransactionService.WriteToJson();
+                //TransactionService.WriteToJson();
                 break;
             }
 
@@ -148,7 +151,7 @@
 
     public static List<Transaction> transactions = new List<Transaction>();
 
-
+    
     public void Savelist()
     {
 
@@ -184,17 +187,18 @@
                 for (int i = 0; i < transactions.Count; ++i)
                 {
                     Transaction temp = transactions.ElementAt(i);
-                    temp.ElementID = i;
+                    temp.Id = i;
                     transactions[i] = temp;
                 }
-
+                /*
                 if (textValue == null)
-                    transactions.Add(new Transaction(dateTime: date, elementID: transactions.Count(), amount: amount, categoryValue: tempEnum));
+                    transactions.Add(new Finance(FirstDate: date, elementID: transactions.Count(), amount: amount, categoryValue: tempEnum));
 
-                else
+                    else
                     transactions.Add(new Transaction(dateTime: date, elementID: transactions.Count(), amount: amount, categoryValue: tempEnum, textValue: textValue));
-
+                
                 transactions.Sort();
+                */
             }
 
             categoryValue = null;
@@ -207,19 +211,13 @@
             return;
         }
 
-        TransactionService.WriteToJson();
+        //TransactionService.WriteToJson();
         SnackBarService.SuccessMsg("Succsesfully saved data");
         textValue = null;
 
         NavMenu.Balance();
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-        transactions = TransactionService.ReadJson();
-        await Task.Delay(5);
-
-    }
+    
 
     private async Task<IEnumerable<string>> Search1(string value)
     {

@@ -12,3 +12,17 @@ D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.pd
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\ref\SpendLess.Shared.dll
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.runtimeconfig.json
 D:\C#\SpendLess3\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.genruntimeconfig.cache
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.deps.json
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.runtimeconfig.json
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.dll
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\bin\Debug\net6.0\SpendLess.Shared.pdb
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.csproj.AssemblyReference.cache
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.AssemblyInfoInputs.cache
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.AssemblyInfo.cs
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.csproj.CoreCompileInputs.cache
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.dll
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\refint\SpendLess.Shared.dll
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.pdb
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\SpendLess.Shared.genruntimeconfig.cache
+C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\SpendLess\Shared\obj\Debug\net6.0\ref\SpendLess.Shared.dll

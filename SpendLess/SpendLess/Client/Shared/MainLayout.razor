@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using SpendLess.Client.Services
 @inject ISnackbar Snackbar
+@inject ITransactionService TransactionService
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -29,6 +30,7 @@
 @code{
     protected override async Task OnInitializedAsync()
     {
+        await TransactionService.GetTransactions();
         SnackBarService.InitSnackBarService(Snackbar);
         NavMenu.Balance();
     }

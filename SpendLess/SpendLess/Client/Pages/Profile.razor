@@ -40,6 +40,7 @@
    <tbody>
 
         @{
+            /*
             if (Transactions.transactions != null)
                 foreach (var tempCategory in Enum.GetValues(typeof(CategoryValues)).Cast<CategoryValues>().Select(x => x.ToString()).ToArray())
                 {
@@ -51,6 +52,7 @@
                                         </tr>
                     }
                 }
+            */
         }
     </tbody>
 </MudSimpleTable>
@@ -65,17 +67,20 @@
 
 
 @code {
-    public static double TotalExpenses(List<Transaction> transactions)
+    public static double? TotalExpenses(List<Finance> transactions)
     {
-        return Transactions.transactions.Sum(item => (item.Amount ?? 0));
+        return Transactions.transactions.Sum(item => (item.Amount));
+        
     }
 
     public double categoryExpenses(String category, List<Transaction> transactions)
     {
+        /*
         CategoryValues tempEnum;
         if (!Enum.TryParse(category, out tempEnum))
             SnackBarService.WarningMsg("Category parse error!");
-        return (from item in transactions where item.CategoryValue == tempEnum select ((item.Amount ?? 0))).Sum();
+        */
+        return (from item in transactions where item.Category == category select ((item.Amount ?? 0))).Sum();
     }
 
     public void SaveToProfile()
@@ -87,7 +92,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Transactions.transactions = TransactionService.ReadJson();
+        //Transactions.transactions = TransactionService.ReadJson();
         // In real life use an asynchronous function for fetching data from an api.
         await Task.Delay(5);
     }
