@@ -215,13 +215,19 @@
         NavMenu.Balance();
     }
 
-    private bool _loading;
+    private static bool _loading;
 
-    private async Task UpdatePage()
+    public static async Task UpdatePage()
     {
         _loading = true;
         await Task.Delay(1);
         _loading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TransactionService.GetTransactions();
+        await Transactions.UpdatePage();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

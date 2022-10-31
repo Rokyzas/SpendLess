@@ -244,14 +244,14 @@
       "netstandard.dll": "sha256-+SGdnDhVMiZ9hq0EsYwJ+mcK0odf3bAtXnSKLorGDCs=",
       "System.Private.CoreLib.dll": "sha256-mqfalNg3wC8XHlyA+j5ioNcnc0kt4prNudKdyJoaYaU=",
       "SpendLess.Shared.dll": "sha256-wwEKmFRrzJ3GFj2xx4zAw9GtUGaJryhjHY20dKL9IDY=",
-      "SpendLess.Client.dll": "sha256-Q\/fdoqvfomMZhfxPu9Kof+SyBtbP5D3YwGmHA\/kZ2xg="
+      "SpendLess.Client.dll": "sha256-YExVkpwe0Z+5gKDZUhJXlLhsj4eRpyTO6UDUAxUpuiU="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
       "SpendLess.Shared.pdb": "sha256-UKJ4WMaIOBx4HvkiATDO8B03\/tz+uEvGIaZVHU\/m\/\/s=",
-      "SpendLess.Client.pdb": "sha256-UOF8QlggcaGz3bWRzlUlY+L4+2zWxVrRHdTJxq1U4dk="
+      "SpendLess.Client.pdb": "sha256-po8y9P8pdbCU+iv\/HzO9j9h3KdzO43QZ1QjTfDhdm94="
     },
     "runtime": {
       "dotnet.6.0.9.i7dvgjptvh.js": "sha256-Azk5sbYFVo84h8NpIst9roIPGLH2y8ewQ9SY\/sUHvgs=",

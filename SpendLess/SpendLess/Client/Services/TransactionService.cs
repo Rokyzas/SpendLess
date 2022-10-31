@@ -16,7 +16,7 @@ namespace SpendLess.Client.Services
             _httpClient = httpClient;
         }
 
-        public List<Transaction> Transactions { get; set; }
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
         public async Task<List<Transaction>> GetTransactions()
         {
