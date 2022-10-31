@@ -12,7 +12,7 @@ using SpendLess.Server.Models;
 namespace SpendLess.Server.Migrations
 {
     [DbContext(typeof(SpendLessContext))]
-    [Migration("20221031170339_New")]
+    [Migration("20221031175512_New")]
     partial class New
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,9 +59,12 @@ namespace SpendLess.Server.Migrations
 
             modelBuilder.Entity("SpendLess.Shared.Transaction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
@@ -77,12 +80,12 @@ namespace SpendLess.Server.Migrations
                         .HasColumnType("nchar(200)")
                         .IsFixedLength();
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Finances");
+                    b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618
         }

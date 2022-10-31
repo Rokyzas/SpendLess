@@ -8,6 +8,6 @@ namespace SpendLess.Client.Services
         public List<Transaction> Transactions { get; set; }
         Task<List<Transaction>> GetTransactions();
 
-        Task AddTransaction(Transaction transaction);
+        Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction");
     }
 }

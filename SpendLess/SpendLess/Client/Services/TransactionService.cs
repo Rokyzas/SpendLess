@@ -3,7 +3,6 @@ using SpendLess.Client.Pages;
 using SpendLess.Shared;
 using System.Net.Http.Json;
 using System.Text.Json;
-using static SpendLess.Client.Pages.Transactions;
 
 
 namespace SpendLess.Client.Services
@@ -29,9 +28,19 @@ namespace SpendLess.Client.Services
             return result;
         }
 
-        public async Task AddTransaction(Transaction transaction)
+        public async Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction")
         {
-            await _httpClient.PostAsJsonAsync("api/finance", transaction);
+            var transaction = new Transaction(null, amount, category, date, comment);
+            var response = await _httpClient.PostAsJsonAsync("api/finance", transaction);
+            if (response.IsSuccessStatusCode)
+            {
+                Transactions.Add(transaction);
+                SnackBarService.SuccessMsg("Succsesfully saved data");
+            }
+            else
+            {
+                SnackBarService.ErrorMsg("Failed to save data!");
+            }
         }
 
         /*

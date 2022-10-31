@@ -10,18 +10,19 @@ namespace SpendLess.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Finances",
+                name: "Transactions",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Comment = table.Column<string>(type: "nchar(200)", fixedLength: true, maxLength: 200, nullable: true),
                     Category = table.Column<string>(type: "nchar(20)", fixedLength: true, maxLength: 20, nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Finances", x => x.ID);
+                    table.PrimaryKey("PK_Transactions", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,7 +45,7 @@ namespace SpendLess.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Finances");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -20,14 +20,14 @@ namespace SpendLess.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Transaction>>> GetTransactions(){
 
-            var transactions =  await _context.Finances.ToListAsync();
+            var transactions =  await _context.Transactions.ToListAsync();
             return Ok(transactions);
         }
 
         [HttpPost]
         public async Task<ActionResult> AddTransaction(Transaction transaction)
         {
-            _context.Finances.Add(transaction);
+            _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
 
             return Ok();

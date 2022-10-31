@@ -17,7 +17,7 @@ namespace SpendLess.Server.Models
         {
         }
 
-        public virtual DbSet<Transaction> Finances { get; set; } = null!;
+        public virtual DbSet<Transaction> Transactions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,7 +34,7 @@ namespace SpendLess.Server.Models
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Category)
@@ -45,7 +45,7 @@ namespace SpendLess.Server.Models
                     .HasMaxLength(200)
                     .IsFixedLength();
 
-                entity.Property(e => e.Date).HasColumnType("datetime");
+                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<User>(entity =>

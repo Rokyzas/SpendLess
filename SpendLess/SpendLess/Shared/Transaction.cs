@@ -2,7 +2,7 @@
 {
     public class Transaction : IComparable<Transaction>
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string? Comment { get; set; }
         public string Category { get; set; }
 
@@ -18,24 +18,24 @@
                 amount = Math.Round((value ?? 0), 2);
             }
         }
-        public DateTime Date { get; set; }
+        public DateTime TransactionDate { get; set; }
 
-        public Transaction(int Id, double? amount, string category, DateTime date, string comment = "Transaction")
+        public Transaction(int? Id, double? amount, string category, DateTime transactionDate, string comment = "Transaction")
         {
             this.Id = Id;
             this.Comment = comment;
             this.Amount = amount;
             this.Category = category;
-            this.Date = date;
+            this.TransactionDate = transactionDate;
         }
 
         public int CompareTo(Transaction x)
         {
-            if (x.Date < this.Date)
+            if (x.TransactionDate < this.TransactionDate)
             {
                 return -1;
             }
-            else if (x.Date > this.Date)
+            else if (x.TransactionDate > this.TransactionDate)
             {
                 return 1;
             }
