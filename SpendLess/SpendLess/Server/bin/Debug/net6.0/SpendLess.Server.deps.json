@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "SpendLess.Server/1.0.0": {
         "dependencies": {
+          "Blazor-ApexCharts": "0.9.14-beta",
           "Microsoft.AspNetCore.Components.Authorization": "6.0.10",
           "Microsoft.AspNetCore.Components.WebAssembly.Server": "6.0.10",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
@@ -21,6 +22,18 @@
         },
         "runtime": {
           "SpendLess.Server.dll": {}
+        }
+      },
+      "Blazor-ApexCharts/0.9.14-beta": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.10",
+          "Microsoft.AspNetCore.Components.Web": "6.0.10"
+        },
+        "runtime": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {
+            "assemblyVersion": "0.9.14.0",
+            "fileVersion": "0.9.14.0"
+          }
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -1155,6 +1168,7 @@
       },
       "SpendLess.Client/1.0.0": {
         "dependencies": {
+          "Blazor-ApexCharts": "0.9.14-beta",
           "Microsoft.AspNetCore.Components.Authorization": "6.0.10",
           "Microsoft.AspNetCore.Components.WebAssembly": "6.0.10",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
@@ -1189,6 +1203,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Blazor-ApexCharts/0.9.14-beta": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-v8THa+hAkHE7H0auzv4s1P7RMc0eOA3XbHDQ7Wv+Th9U6vCsyVDHS6bZ3w4sp4IfIRlmTJcmslVErHmdRrwv8g==",
+      "path": "blazor-apexcharts/0.9.14-beta",
+      "hashPath": "blazor-apexcharts.0.9.14-beta.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

@@ -48,7 +48,7 @@
 <!-- Save, toggle button -->
 <div>
     <button class="btn btn-primary" @onclick="Savelist">Save</button>
-    <MudToggleIconButton @bind-Toggled="@toggleExpenseIncome" Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
+    <MudToggleIconButton @bind-Toggled="@toggleExpenseIncome" Icon="@Icons.Filled.AttachMoney" Color="@MudBlazor.Color.Error" Title="Off" ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@MudBlazor.Color.Success" ToggledTitle="On" />
     <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
 </div>
 

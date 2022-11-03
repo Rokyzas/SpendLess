@@ -1,0 +1,90 @@
+﻿@page "/stats"
+@using SpendLess.Client.Services
+@using SpendLess.Shared
+@inject ITransactionService TransactionService
+
+<h3>Stats</h3>
+
+<MudChart ChartType="MudBlazor.ChartType.Donut" Width="300px" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
+	<CustomGraphics>
+		<text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
+		<text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
+	</CustomGraphics>
+</MudChart>
+
+
+@code {
+	public double[] data = { 25, 77, 28, 5 };
+	public string[] labels = { "Oil", "Coal", "Gas", "Biomass" };
+
+	public List<Transaction> Transactions = new List<Transaction>();
+
+	public List<string> CategoriesList = new List<string>();
+	public List<double> ExpensesList = new List<double>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await TransactionService.GetTransactions();
+		Transactions = TransactionService.Transactions;
+
+		var firstTable = from item in Transactions where !item.Category.Contains("Income") select item;
+		var results = from item in firstTable group item by item.Category into g select new { Category = g.First().Category, TotalAmount = g.Sum(pc => pc.Amount) };
+		CategoriesList = (from item in results select item.Category).ToList();
+		ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
+
+		//Bar chart
+
+		foreach(var day in GetDates(2022, 11)) // galimai inf loopas
+		{
+			DailyExpenses.Add((from item in Transactions where item.TransactionDate == day select (double)item.Amount).Sum());
+		}
+
+		Series.Add(new ChartSeries() { Name = "Expenses", Data = (DailyExpenses).ToArray() });
+		Series.Add(new ChartSeries() { Name = "Expenses", Data = (DailyExpenses).ToArray() });
+	}
+}
+
+<div>
+	<MudChart ChartType="MudBlazor.ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="550px"></MudChart>
+</div>
+
+@code {
+	private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+
+	public DateTime dateFrom = new DateTime();
+	public DateTime dateTo = new DateTime();
+
+	public List<double> DailyExpenses = new List<double>();
+
+	public static List<DateTime> GetDates(int year, int month)
+	{
+		return Enumerable.Range(1, DateTime.DaysInMonth(year, month))  // Days: 1, 2 ... 31 etc.
+		.Select(day => new DateTime(year, month, day)) // Map each day to a date
+		.ToList(); // Load dates into a list
+	}
+
+	public List<ChartSeries> Series = new List<ChartSeries>();
+
+	public string[] XAxisLabels = (from day in GetDates(2022, 11) select day.Day.ToString()).ToArray();
+
+
+
+}
+
+<DemoContainer>
+<ApexChart TItem="Transaction"
+           Title="Order Net Value">
+
+    <ApexPointSeries TItem="Transaction"
+                Items="Transactions"
+                Name="Gross Value"
+                XValue="@(e => e.TransactionDate)"
+                YAggregate="@(e => e.Sum(e => (decimal)e.Amount))"
+                OrderByDescending="e=>e.Y"
+                SeriesType="SeriesType.Bar"/>
+
+</ApexChart>
+</DemoContainer>
+
+
+

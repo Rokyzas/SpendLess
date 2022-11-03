@@ -17,8 +17,8 @@
                                   InputType="InputType.Password"
                                   Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true"/>
                     <div class="d-flex align-center justify-space-between">        
-                        <MudButton Href="Register" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Go to registration</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>ValidateLogin(success)" Class="ml-auto">Login</MudButton>
+                        <MudButton Href="Register" Variant="Variant.Filled" Color="MudBlazor.Color.Primary" Class="ml-auto">Go to registration</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" Disabled="@(!success)" OnClick="()=>ValidateLogin(success)" Class="ml-auto">Login</MudButton>
                     </div>
             </MudForm>   
         </MudPaper>

@@ -18,8 +18,8 @@
                                   Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true"/>
                     <div class="d-flex align-center justify-space-between">
                         <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree with terms :)"  />
-                        <MudButton  Href = "Login" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Cancel</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>RegisterAccount(success)" Class="ml-auto">Register</MudButton>
+                        <MudButton  Href = "Login" Variant="Variant.Filled" Color="MudBlazor.Color.Primary" Class="ml-auto">Cancel</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="MudBlazor.Color.Primary" Disabled="@(!success)" OnClick="()=>RegisterAccount(success)" Class="ml-auto">Register</MudButton>
                     </div>
             </MudForm>   
         </MudPaper>

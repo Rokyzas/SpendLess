@@ -2,6 +2,25 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "Blazor-ApexCharts/0.9.14-beta": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.3",
+          "Microsoft.AspNetCore.Components.Web": "6.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor-ApexCharts.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor-ApexCharts.props": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -2207,6 +2226,25 @@
       }
     },
     "net6.0/browser-wasm": {
+      "Blazor-ApexCharts/0.9.14-beta": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.3",
+          "Microsoft.AspNetCore.Components.Web": "6.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Blazor-ApexCharts.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor-ApexCharts.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor-ApexCharts.props": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -4453,6 +4491,25 @@
     }
   },
   "libraries": {
+    "Blazor-ApexCharts/0.9.14-beta": {
+      "sha512": "v8THa+hAkHE7H0auzv4s1P7RMc0eOA3XbHDQ7Wv+Th9U6vCsyVDHS6bZ3w4sp4IfIRlmTJcmslVErHmdRrwv8g==",
+      "type": "package",
+      "path": "blazor-apexcharts/0.9.14-beta",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazor-apexcharts.0.9.14-beta.nupkg.sha512",
+        "blazor-apexcharts.nuspec",
+        "build/Blazor-ApexCharts.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Blazor-ApexCharts.props",
+        "buildTransitive/Blazor-ApexCharts.props",
+        "lib/net6.0/Blazor-ApexCharts.dll",
+        "staticwebassets/css/apexcharts.css",
+        "staticwebassets/js/apex-charts.min.js",
+        "staticwebassets/js/blazor-apex-charts.js"
+      ]
+    },
     "Humanizer.Core/2.8.26": {
       "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "type": "package",
@@ -9135,6 +9192,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Blazor-ApexCharts >= 0.9.14-beta",
       "Microsoft.AspNetCore.Components.Authorization >= 6.0.10",
       "Microsoft.AspNetCore.Components.WebAssembly >= 6.0.10",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 6.0.10",
@@ -9149,23 +9207,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\viliu\\.nuget\\packages\\": {},
+    "C:\\Users\\danie\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
+      "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
       "projectName": "SpendLess.Client",
-      "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
-      "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\SpendLess\\Client\\obj\\",
+      "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
+      "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+      "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\SpendLess\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -9181,8 +9239,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-              "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+            "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+              "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
             }
           }
         }
@@ -9197,6 +9255,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "Blazor-ApexCharts": {
+            "target": "Package",
+            "version": "[0.9.14-beta, )"
+          },
           "Microsoft.AspNetCore.Components.Authorization": {
             "target": "Package",
             "version": "[6.0.10, )"
