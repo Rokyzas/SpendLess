@@ -34,13 +34,12 @@
 
 		//Bar chart
 
-		foreach(var day in GetDates(2022, 11)) // galimai inf loopas
+		foreach(var day in GetDates(2022, 11))
 		{
-			DailyExpenses.Add((from item in Transactions where item.TransactionDate == day select (double)item.Amount).Sum());
+			DailyExpenses.Add((from item in Transactions where item.TransactionDate == day && !item.Category.Contains("Income") select Math.Abs((double)item.Amount)).Sum());
 		}
 
-		Series.Add(new ChartSeries() { Name = "Expenses", Data = (DailyExpenses).ToArray() });
-		Series.Add(new ChartSeries() { Name = "Expenses", Data = (DailyExpenses).ToArray() });
+		Series.Add(new ChartSeries() { Name = "Expenses", Data = ((DailyExpenses).ToArray()) });
 	}
 }
 
@@ -70,7 +69,7 @@
 
 
 }
-
+@*
 <DemoContainer>
 <ApexChart TItem="Transaction"
            Title="Order Net Value">
@@ -85,6 +84,6 @@
 
 </ApexChart>
 </DemoContainer>
-
+*@
 
 
