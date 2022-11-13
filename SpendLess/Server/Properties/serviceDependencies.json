@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "DESKTOP-4Q7MK15:SQLEXPRESS",
+      "dynamicId": null
+    }
+  }
+}
