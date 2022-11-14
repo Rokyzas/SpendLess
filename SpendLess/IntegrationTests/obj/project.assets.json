@@ -9528,6 +9528,7 @@
       "Microsoft.AspNetCore.Mvc.Testing >= 7.0.0",
       "Microsoft.NET.Test.Sdk >= 17.4.0",
       "SpendLess.Server >= 1.0.0",
+      "SpendLess.Shared >= 1.0.0",
       "coverlet.collector >= 3.2.0",
       "xunit >= 2.4.2",
       "xunit.runner.visualstudio >= 2.4.5"
@@ -9567,6 +9568,9 @@
           "projectReferences": {
             "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
               "projectPath": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj"
+            },
+            "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+              "projectPath": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
             }
           }
         }

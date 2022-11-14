@@ -147,6 +147,9 @@
             "projectReferences": {
               "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
                 "projectPath": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj"
+              },
+              "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }

@@ -23,8 +23,6 @@
     <ProjectReference Include="..\Shared\SpendLess.Shared.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="$(AssemblyName).Test" />
-	</ItemGroup>
+
 
 </Project>

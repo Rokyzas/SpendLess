@@ -101,7 +101,7 @@ namespace SpendLess.Server.Services
 
                 var token = new JwtSecurityToken(
                     claims: claims,
-                    expires: DateTime.UtcNow.AddSeconds(15),
+                    expires: DateTime.UtcNow.AddHours(1),
                     signingCredentials: creds);
 
                 var jwt = new JwtSecurityTokenHandler().WriteToken(token);
