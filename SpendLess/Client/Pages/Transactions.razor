@@ -45,15 +45,39 @@
 
 <br />
 
-<!-- Save, toggle button -->
+<!-- Save, toggle buttons -->
 <div>
     <button class="btn btn-primary" @onclick="Savelist">Save</button>
     <MudToggleIconButton @bind-Toggled="@toggleExpenseIncome" Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
     <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
+    <MudToggleIconButton @bind-Toggled="@togglePeriodical" Icon="@Icons.Filled.TimerOff" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.Timer" ToggledColor="@Color.Success" ToggledTitle="On" />
+    <span>@(togglePeriodical ? "Periodic" : "OneTime")</span>
 </div>
+@{
+    if (togglePeriodical)
+    {
+        <div class="gap-4 d-flex flex-wrap">
+            <p>Repeat every</p>
+            <MudTextField @bind-Value="interval" Variant="Variant.Outlined"></MudTextField>
+            <MudSelect T="string" @bind-Value="type" AnchorOrigin="Origin.BottomCenter">
+                <MudSelectItem Value="@("day(s)")" />
+                <MudSelectItem Value="@("week(s)")" />
+                <MudSelectItem Value="@("month(s)")" />
+            </MudSelect>
+            <MudDatePicker Label="End Date" Editable="true" @bind-Date="endDate" Variant="Variant.Outlined" />
+        </div>
+    }
+}
+
+
 
 @code {
     private bool toggleExpenseIncome;
+    private bool togglePeriodical;
+
+    private int interval = 1;
+    private string type = "day(s)";
+    private DateTime? endDate = null;
 }
 
 <br />
