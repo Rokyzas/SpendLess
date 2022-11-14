@@ -42,6 +42,10 @@ namespace SpendLess.Server.Models
                     .HasMaxLength(200)
                     .IsFixedLength();
 
+                entity.Property(e => e.Period)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
                 entity.Property(e => e.TransactionDate).HasColumnType("datetime");
             });
 
