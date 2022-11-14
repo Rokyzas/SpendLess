@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpendLess.Shared;
 using System.Security.Claims;
 
@@ -21,7 +22,9 @@ namespace SpendLess.Server.Controllers
         [HttpGet("GetTransactions")]
         public async Task<ActionResult<List<Transaction>>> GetTransactions()
         {
-            Dictionary<string, string> requestHeaders =
+            var transactions = await _context.Transactions.ToListAsync();
+            return Ok(transactions);
+            /*Dictionary<string, string> requestHeaders =
              new Dictionary<string, string>();
             foreach (var header in Request.Headers)
             {
@@ -43,11 +46,11 @@ namespace SpendLess.Server.Controllers
             //   List<Transaction> listas2 = await _context.Transactions.ToListAsync();
             List<Transaction> listas = new List<Transaction>();
             listas.Add(transaction);
-            return Ok(listas);
+            return Ok(listas);*/
         }
 
-        [HttpPost]
-        public async Task<ActionResult<int?>> AddTransaction(Transaction transaction)
+        [HttpPost("AddTransaction")]
+        public async Task<ActionResult<int?>> AddTransaction([FromBody]Transaction? transaction)
         {
             _context.Transactions.Add(transaction);
             _context.SaveChanges();

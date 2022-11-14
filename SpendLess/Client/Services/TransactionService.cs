@@ -1,5 +1,7 @@
-﻿using SpendLess.Shared;
+﻿using Newtonsoft.Json;
+using SpendLess.Shared;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
@@ -61,9 +63,15 @@ namespace SpendLess.Client.Services
 
         public async Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction")
         {
+
+            string token = await _localStorage.GetItemAsStringAsync("token");
             var _httpClient = _clientFactory.CreateClient();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
+
+
             var transaction = new Transaction(null, amount, category, date, comment);
-            var response = await _httpClient.PostAsJsonAsync("api/finance", transaction);
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddTransaction", transaction);
             var id = await response.Content.ReadFromJsonAsync<int>();
 
             if (response.IsSuccessStatusCode)
@@ -80,8 +88,11 @@ namespace SpendLess.Client.Services
 
         public async Task DeleteTransaction(int id)
         {
+            string token = await _localStorage.GetItemAsStringAsync("token");
             var _httpClient = _clientFactory.CreateClient();
-            var response = await _httpClient.DeleteAsync($"api/finance/{id}");
+            _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
+            var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Finance/{id}");
             if (response.IsSuccessStatusCode)
             {
                 SnackBarService.SuccessMsg("Transaction was successfully deleted");
