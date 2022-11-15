@@ -1,6 +1,9 @@
 ﻿﻿@using Pages
 @using SpendLess.Shared
+@using SpendLess.Client.Services
 
+@inject ITransactionService TransactionService
+@inject IBalanceService BalanceService
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -30,11 +33,11 @@
         </div>
     </nav>
     <div style="position:fixed; bottom:0"> 
-        <h3 style="color: floralwhite; margin:7%">Balance 0</h3>
+        <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
     </div>
 </div>
 
-@functions {
+@code {
 
     private bool collapseNavMenu = true;
     // public static double balance = SpendLess.Shared.User.balance;
@@ -46,9 +49,16 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    public static void Balance()
+    private double GetBalance()
     {
         //balance = Math.Round(SpendLess.Shared.User.balance + Profile.TotalExpenses(Transactions.transactions), 2);
-
+        return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TransactionService.GetTransactions();
+        BalanceService.BalanceChanged += StateHasChanged;
+    }
+
 }
