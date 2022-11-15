@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SpendLess.Client.Pages;
 using SpendLess.Shared;
 using System.Net;
 using System.Net.Http;
@@ -38,6 +39,7 @@ namespace SpendLess.Client.Services
             var client = _clientFactory.CreateClient();
             string token = await _localStorage.GetItemAsStringAsync("token");
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
+
             var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
             if ((response.StatusCode) == HttpStatusCode.Unauthorized)
             {
@@ -61,7 +63,7 @@ namespace SpendLess.Client.Services
             }*/
         }
 
-        public async Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction")
+        public async Task AddTransaction(double? amount, string category, DateTime date, string comment)
         {
 
             string token = await _localStorage.GetItemAsStringAsync("token");
@@ -86,12 +88,72 @@ namespace SpendLess.Client.Services
             }
         }
 
+        public async Task AddPeriodicTransaction(double? amount, string category, DateTime date, string comment, string period, int interval, DateTime? endDate)
+        {
+            string token = await _localStorage.GetItemAsStringAsync("token");
+            var _httpClient = _clientFactory.CreateClient();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
+
+
+            if(endDate == null)
+            {
+                endDate = date.AddMonths(12);
+            }
+
+            bool isMonthly = false;
+
+            switch (period)
+            {
+                case "day(s)":
+                    break;
+                case "week(s)":
+                    interval = interval * 7;
+                    break;
+                case "month(s)":
+                    isMonthly = true;
+                    break;
+                default://add exception for logging here?
+                    break;
+            }
+
+            List<Transaction> transactions = new List<Transaction>();
+
+            while (date <= endDate)
+            {
+                transactions.Add(new Transaction(null, amount, category, date, comment, period, interval, endDate));
+
+                if (isMonthly)
+                {
+                    date = date.AddMonths(interval);
+                }
+                else
+                {
+                    date =  date.AddDays(interval);
+                }
+            }
+
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddPeriodicTransaction", transactions);
+            var transactionsID = await response.Content.ReadFromJsonAsync<List<Transaction?>>();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Transactions.AddRange(transactionsID);
+                SnackBarService.SuccessMsg("Succsesfully saved data");
+            }
+            else
+            {
+                SnackBarService.ErrorMsg("Failed to save data!");
+            }
+        }
+
         public async Task DeleteTransaction(int id)
         {
             string token = await _localStorage.GetItemAsStringAsync("token");
             var _httpClient = _clientFactory.CreateClient();
             _httpClient.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
+
             var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Finance/{id}");
             if (response.IsSuccessStatusCode)
             {

@@ -1,4 +1,6 @@
-﻿namespace SpendLess.Shared
+﻿using System.ComponentModel;
+
+namespace SpendLess.Shared
 {
     public class Transaction : IComparable<Transaction>
     {
@@ -19,14 +21,21 @@
             }
         }
         public DateTime TransactionDate { get; set; }
+        public string Period { get; set; }
+        public int Interval { get; set; }
+        public DateTime? EndDate { get; set; }
 
-        public Transaction(int? Id, double? amount, string category, DateTime transactionDate, string comment = "Transaction")
+        public Transaction(int? Id, double? amount, string category, DateTime transactionDate, string comment = "Transaction",
+                            String period = "oneTime", int interval = 0, DateTime? endDate = null)
         {
             this.Id = Id;
             this.Comment = comment;
             this.Amount = amount;
             this.Category = category;
             this.TransactionDate = transactionDate;
+            this.Period = period;
+            this.Interval = interval;
+            this.EndDate = endDate;
         }
 
         public int CompareTo(Transaction x)
