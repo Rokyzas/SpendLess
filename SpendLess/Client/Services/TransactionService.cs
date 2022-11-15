@@ -29,13 +29,11 @@ namespace SpendLess.Client.Services
         private readonly IHttpClientFactory _clientFactory;
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<SpendLess.Shared.Transactions> Transactions { get; set; } = new List<SpendLess.Shared.Transactions>();
 
         public async Task GetTransactions()
         {
-
-
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Finance/GetTransactions");
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetTransactions");
             var client = _clientFactory.CreateClient();
             string token = await _localStorage.GetItemAsStringAsync("token");
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
@@ -49,7 +47,7 @@ namespace SpendLess.Client.Services
             }
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<List<Transaction>>();
+                var result = await response.Content.ReadFromJsonAsync<List<SpendLess.Shared.Transactions>>();
                 Transactions = result;
             }
 
@@ -69,11 +67,11 @@ namespace SpendLess.Client.Services
             string token = await _localStorage.GetItemAsStringAsync("token");
             var _httpClient = _clientFactory.CreateClient();
             _httpClient.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
+            new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
 
-            var transaction = new Transaction(null, amount, category, date, comment);
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddTransaction", transaction);
+            var transaction = new SpendLess.Shared.Transactions(null, amount, category, date, comment);
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddTransaction", transaction);
             var id = await response.Content.ReadFromJsonAsync<int>();
 
             if (response.IsSuccessStatusCode)
@@ -117,11 +115,11 @@ namespace SpendLess.Client.Services
                     break;
             }
 
-            List<Transaction> transactions = new List<Transaction>();
+            List<SpendLess.Shared.Transactions> transactions = new List<SpendLess.Shared.Transactions>();
 
             while (date <= endDate)
             {
-                transactions.Add(new Transaction(null, amount, category, date, comment, period, interval, endDate));
+                transactions.Add(new SpendLess.Shared.Transactions(null, amount, category, date, comment, null , period, interval, endDate));
 
                 if (isMonthly)
                 {
@@ -133,8 +131,8 @@ namespace SpendLess.Client.Services
                 }
             }
 
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddPeriodicTransaction", transactions);
-            var transactionsID = await response.Content.ReadFromJsonAsync<List<Transaction?>>();
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddPeriodicTransaction", transactions);
+            var transactionsID = await response.Content.ReadFromJsonAsync<List<SpendLess.Shared.Transactions?>>();
 
             if (response.IsSuccessStatusCode)
             {
@@ -154,7 +152,7 @@ namespace SpendLess.Client.Services
             _httpClient.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
-            var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Finance/{id}");
+            var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Transactions/{id}");
             if (response.IsSuccessStatusCode)
             {
                 SnackBarService.SuccessMsg("Transaction was successfully deleted");

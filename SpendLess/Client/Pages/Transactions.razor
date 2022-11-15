@@ -110,7 +110,7 @@
     <tbody>
         @{
 
-            List<Transaction> filteredTransactions = TransactionService.Transactions;
+            List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
 
             if (dateFilterTo != null)
                 filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
