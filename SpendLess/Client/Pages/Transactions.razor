@@ -59,7 +59,7 @@
         <div class="gap-4 d-flex flex-wrap">
             <p>Repeat every</p>
             <MudTextField @bind-Value="interval" Variant="Variant.Outlined"></MudTextField>
-            <MudSelect T="string" @bind-Value="type" AnchorOrigin="Origin.BottomCenter">
+            <MudSelect T="string" @bind-Value="period" AnchorOrigin="Origin.BottomCenter">
                 <MudSelectItem Value="@("day(s)")" />
                 <MudSelectItem Value="@("week(s)")" />
                 <MudSelectItem Value="@("month(s)")" />
@@ -76,7 +76,7 @@
     private bool togglePeriodical;
 
     private int interval = 1;
-    private string type = "day(s)";
+    private string period = "day(s)";
     private DateTime? endDate = null;
 }
 
@@ -161,7 +161,7 @@
 
 @code {
 
-    public static List<Transaction> transactions = new List<Transaction>();
+    //public static List<Transaction> transactions = new List<Transaction>();
 
 
     public async Task Savelist()
@@ -178,6 +178,11 @@
             categoryValue = "Income";
         }
 
+        if(textValue == null)
+        {
+            textValue = "Transaction";
+        }
+
         if (categoryValue != null && date.HasValue && amount != null)
         {
 
@@ -186,21 +191,16 @@
                 amount = -amount;
             }
 
-            for (int i = 0; i < transactions.Count; ++i)
+            if(togglePeriodical == true)
             {
-                Transaction temp = transactions.ElementAt(i);
-                temp.Id = i;
-                transactions[i] = temp;
+                await TransactionService.AddPeriodicTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue, period, interval, endDate);
+            }
+            else
+            {
+                await TransactionService.AddTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue);
             }
 
-            if (textValue == null)
-                // DateTime.MinValue should never happen, because date is checked before
-                await TransactionService.AddTransaction(amount, categoryValue, date ?? DateTime.MinValue);
-
-            else
-                await TransactionService.AddTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue);
-
-            transactions.Sort();
+            TransactionService.Transactions.Sort();
             await UpdatePage();
 
             categoryValue = null;
