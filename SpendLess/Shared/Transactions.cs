@@ -2,9 +2,10 @@
 
 namespace SpendLess.Shared
 {
-    public class Transaction : IComparable<Transaction>
+    public class Transactions : IComparable<Transactions>
     {
         public int? Id { get; set; }
+        public int? UserId { get; set; }
         public string? Comment { get; set; }
         public string Category { get; set; }
 
@@ -25,7 +26,7 @@ namespace SpendLess.Shared
         public int Interval { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public Transaction(int? Id, double? amount, string category, DateTime transactionDate, string comment = "Transaction",
+        public Transactions(int? Id, double? amount, string category, DateTime transactionDate, string comment = "Transaction", int? UserId = null,
                             String period = "oneTime", int interval = 0, DateTime? endDate = null)
         {
             this.Id = Id;
@@ -38,7 +39,7 @@ namespace SpendLess.Shared
             this.EndDate = endDate;
         }
 
-        public int CompareTo(Transaction x)
+        public int CompareTo(Transactions x)
         {
             if (x.TransactionDate < this.TransactionDate)
             {
