@@ -9,12 +9,12 @@ namespace SpendLess.Server.Models
         {
         }
 
-        public SpendLessContext(DbContextOptions<SpendLessContext> options)
-            : base(options)
+        public SpendLessContext(DbContextOptions<SpendLessContext> options) : base(options)
         {
         }
 
-        public virtual DbSet<Transaction> Transactions { get; set; } = null!;
+        public DbSet<Goal> Goals { get; set; }
+        public virtual DbSet<Transactions> Transactions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,26 +28,26 @@ namespace SpendLess.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Transaction>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ID");
+            //modelBuilder.Entity<Transactions>(entity =>
+            //{
+            //    entity.property(e => e.id)
+            //        .valuegeneratedonadd()
+            //        .hascolumnname("id");
 
-                entity.Property(e => e.Category)
-                    .HasMaxLength(20)
-                    .IsFixedLength();
+            //    entity.property(e => e.category)
+            //        .hasmaxlength(20)
+            //        .isfixedlength();
 
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(200)
-                    .IsFixedLength();
+            //    entity.property(e => e.comment)
+            //        .hasmaxlength(200)
+            //        .isfixedlength();
 
-                entity.Property(e => e.Period)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+            //    entity.property(e => e.period)
+            //        .hasmaxlength(10)
+            //        .isfixedlength();
 
-                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
-            });
+            //    entity.property(e => e.transactiondate).hascolumntype("datetime");
+            //});
 
             modelBuilder.Entity<User>(entity =>
             {

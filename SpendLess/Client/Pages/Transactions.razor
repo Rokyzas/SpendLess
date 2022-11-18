@@ -8,6 +8,7 @@
 @attribute [Authorize]
 @inject HttpClient httpClient
 @inject ITransactionService TransactionService
+@inject IBalanceService BalanceService
 
 
 <h3>Have you done any transactions recently?</h3>
@@ -110,7 +111,7 @@
     <tbody>
         @{
 
-            List<Transaction> filteredTransactions = TransactionService.Transactions;
+            List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
 
             if (dateFilterTo != null)
                 filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
@@ -154,6 +155,8 @@
     {
         await TransactionService.DeleteTransaction(id);
         await UpdatePage();
+
+        BalanceService.RefreshBalance();
 
     }
 }
@@ -214,7 +217,7 @@
         }
         textValue = null;
 
-        NavMenu.Balance();
+        BalanceService.RefreshBalance();
     }
 
     private static bool _loading;
@@ -230,6 +233,7 @@
     {
         await TransactionService.GetTransactions();
         await Transactions.UpdatePage();
+        BalanceService.RefreshBalance();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

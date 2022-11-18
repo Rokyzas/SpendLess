@@ -26,14 +26,14 @@ namespace SpendLess.Client.Services
         private readonly IHttpClientFactory _clientFactory;
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public List<SpendLess.Shared.Transactions> Transactions { get; set; } = new List<SpendLess.Shared.Transactions>();
 
         public async Task GetTransactions()
         {
+            var client = _clientFactory.CreateClient();
             try
             {
-                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Finance/GetTransactions");
-                var client = _clientFactory.CreateClient();
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Finance/GetTransactions");                
                 string token = await _localStorage.GetItemAsStringAsync("token");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
 
@@ -46,24 +46,28 @@ namespace SpendLess.Client.Services
                 }
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadFromJsonAsync<List<Transaction>>();
+                    var result = await response.Content.ReadFromJsonAsync<List<Transactions>>();
                     Transactions = result;
                 }
             }
             catch (NullReferenceException ex)
             {
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
-            catch (JsonException ex)
+            /*catch (JsonException ex)
             {
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
-            }
+            }*/
             catch (Exception ex)
             {
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
 
@@ -87,7 +91,7 @@ namespace SpendLess.Client.Services
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
 
-                var transaction = new Transaction(null, amount, category, date, comment);
+                var transaction = new Transactions(null, amount, category, date, comment);
                 var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddTransaction", transaction);
                 var id = await response.Content.ReadFromJsonAsync<int>();
                 await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", new Exception());
@@ -126,10 +130,10 @@ namespace SpendLess.Client.Services
 
         public async Task AddPeriodicTransaction(double? amount, string category, DateTime date, string comment, string period, int interval, DateTime? endDate)
         {
+            var _httpClient = _clientFactory.CreateClient();
             try
             {
-                string token = await _localStorage.GetItemAsStringAsync("token");
-                var _httpClient = _clientFactory.CreateClient();
+                string token = await _localStorage.GetItemAsStringAsync("token");               
                 _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
@@ -154,11 +158,11 @@ namespace SpendLess.Client.Services
                     default: throw new ArgumentException("Period is incorrect"); //add exception for logging here?
                 }
 
-                List<Transaction> transactions = new List<Transaction>();
+                List<Transactions> transactions = new List<Transactions>();
 
                 while (date <= endDate)
                 {
-                    transactions.Add(new Transaction(null, amount, category, date, comment, period, interval, endDate));
+                    transactions.Add(new Transactions(null, amount, category, date, comment, null, period, interval, endDate));
 
                     if (isMonthly)
                     {
@@ -171,7 +175,7 @@ namespace SpendLess.Client.Services
                 }
 
                 var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddPeriodicTransaction", transactions);
-                var transactionsID = await response.Content.ReadFromJsonAsync<List<Transaction?>>();
+                var transactionsID = await response.Content.ReadFromJsonAsync<List<Transactions?>>();
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -185,22 +189,27 @@ namespace SpendLess.Client.Services
             }
             catch (NullReferenceException ex)
             {
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
             catch (InvalidOperationException ex)
             {
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
             catch (JsonException ex)
             {
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
             catch(ArgumentException ex)
             {
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
             catch (Exception ex)
             {
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
         }

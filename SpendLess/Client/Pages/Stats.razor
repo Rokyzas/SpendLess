@@ -1,0 +1,95 @@
+﻿@page "/stats"
+@using SpendLess.Client.Services
+@using SpendLess.Shared
+@inject ITransactionService TransactionService
+
+<h3>Stats</h3>
+<MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
+
+<div class="d-flex flex-grow-1 gap-10">
+	<div>
+		<MudChart ChartType="MudBlazor.ChartType.Donut" Width="100%" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
+			<CustomGraphics>
+				<text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
+				<text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
+			</CustomGraphics>
+		</MudChart>
+	</div>
+	<div>
+		<MudChart ChartType="MudBlazor.ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="550px"></MudChart>
+	</div>
+</div>
+
+@code {
+	public List<SpendLess.Shared.Transactions> Transactions = new List<SpendLess.Shared.Transactions>();
+
+	public List<string> CategoriesList = new List<string>();
+	public List<double> ExpensesList = new List<double>();
+	public List<double> DailyExpenses = new List<double>();
+	public List<ChartSeries> Series = new List<ChartSeries>();
+
+	private DateTime? _yearMonth = DateTime.Today;
+
+	[Parameter]
+	public DateTime? YearMonth
+	{
+		get
+		{
+			return _yearMonth;
+		}
+		set
+		{
+			if (_yearMonth == value)
+				return;
+
+			_yearMonth = value;
+			OnParametersSetAsync();
+		}
+	}
+
+	[Parameter]
+	public EventCallback<DateTime> YearMonthChanged { get; set; }
+
+	private int Index = -1;
+
+	public string[] XAxisLabels = { };
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await TransactionService.GetTransactions();
+		Transactions = TransactionService.Transactions;
+
+		CategoriesList = new List<string>();
+		ExpensesList = new List<double>();
+		DailyExpenses = new List<double>();
+		Series = new List<ChartSeries>();
+
+		var firstTable = from item in Transactions
+							where !item.Category.Contains("Income") &&
+							(item.TransactionDate.Year == ((DateTime)YearMonth).Year && item.TransactionDate.Month == ((DateTime)YearMonth).Month)
+							select item;
+		var results = from item in firstTable group item by item.Category into g select new { Category = g.First().Category, TotalAmount = g.Sum(pc => pc.Amount) };
+		CategoriesList = (from item in results select item.Category).ToList();
+		ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
+
+		foreach (var day in GetDates((DateTime)YearMonth))
+		{
+			DailyExpenses.Add((from item in Transactions where item.TransactionDate == day && !item.Category.Contains("Income") select Math.Abs((double)item.Amount)).Sum());
+		}
+		XAxisLabels = (from day in GetDates((DateTime)YearMonth) select day.Day.ToString()).ToArray();
+
+		Series.Add(new ChartSeries() { Name = "Expenses", Data = ((DailyExpenses).ToArray()) });
+
+		StateHasChanged();
+	}
+
+	public static List<DateTime> GetDates(DateTime date)
+	{
+		int year = int.Parse(date.ToString("yyyy"));
+		int month = int.Parse(date.ToString("MM"));
+
+		return Enumerable.Range(1, DateTime.DaysInMonth(year, month))
+		.Select(day => new DateTime(year, month, day))
+		.ToList();
+	}
+}

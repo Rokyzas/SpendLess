@@ -25,8 +25,8 @@ namespace SpendLess.UnitTests
         private IHttpClientFactory _clientFactoryLogin = new HttpClientFactoryMock<LoginResponse>(
             new LoginResponse("success", "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJqb25hc0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY2ODU1MDIxNX0.WRDJFuhBLpbeWK8q4fx4CNJ9TOZeq_owRbuuqt8CQrt-97ctoAfTff2vdyCBpgeXWY8bPW0sMJWVmZu5Q2fMWA"));
         private IHttpClientFactory _clientFactoryInt = new HttpClientFactoryMock<int>(0);
-        private IHttpClientFactory _clientFactoryTransactionList = new HttpClientFactoryMock<List<Transaction?>>
-        ( new List<Transaction?>{new Transaction(null, 10, "Food", DateTime.Now), null} );
+        private IHttpClientFactory _clientFactoryTransactionList = new HttpClientFactoryMock<List<Transactions?>>
+        ( new List<Transactions?>{new Transactions(null, 10, "Food", DateTime.Now, "Taco", null), null} );
         private ILocalStorageService _localStorage = new LocalStorage();
         private ILocalStorageService _localStorageAuth = new LocalStorage();
         private AuthenticationStateProvider _authProviderMock = new CustomAuthStateProviderMock();
@@ -134,7 +134,7 @@ namespace SpendLess.UnitTests
             int count = _transactionServiceAdd.Transactions.Count;
             await _transactionServiceAdd.AddTransaction(50, "Food", DateTime.Now, "Taco");
 
-            Transaction item = _transactionServiceAdd.Transactions.Last();
+            Transactions item = _transactionServiceAdd.Transactions.Last();
 
             Assert.That(_transactionServiceAdd.Transactions.Count, Is.EqualTo(count + 1));
         }

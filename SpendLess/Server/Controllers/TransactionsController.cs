@@ -9,17 +9,17 @@ namespace SpendLess.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class FinanceController : ControllerBase
+    public class TransactionsController : ControllerBase
     {
         private readonly SpendLessContext _context;
 
-        public FinanceController(SpendLessContext context)
+        public TransactionsController(SpendLessContext context)
         {
             _context = context;
         }
 
         [HttpGet("GetTransactions")]
-        public async Task<ActionResult<List<Transaction>>> GetTransactions()
+        public async Task<ActionResult<List<Transactions>>> GetTransactions()
         {
             var transactions = await _context.Transactions.ToListAsync();
             return Ok(transactions);
@@ -49,7 +49,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        public async Task<ActionResult<int?>> AddTransaction([FromBody] Transaction? transaction)
+        public async Task<ActionResult<int?>> AddTransaction([FromBody] Transactions? transaction)
         {
             var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
             _context.Transactions.Add(transaction);
@@ -60,7 +60,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddPeriodicTransaction")]
-        public async Task<ActionResult<List<Transaction?>>> AddPeriodicTransaction([FromBody] List<Transaction?> transactions)
+        public async Task<ActionResult<List<Transactions?>>> AddPeriodicTransaction([FromBody] List<Transactions?> transactions)
         {
             foreach (var transaction in transactions)
             {
@@ -75,7 +75,7 @@ namespace SpendLess.Server.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteTransaction(int id)
         {
-            var transaction = new Transaction(id, 0, "null", DateTime.MinValue);
+            var transaction = new Transactions(id, 0, "null", DateTime.MinValue);
             _context.Transactions.Attach(transaction);
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();

@@ -6,6 +6,7 @@
 @using SpendLess.Client.Services
 
 @inject ISnackbar Snackbar
+@inject IBalanceService BalanceService
 
 <h1>User</h1>
 
@@ -74,7 +75,7 @@
 
     }
     */
-    public double categoryExpenses(String category, List<Transaction> transactions)
+    public double categoryExpenses(String category, List<SpendLess.Shared.Transactions> transactions)
     {
         /*
         CategoryValues tempEnum;
@@ -86,9 +87,7 @@
 
     public void SaveToProfile()
     {
-        //User.balance = balance;
-
-        NavMenu.Balance();
+        BalanceService.RefreshBalance();
     }
 
     protected override async Task OnInitializedAsync()
