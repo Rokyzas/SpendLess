@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wOkf3SFJArztpQoMHqRGofSOF2ZGEcbvLqmeeNBZams=",
+  "Hash": "rHfl6e9ZzbgjiQCNLzE6sXKBy2s/6kmeRe06anTFuy0=",
   "Source": "SpendLess.Server",
   "BasePath": "_content/SpendLess.Server",
   "Mode": "Default",
@@ -860,6 +860,40 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\13.0.1\\lib\\netstandard2.0\\Newtonsoft.Json.dll"
+    },
+    {
+      "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.dll",
+      "SourceId": "SpendLess.Client",
+      "SourceType": "Project",
+      "ContentRoot": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Serilog.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\User\\.nuget\\packages\\serilog\\2.12.0\\lib\\net6.0\\Serilog.dll"
+    },
+    {
+      "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.Sinks.File.dll",
+      "SourceId": "SpendLess.Client",
+      "SourceType": "Project",
+      "ContentRoot": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Serilog.Sinks.File.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\User\\.nuget\\packages\\serilog.sinks.file\\5.0.0\\lib\\net5.0\\Serilog.Sinks.File.dll"
     },
     {
       "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.AppContext.dll",
@@ -3735,6 +3769,23 @@
       "OriginalItemSpec": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Threading.dll"
     },
     {
+      "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\obj\\Debug\\net7.0\\build-gz\\+5Fc4K4+.gz",
+      "SourceId": "SpendLess.Client",
+      "SourceType": "Project",
+      "ContentRoot": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Serilog.Sinks.File.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.Sinks.File.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.Sinks.File.dll"
+    },
+    {
       "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\obj\\Debug\\net7.0\\build-gz\\+iyd+N9X.gz",
       "SourceId": "SpendLess.Client",
       "SourceType": "Project",
@@ -4294,6 +4345,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Security.Principal.Windows.dll"
+    },
+    {
+      "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\obj\\Debug\\net7.0\\build-gz\\8L+iD309.gz",
+      "SourceId": "SpendLess.Client",
+      "SourceType": "Project",
+      "ContentRoot": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Serilog.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Serilog.dll"
     },
     {
       "Identity": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\obj\\Debug\\net7.0\\build-gz\\8Zujt9vu.gz",

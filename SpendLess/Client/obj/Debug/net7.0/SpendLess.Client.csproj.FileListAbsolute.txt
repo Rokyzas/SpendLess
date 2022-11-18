@@ -874,3 +874,12 @@ D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\+ImPWkLo.gz
 D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\uDjpu6Bk.gz
 D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\ARJCOHn+.gz
 D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\IK+6DKgH.gz
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\libman.json
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\wwwroot\_framework\Serilog.dll
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\wwwroot\_framework\Serilog.Sinks.File.dll
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\wwwroot\_framework\Serilog.Sinks.File.dll.gz
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\wwwroot\_framework\Serilog.dll.gz
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\Serilog.dll
+D:\C#\PROJECT\SpendLess\SpendLess\Client\bin\Debug\net7.0\Serilog.Sinks.File.dll
+D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\8L+iD309.gz
+D:\C#\PROJECT\SpendLess\SpendLess\Client\obj\Debug\net7.0\build-gz\+5Fc4K4+.gz

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace SpendLess.Shared
+﻿namespace SpendLess.Shared
 {
     public class Transaction : IComparable<Transaction>
     {

@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SpendLess.Client.Pages;
 using SpendLess.Shared;
-using System.Linq.Expressions;
-using System.Security.Claims;
 
 namespace SpendLess.Server.Controllers
 {
@@ -52,8 +49,9 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        public async Task<ActionResult<int?>> AddTransaction([FromBody]Transaction? transaction)
+        public async Task<ActionResult<int?>> AddTransaction([FromBody] Transaction? transaction)
         {
+            var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
             await _context.SaveChangesAsync();
@@ -64,7 +62,7 @@ namespace SpendLess.Server.Controllers
         [HttpPost("AddPeriodicTransaction")]
         public async Task<ActionResult<List<Transaction?>>> AddPeriodicTransaction([FromBody] List<Transaction?> transactions)
         {
-            foreach(var transaction in transactions)
+            foreach (var transaction in transactions)
             {
                 _context.Transactions.Add(transaction);
             }

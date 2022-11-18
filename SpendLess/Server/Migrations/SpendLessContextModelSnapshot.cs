@@ -83,6 +83,18 @@ namespace SpendLess.Server.Migrations
                         .HasColumnType("nchar(200)")
                         .IsFixedLength();
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Interval")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Period")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nchar(10)")
+                        .IsFixedLength();
+
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime");
 

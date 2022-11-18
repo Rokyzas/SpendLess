@@ -163,3 +163,8 @@ D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\obj\Debug\net7.0\refint\UnitTests.dl
 D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\obj\Debug\net7.0\UnitTests.pdb
 D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\obj\Debug\net7.0\UnitTests.genruntimeconfig.cache
 D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\obj\Debug\net7.0\ref\UnitTests.dll
+D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\bin\Debug\net7.0\Castle.Core.dll
+D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\bin\Debug\net7.0\Moq.dll
+D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\bin\Debug\net7.0\libman.json
+D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\bin\Debug\net7.0\Serilog.dll
+D:\C#\PROJECT\SpendLess\SpendLess\UnitTests\bin\Debug\net7.0\Serilog.Sinks.File.dll

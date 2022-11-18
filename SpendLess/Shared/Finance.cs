@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SpendLess.Shared
+﻿namespace SpendLess.Shared
 {
     public partial class Finance
     {

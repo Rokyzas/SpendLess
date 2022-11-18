@@ -12,6 +12,6 @@ namespace SpendLess.Client.Services
 
         Task AddPeriodicTransaction(double? amount, string category, DateTime date, string comment, string period, int interval, DateTime? endDate);
 
-        Task DeleteTransaction(int id);
+        Task<string> DeleteTransaction(int id);
     }
 }
