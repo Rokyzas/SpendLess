@@ -33,7 +33,7 @@ namespace SpendLess.Client.Services
             var client = _clientFactory.CreateClient();
             try
             {
-                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Finance/GetTransactions");                
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetTransactions");                
                 string token = await _localStorage.GetItemAsStringAsync("token");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
 
@@ -92,7 +92,7 @@ namespace SpendLess.Client.Services
 
 
                 var transaction = new Transactions(null, amount, category, date, comment);
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddTransaction", transaction);
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddTransaction", transaction);
                 var id = await response.Content.ReadFromJsonAsync<int>();
                 await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", new Exception());
                 if (response.IsSuccessStatusCode)

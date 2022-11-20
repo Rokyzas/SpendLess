@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = IntegrationTests
-build_property.ProjectDir = D:\C#\PROJECT\SpendLess\SpendLess\IntegrationTests\
+build_property.ProjectDir = C:\Users\Rokis\source\repos\Test\SpendLess\SpendLess\IntegrationTests\

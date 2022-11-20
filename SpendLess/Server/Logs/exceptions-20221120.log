@@ -1,0 +1,9 @@
+2022-11-20 10:50:00.071 +02:00 [INF] admin@admin.lt
+2022-11-20 10:50:12.782 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-20 10:50:21.196 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
