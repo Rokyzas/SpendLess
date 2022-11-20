@@ -2,6 +2,7 @@
 @using SpendLess.Client.Services
 @using SpendLess.Shared
 @inject ITransactionService TransactionService
+@inject IBalanceService BalanceService
 
 <h3>Stats</h3>
 <MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
@@ -88,10 +89,10 @@
 @code {
 	public List<SpendLess.Shared.Transactions> Transactions = new List<SpendLess.Shared.Transactions>();
 
-	public List<string> CategoriesList = new List<string>();
-	public List<double> ExpensesList = new List<double>();
-	public List<double> DailyExpenses = new List<double>();
-	public List<ChartSeries> Series = new List<ChartSeries>();
+	public List<string> CategoriesList;
+	public List<double> ExpensesList;
+	public List<double> DailyExpenses;
+	public List<ChartSeries> Series;
 
 	private DateTime? _yearMonth = DateTime.Today;
 
@@ -106,7 +107,7 @@
 		{
 			if (_yearMonth == value)
 				return;
-
+			XAxisLabels = new Lazy<string[]>(() => InitDateLabels());
 			_yearMonth = value;
 			OnParametersSetAsync();
 		}
@@ -117,15 +118,14 @@
 
 	private int Index = -1;
 
-	public Lazy<string[]> XAxisLabels = new Lazy<string[]>(() => InitDateLabels());
+	public Lazy<string[]> XAxisLabels;
 
 	protected override async Task OnParametersSetAsync()
 	{
-		await TransactionService.GetTransactions();
 		Transactions = TransactionService.Transactions;
 
-		CategoriesList = new List<string>();
-		ExpensesList = new List<double>();
+		//CategoriesList = new List<string>();
+		//ExpensesList = new List<double>();
 		DailyExpenses = new List<double>();
 		Series = new List<ChartSeries>();
 
@@ -147,10 +147,10 @@
 		StateHasChanged();
 	}
 
-	public static string[] InitDateLabels()
+	public string[] InitDateLabels()
 	{
-		var mc = new Stats();
-		return (from day in GetDates((DateTime)mc.YearMonth) select day.Day.ToString()).ToArray();
+		//var mc = new Stats();
+		return (from day in GetDates((DateTime)YearMonth) select day.Day.ToString()).ToArray();
 	}
 
 	public static List<DateTime> GetDates(DateTime date)
@@ -161,5 +161,13 @@
 		return Enumerable.Range(1, DateTime.DaysInMonth(year, month))
 		.Select(day => new DateTime(year, month, day))
 		.ToList();
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		XAxisLabels = new Lazy<string[]>(() => InitDateLabels());
+		BalanceService.BalanceChanged += StateHasChanged;
+		//await BalanceService.RefreshBalance();
+
 	}
 }

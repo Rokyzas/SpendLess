@@ -230,9 +230,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await TransactionService.GetTransactions();
-        await Transactions.UpdatePage();
-        BalanceService.RefreshBalance();
+        BalanceService.BalanceChanged += StateHasChanged;
+        await BalanceService.RefreshBalance();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)
@@ -244,8 +243,8 @@
 
 
         // if text is null or empty, show complete list
-        if (string.IsNullOrEmpty(value)) ;
-        return categoryVal.Where(x => x != "Income");
+        if (string.IsNullOrEmpty(value))
+            return categoryVal.Where(x => x != "Income");
         return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase) && x != "Income");
     }
 }

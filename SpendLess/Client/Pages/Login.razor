@@ -5,6 +5,8 @@
 @using SpendLess.Client.Services
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
+@inject ITransactionService TransactionService
+@inject IBalanceService BalanceService
 
 <MudGrid>
     <MudItem xs="12" sm="7">
@@ -45,6 +47,8 @@
             if (await AuthService.GetLoginAuthentication(user))
             {
                 NavigationManager.NavigateTo("");
+                await TransactionService.GetTransactions();
+                await BalanceService.RefreshBalance();
             }
         }
     }

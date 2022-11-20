@@ -3,9 +3,10 @@ namespace SpendLess.Client.Services
 {
     public interface IBalanceService
     {
-        event Action BalanceChanged;
+		event Action BalanceChanged;
 
-        public Task RefreshBalance();
+		//public delegate void BalanceChanged();
+		public Task RefreshBalance();
     }
 }
 

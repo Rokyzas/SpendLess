@@ -9,9 +9,10 @@ namespace SpendLess.Client.Services
 {
     public class BalanceService : IBalanceService
     {
-        public event Action? BalanceChanged;
 
-        public async Task RefreshBalance()
+		public event Action BalanceChanged;
+
+		public async Task RefreshBalance()
         {
             if (BalanceChanged != null)
                 BalanceChanged.Invoke();
