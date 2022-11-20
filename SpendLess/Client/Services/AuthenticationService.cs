@@ -150,8 +150,10 @@ namespace SpendLess.Client.Services
                     {
                         await _localStorage.SetItemAsync("token", result.token);
                         await _authStateprovider.GetAuthenticationStateAsync();
-						//SnackBarService.SuccessMsg("Logged in");
-						return true;
+                        //await transactionService.GetTransactions();
+                        //await BalanceService.RefreshBalance();
+                        //SnackBarService.SuccessMsg("Logged in");
+                        return true;
                     }
                     else
                     {

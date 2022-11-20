@@ -60,11 +60,11 @@ namespace SpendLess.Client.Services
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
-            /*catch (JsonException ex)
+            catch (JsonException ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
-            }*/
+            }
             catch (Exception ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
@@ -174,7 +174,7 @@ namespace SpendLess.Client.Services
                     }
                 }
 
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddPeriodicTransaction", transactions);
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddPeriodicTransaction", transactions);
                 var transactionsID = await response.Content.ReadFromJsonAsync<List<Transactions?>>();
 
                 if (response.IsSuccessStatusCode)
@@ -223,7 +223,7 @@ namespace SpendLess.Client.Services
                 _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
-                var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Finance/{id}");
+                var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Transactions/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     //SnackBarService.SuccessMsg("Transaction was successfully deleted");

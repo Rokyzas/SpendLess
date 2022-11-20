@@ -4,6 +4,8 @@
 
 @inject ITransactionService TransactionService
 @inject IBalanceService BalanceService
+@inject ILocalStorageService _localStorage
+
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -57,8 +59,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
         BalanceService.BalanceChanged += StateHasChanged;
+        if (await _localStorage.GetItemAsStringAsync("token") is not null)
+        {
+            await TransactionService.GetTransactions();
+            await BalanceService.RefreshBalance();
+    
+        }
     }
-
 }
