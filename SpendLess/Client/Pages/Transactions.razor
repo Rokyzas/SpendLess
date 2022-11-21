@@ -154,9 +154,6 @@
     {
         await TransactionService.DeleteTransaction(id);
         TransactionService.OnTransactionsChanged();
-        await UpdatePage();
-
-        
 
     }
 }

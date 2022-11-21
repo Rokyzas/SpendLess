@@ -234,7 +234,7 @@ namespace SpendLess.Client.Services
                 if (response.IsSuccessStatusCode)
                 {
                     //SnackBarService.SuccessMsg("Transaction was successfully deleted");
-                    return "Transaction was successfully deleted";
+                    
                     int c = 0;
                     foreach (var element in Transactions)
                     {
@@ -246,6 +246,7 @@ namespace SpendLess.Client.Services
 
                         c++;
                     }
+                    return "Transaction was successfully deleted";
                 }
                 else
                 {

@@ -14,7 +14,6 @@
         </button>
     </div>
 </div>
-
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">   
         <div class="nav-item px-3">
@@ -34,7 +33,13 @@
         </div>
     </nav>
     <div style="position:fixed; bottom:0"> 
-        <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
+        @{
+            //if (_localStorage.GetItemAsStringAsync("token") is not null)
+            //if (TransactionService.Transactions.Count == 0)
+            {
+                <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
+            }
+        }
     </div>
 </div>
 

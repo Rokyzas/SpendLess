@@ -1,6 +1,7 @@
 ﻿@page "/stats"
 @using SpendLess.Client.Services
 @using SpendLess.Shared
+@attribute [Authorize]
 @inject ITransactionService TransactionService
 
 <h3>Stats</h3>
