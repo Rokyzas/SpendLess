@@ -3,7 +3,6 @@
 @using SpendLess.Client.Pages
 @inject ISnackbar Snackbar
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -34,6 +33,5 @@
     protected override async Task OnInitializedAsync()
     {
         SnackBarService.InitSnackBarService(Snackbar);
-        
     }
 }

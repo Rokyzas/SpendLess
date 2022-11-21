@@ -109,31 +109,35 @@
     </thead>
     <tbody>
         @{
-
-            List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
-
-            if (dateFilterTo != null)
-                filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
-
-            if (dateFilterFrom != null)
-                filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
-
-
-            if (filteredTransactions != null)
+            if (TransactionService.Transactions is not null)
             {
-                for (int i = 0; i < filteredTransactions.Count; i++)
+                List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
+
+                if (dateFilterTo != null)
+                    filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
+
+                if (dateFilterFrom != null)
+                    filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
+
+
+                if (filteredTransactions != null)
                 {
-                    int id = filteredTransactions.ElementAt(i).Id ?? 0;
-                                            <tr>
-                                                <td>@filteredTransactions.ElementAt(i).Comment</td>
-                                                <td>@((filteredTransactions.ElementAt(i).Category))</td>
-                                                <td>@filteredTransactions.ElementAt(i).Amount</td>
-                                                <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
-                                                <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
-                                            </tr>
+                    for (int i = 0; i < filteredTransactions.Count; i++)
+                    {
+                        int id = filteredTransactions.ElementAt(i).Id ?? 0;
+                        <tr>
+                            <td>@filteredTransactions.ElementAt(i).Comment</td>
+                            <td>@(
+                    (filteredTransactions.ElementAt(i).Category)
+                    )</td>
+                            <td>@filteredTransactions.ElementAt(i).Amount</td>
+                            <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
+                            <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
+                        </tr>
+                    }
+
                 }
             }
-
         }
     </tbody>
 </MudSimpleTable>
@@ -212,7 +216,6 @@
             return;
         }
         textValue = null;
-
         TransactionService.OnTransactionsChanged();
     }
 
@@ -227,9 +230,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
         //await Task.Delay(1000);   // TODO: NavMenu loads TransactionsList after this initialization.
-                                  //       So we must be sure initialization starts only after TransactionsList is loaded.
-        TransactionService.OnTransactionsChanged();
+        //       So we must be sure initialization starts only after TransactionsList is loaded.
+        await UpdatePage();
+        //await Task.Delay(1000);
+        //TransactionService.OnTransactionsChanged();
+        //TransactionService.OnTransactionsChanged
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

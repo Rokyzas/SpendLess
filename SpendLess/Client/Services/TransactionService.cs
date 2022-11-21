@@ -6,6 +6,7 @@ using System.Text.Json;
 
 namespace SpendLess.Client.Services
 {
+
     public class TransactionService : ITransactionService
     {
 
@@ -17,7 +18,7 @@ namespace SpendLess.Client.Services
          }*/
 
         public event EventHandler<EventArgs>? TransactionsChanged;
-        public void OnTransactionsChanged()
+        public async Task OnTransactionsChanged()
         {
             if (TransactionsChanged is not null)
                 TransactionsChanged.Invoke(this, EventArgs.Empty);
@@ -37,6 +38,7 @@ namespace SpendLess.Client.Services
 
         public async Task GetTransactions()
         {
+            
             var client = _clientFactory.CreateClient();
             try
             {
@@ -86,6 +88,7 @@ namespace SpendLess.Client.Services
                 Transactions = result;
                 SnackBarService.SuccessMsg("Data loaded");
             }*/
+            await this.OnTransactionsChanged();
         }
 
         public async Task AddTransaction(double? amount, string category, DateTime date, string comment)

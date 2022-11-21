@@ -58,17 +58,18 @@
     private double GetBalance()
     {
         //balance = Math.Round(SpendLess.Shared.User.balance + Profile.TotalExpenses(Transactions.transactions), 2);
-        return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
+        if (TransactionService.Transactions is not null)
+            return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
+        return 0;
     }
+
 
     protected override async Task OnInitializedAsync()
     {
-        TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
+        TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
         if (await _localStorage.GetItemAsStringAsync("token") is not null)
         {
             await TransactionService.GetTransactions();
-            //await BalanceService.RefreshBalance();
-            TransactionService.OnTransactionsChanged();
 
         }
     }

@@ -9,7 +9,7 @@ namespace SpendLess.Client.Services
 
         event EventHandler<EventArgs>? TransactionsChanged;
 
-        public void OnTransactionsChanged();
+        public Task OnTransactionsChanged();
 
         Task GetTransactions();
 

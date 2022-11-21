@@ -165,8 +165,8 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+		TransactionService.TransactionsChanged += ((source, args) => OnParametersSetAsync());
 		XAxisLabels = new Lazy<string[]>(InitDateLabels);
-		//await BalanceService.RefreshBalance();
-
 	}
 }
