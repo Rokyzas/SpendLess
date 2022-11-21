@@ -3,7 +3,6 @@
 @using SpendLess.Client.Services
 
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
 @inject ILocalStorageService _localStorage
 
 
@@ -59,12 +58,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        BalanceService.BalanceChanged += StateHasChanged;
+        TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
         if (await _localStorage.GetItemAsStringAsync("token") is not null)
         {
             await TransactionService.GetTransactions();
-            await BalanceService.RefreshBalance();
-    
+            //await BalanceService.RefreshBalance();
+            TransactionService.OnTransactionsChanged();
+
         }
     }
 }

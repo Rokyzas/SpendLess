@@ -2,7 +2,6 @@
 @using SpendLess.Client.Services
 @using SpendLess.Shared
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
 
 <h3>Stats</h3>
 <MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
@@ -166,7 +165,6 @@
 	protected override async Task OnInitializedAsync()
 	{
 		XAxisLabels = new Lazy<string[]>(InitDateLabels);
-		BalanceService.BalanceChanged += StateHasChanged;
 		//await BalanceService.RefreshBalance();
 
 	}

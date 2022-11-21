@@ -3,10 +3,13 @@ namespace SpendLess.Client.Services
 {
     public interface IBalanceService
     {
-		event Action BalanceChanged;
+        //event EventHandler<EventArgs>? TransactionsChanged;
+        //public void OnTransactionsChanged();
+
+
 
 		//public delegate void BalanceChanged();
-		public Task RefreshBalance();
+		//public Task RefreshBalance();
     }
 }
 

@@ -8,7 +8,6 @@
 @attribute [Authorize]
 @inject HttpClient httpClient
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
 
 
 <h3>Have you done any transactions recently?</h3>
@@ -154,9 +153,10 @@
     public async Task DeleteRow(int id)
     {
         await TransactionService.DeleteTransaction(id);
+        TransactionService.OnTransactionsChanged();
         await UpdatePage();
 
-        BalanceService.RefreshBalance();
+        
 
     }
 }
@@ -216,7 +216,7 @@
         }
         textValue = null;
 
-        BalanceService.RefreshBalance();
+        TransactionService.OnTransactionsChanged();
     }
 
     private static bool _loading;
@@ -230,8 +230,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        BalanceService.BalanceChanged += StateHasChanged;
-        await BalanceService.RefreshBalance();
+        //await Task.Delay(1000);   // TODO: NavMenu loads TransactionsList after this initialization.
+                                  //       So we must be sure initialization starts only after TransactionsList is loaded.
+        TransactionService.OnTransactionsChanged();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)

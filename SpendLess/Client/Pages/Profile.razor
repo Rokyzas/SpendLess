@@ -3,8 +3,9 @@
 @using SpendLess.Client.Pages
 @using System.Linq
 @using SpendLess.Client.Services
+
 @inject ISnackbar Snackbar
-@inject IBalanceService BalanceService
+@inject ITransactionService TransactionService
 
 <h1>User</h1>
 
@@ -21,7 +22,7 @@
 
     public void SaveToProfile()
     {
-        BalanceService.RefreshBalance();
+        TransactionService.OnTransactionsChanged();
     }
 
     protected override async Task OnInitializedAsync()

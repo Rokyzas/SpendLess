@@ -10,12 +10,21 @@ namespace SpendLess.Client.Services
     public class BalanceService : IBalanceService
     {
 
-		public event Action BalanceChanged;
+        //public event EventHandler<EventArgs>? TransactionsChanged;
+        //public void OnTransactionsChanged()
+        //{
+        //    if (TransactionsChanged is not null)
+        //        TransactionsChanged.Invoke(this, EventArgs.Empty);
+        //}
 
-		public async Task RefreshBalance()
-        {
-            if (BalanceChanged != null)
-                BalanceChanged.Invoke();
-        }
+
+        //public event Action BalanceChanged;
+
+        //public async Task RefreshBalance()
+        //      {
+        //          if (BalanceChanged != null)
+        //              BalanceChanged.Invoke();
+        //      }
+
     }
 }

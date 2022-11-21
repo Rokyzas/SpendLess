@@ -16,6 +16,13 @@ namespace SpendLess.Client.Services
              _httpClient = httpClient;
          }*/
 
+        public event EventHandler<EventArgs>? TransactionsChanged;
+        public void OnTransactionsChanged()
+        {
+            if (TransactionsChanged is not null)
+                TransactionsChanged.Invoke(this, EventArgs.Empty);
+        }
+
         public TransactionService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
         {
             _clientFactory = clientFactory;
