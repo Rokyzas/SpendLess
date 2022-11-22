@@ -12,6 +12,7 @@ namespace SpendLess.Client.Services
 
         public Task OnTransactionsChanged();
         Task GetTransactions(LogException logexception);
+        
         Task GetTransactions();
 
         Task AddTransaction(double? amount, string category, DateTime date, string comment = "Transaction");
