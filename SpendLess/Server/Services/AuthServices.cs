@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SpendLess.Shared;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,20 +21,39 @@ namespace SpendLess.Server.Services
         {
             if (VerifyRequest(request) && !await VerifyEmail(request.Email!))
             {
-                byte[] passwordHash;
-                byte[] passwordSalt;
-                CreatePasswordHash(request.Password!, out passwordHash, out passwordSalt);
-                User newUser = new User
+                try
                 {
-                    Email = request.Email!,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                    Name = request.Username,
-                    InitialBalance = 0
-                };
-                await _context.Users.AddAsync(newUser);
-                _context.SaveChanges();
-                return true;
+                    byte[] passwordHash;
+                    byte[] passwordSalt;
+                    CreatePasswordHash(request.Password!, out passwordHash, out passwordSalt);
+                    User newUser = new User
+                    {
+                        Email = request.Email!,
+                        PasswordHash = passwordHash,
+                        PasswordSalt = passwordSalt,
+                        Name = request.Username,
+                        InitialBalance = 0
+                    };
+                    await _context.Users.AddAsync(newUser);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch(SqlException ex)
+                {
+                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                    throw;
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                    throw;
+                }
+
             }
             return false;
         }
@@ -48,40 +68,69 @@ namespace SpendLess.Server.Services
 
         public async Task<bool> VerifyAccount(UserDto request)
         {
+
             if (VerifyRequest(request))
             {
                 if (await VerifyEmail(request.Email!))
                 {
-                    var passwordHash = _context.Users
+                    try
+                    {
+                        var passwordHash = _context.Users
                         .Where(user => user.Email.ToLower().Contains(request!.Email!.ToLower()))
                         .Select(user => user.PasswordHash)
                         .FirstOrDefault();
-                    var passwordSalt = _context.Users
-                        .Where(user => user.Email.ToLower().Contains(request!.Email!.ToLower()))
-                        .Select(user => user.PasswordSalt)
-                        .FirstOrDefault();
-                    await _context.SaveChangesAsync();
-                    if (passwordHash == null || passwordSalt == null)
+                        var passwordSalt = _context.Users
+                            .Where(user => user.Email.ToLower().Contains(request!.Email!.ToLower()))
+                            .Select(user => user.PasswordSalt)
+                            .FirstOrDefault();
+                        await _context.SaveChangesAsync();
+                        if (passwordHash == null || passwordSalt == null)
+                        {
+                            return false;
+                        }
+
+                        using (var hmac = new HMACSHA512(passwordSalt!))
+                        {
+                            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(request.Password));
+                            bool loll = computedHash.SequenceEqual(passwordHash!);
+                            return computedHash.SequenceEqual(passwordHash!);
+                        }
+
+                    }
+                    catch(SqlException ex)
                     {
-                        return false;
+                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                        throw;
+                    }
+                    catch (ArgumentNullException ex)
+                    {
+                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                        throw;
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                        throw;
                     }
 
-                    using (var hmac = new HMACSHA512(passwordSalt!))
-                    {
-                        var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(request.Password));
-                        bool loll = computedHash.SequenceEqual(passwordHash!);
-                        return computedHash.SequenceEqual(passwordHash!);
-                    }
                 }
             }
-
             return false;
+
         }
 
 
         private async Task<bool> VerifyEmail(string email)
         {
-            return await _context.Users.AnyAsync(o => o.Email == email);
+            try
+            {
+                return await _context.Users.AnyAsync(o => o.Email == email);
+            }
+            catch(SqlException ex)
+            {
+                Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                throw;
+            }
         }
 
         public string? CreateToken(UserDto user, IConfiguration _configuration)
@@ -109,11 +158,11 @@ namespace SpendLess.Server.Services
 
                 return jwt;
             }
-            catch(ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
-                Console.WriteLine(ex.Message);
-                return null;
-            }          
+                Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool VerifyRequest(UserDto request)

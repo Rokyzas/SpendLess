@@ -24,10 +24,10 @@ namespace SpendLess.Server.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login([FromBody] UserDto? request)
         {
-
-
+            
             if (_services.VerifyRequest(request!))
             {
+                Log.Information(request.Email);
                 if (!await _services.VerifyAccount(request!))
                 {
                     return new LoginResponse(null, "User with this email and password is not found");
@@ -51,6 +51,7 @@ namespace SpendLess.Server.Controllers
         {
             if (_services.VerifyRequest(request!))
             {
+                Log.Information(request.Email);
                 if (await _services.CreateAccount(request!))
                 {
                     string token = _services.CreateToken(request!, _configuration);

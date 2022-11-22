@@ -1,4 +1,5 @@
 global using SpendLess.Server.Models;
+global using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MudBlazor.Services;
@@ -7,7 +8,10 @@ using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+var dir = Environment.CurrentDirectory + "\\Logs\\exceptions-.log";
+Log.Logger = new LoggerConfiguration()
+                 .WriteTo.File(Environment.CurrentDirectory + "\\Logs\\exceptions-.log", rollingInterval : RollingInterval.Day)
+                 .CreateLogger();
 // Add services to the container.
 builder.Services.AddMudServices();
 builder.Services.AddControllersWithViews();

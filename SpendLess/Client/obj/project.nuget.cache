@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J1XtOF0Vu+i70uxMzo5ka3YNYZYk0pK+fXVDFU4NNri3rjrWZVqL67968SaV3Kq0LoBxXe6WoT7RH+HzwtsYag==",
+  "dgSpecHash": "V2eDvm0QiajBmagxcTL0thhBo+wqxCEbgo8g/t5WBbnUSA5pBN6QCWqN+/1jqrp29MLQ7+vqfVUaX9zqfXoNFw==",
   "success": true,
   "projectFilePath": "D:\\C#\\PROJECT\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
   "expectedPackageFiles": [
@@ -68,6 +68,8 @@
     "C:\\Users\\User\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\serilog\\2.12.0\\serilog.2.12.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\serilog.sinks.file\\5.0.0\\serilog.sinks.file.5.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",

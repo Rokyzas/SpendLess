@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SpendLess.Client.Pages;
 using SpendLess.Shared;
-using System.Linq.Expressions;
-using System.Security.Claims;
 
 namespace SpendLess.Server.Controllers
 {
@@ -22,7 +19,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpGet("GetTransactions")]
-        public async Task<ActionResult<List<Shared.Transactions>>> GetTransactions()
+        public async Task<ActionResult<List<Transactions>>> GetTransactions()
         {
             var transactions = await _context.Transactions.ToListAsync();
             return Ok(transactions);
@@ -52,8 +49,9 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        public async Task<ActionResult<int?>> AddTransaction([FromBody] Shared.Transactions? transaction)
+        public async Task<ActionResult<int?>> AddTransaction([FromBody] Transactions? transaction)
         {
+            var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
             await _context.SaveChangesAsync();
@@ -62,9 +60,9 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddPeriodicTransaction")]
-        public async Task<ActionResult<List<Shared.Transactions?>>> AddPeriodicTransaction([FromBody] List<Shared.Transactions?> transactions)
+        public async Task<ActionResult<List<Transactions?>>> AddPeriodicTransaction([FromBody] List<Transactions?> transactions)
         {
-            foreach(var transaction in transactions)
+            foreach (var transaction in transactions)
             {
                 _context.Transactions.Add(transaction);
             }
@@ -77,7 +75,7 @@ namespace SpendLess.Server.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteTransaction(int id)
         {
-            var transaction = new Shared.Transactions(id, 0, "null", DateTime.MinValue);
+            var transaction = new Transactions(id, 0, "null", DateTime.MinValue);
             _context.Transactions.Attach(transaction);
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();

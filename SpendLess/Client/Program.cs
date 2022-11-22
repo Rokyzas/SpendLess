@@ -2,14 +2,15 @@ global using Blazored.LocalStorage;
 global using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
-using Newtonsoft.Json.Linq;
+
 using SpendLess.Client;
 using SpendLess.Client.Services;
-using System.Net.Http.Headers;
-using System.Net.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+var dir = Environment.CurrentDirectory;
 builder.Services.AddMudServices();
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

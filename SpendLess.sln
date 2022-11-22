@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendLess.Client", "SpendLe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendLess.Shared", "SpendLess\Shared\SpendLess.Shared.csproj", "{57E49BCC-6088-42B6-A89E-297150D82E2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "SpendLess\UnitTests\UnitTests.csproj", "{A6B4B100-268C-4D78-8FD3-58FBDD067AC3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "SpendLess\IntegrationTests\IntegrationTests.csproj", "{40548D13-DB58-4900-9C65-BCC23924DB51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "SpendLess\UnitTests\Tests.csproj", "{A6B4B100-268C-4D78-8FD3-58FBDD067AC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{A6B4B100-268C-4D78-8FD3-58FBDD067AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6B4B100-268C-4D78-8FD3-58FBDD067AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6B4B100-268C-4D78-8FD3-58FBDD067AC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40548D13-DB58-4900-9C65-BCC23924DB51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40548D13-DB58-4900-9C65-BCC23924DB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40548D13-DB58-4900-9C65-BCC23924DB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40548D13-DB58-4900-9C65-BCC23924DB51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
