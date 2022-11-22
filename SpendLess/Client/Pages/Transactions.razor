@@ -8,7 +8,6 @@
 @attribute [Authorize]
 @inject HttpClient httpClient
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
 
 
 <h3>Have you done any transactions recently?</h3>
@@ -110,31 +109,35 @@
     </thead>
     <tbody>
         @{
-
-            List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
-
-            if (dateFilterTo != null)
-                filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
-
-            if (dateFilterFrom != null)
-                filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
-
-
-            if (filteredTransactions != null)
+            if (TransactionService.Transactions is not null)
             {
-                for (int i = 0; i < filteredTransactions.Count; i++)
+                List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
+
+                if (dateFilterTo != null)
+                    filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
+
+                if (dateFilterFrom != null)
+                    filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
+
+
+                if (filteredTransactions != null)
                 {
-                    int id = filteredTransactions.ElementAt(i).Id ?? 0;
-                                            <tr>
-                                                <td>@filteredTransactions.ElementAt(i).Comment</td>
-                                                <td>@((filteredTransactions.ElementAt(i).Category))</td>
-                                                <td>@filteredTransactions.ElementAt(i).Amount</td>
-                                                <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
-                                                <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
-                                            </tr>
+                    for (int i = 0; i < filteredTransactions.Count; i++)
+                    {
+                        int id = filteredTransactions.ElementAt(i).Id ?? 0;
+                        <tr>
+                            <td>@filteredTransactions.ElementAt(i).Comment</td>
+                            <td>@(
+                    (filteredTransactions.ElementAt(i).Category)
+                    )</td>
+                            <td>@filteredTransactions.ElementAt(i).Amount</td>
+                            <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
+                            <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
+                        </tr>
+                    }
+
                 }
             }
-
         }
     </tbody>
 </MudSimpleTable>
@@ -154,18 +157,13 @@
     public async Task DeleteRow(int id)
     {
         await TransactionService.DeleteTransaction(id);
-        await UpdatePage();
-
-        BalanceService.RefreshBalance();
+        TransactionService.OnTransactionsChanged();
 
     }
 }
 
 
 @code {
-
-    //public static List<Transaction> transactions = new List<Transaction>();
-
 
     public async Task Savelist()
     {
@@ -216,8 +214,7 @@
             return;
         }
         textValue = null;
-
-        BalanceService.RefreshBalance();
+        TransactionService.OnTransactionsChanged();
     }
 
     private static bool _loading;
@@ -231,9 +228,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await TransactionService.GetTransactions();
-        await Transactions.UpdatePage();
-        BalanceService.RefreshBalance();
+        TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
     }
 
     private async Task<IEnumerable<string>> Search1(string value)
@@ -245,8 +240,8 @@
 
 
         // if text is null or empty, show complete list
-        if (string.IsNullOrEmpty(value)) ;
-        return categoryVal.Where(x => x != "Income");
+        if (string.IsNullOrEmpty(value))
+            return categoryVal.Where(x => x != "Income");
         return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase) && x != "Income");
     }
 }

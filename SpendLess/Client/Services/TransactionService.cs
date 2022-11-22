@@ -6,6 +6,7 @@ using System.Text.Json;
 
 namespace SpendLess.Client.Services
 {
+
     public class TransactionService : ITransactionService
     {
 
@@ -15,6 +16,13 @@ namespace SpendLess.Client.Services
          {
              _httpClient = httpClient;
          }*/
+
+        public event EventHandler<EventArgs>? TransactionsChanged;
+        public async Task OnTransactionsChanged()
+        {
+            if (TransactionsChanged is not null)
+                TransactionsChanged.Invoke(this, EventArgs.Empty);
+        }
 
         public TransactionService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
         {
@@ -30,10 +38,11 @@ namespace SpendLess.Client.Services
 
         public async Task GetTransactions()
         {
+            
             var client = _clientFactory.CreateClient();
             try
             {
-                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Finance/GetTransactions");                
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetTransactions");                
                 string token = await _localStorage.GetItemAsStringAsync("token");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
 
@@ -60,11 +69,11 @@ namespace SpendLess.Client.Services
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
-            /*catch (JsonException ex)
+            catch (JsonException ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
-            }*/
+            }
             catch (Exception ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
@@ -79,6 +88,7 @@ namespace SpendLess.Client.Services
                 Transactions = result;
                 SnackBarService.SuccessMsg("Data loaded");
             }*/
+            await this.OnTransactionsChanged();
         }
 
         public async Task AddTransaction(double? amount, string category, DateTime date, string comment)
@@ -92,7 +102,7 @@ namespace SpendLess.Client.Services
 
 
                 var transaction = new Transactions(null, amount, category, date, comment);
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddTransaction", transaction);
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddTransaction", transaction);
                 var id = await response.Content.ReadFromJsonAsync<int>();
                 await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", new Exception());
                 if (response.IsSuccessStatusCode)
@@ -174,7 +184,7 @@ namespace SpendLess.Client.Services
                     }
                 }
 
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Finance/AddPeriodicTransaction", transactions);
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddPeriodicTransaction", transactions);
                 var transactionsID = await response.Content.ReadFromJsonAsync<List<Transactions?>>();
 
                 if (response.IsSuccessStatusCode)
@@ -223,11 +233,11 @@ namespace SpendLess.Client.Services
                 _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
-                var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Finance/{id}");
+                var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Transactions/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     //SnackBarService.SuccessMsg("Transaction was successfully deleted");
-                    return "Transaction was successfully deleted";
+                    
                     int c = 0;
                     foreach (var element in Transactions)
                     {
@@ -239,6 +249,7 @@ namespace SpendLess.Client.Services
 
                         c++;
                     }
+                    return "Transaction was successfully deleted";
                 }
                 else
                 {

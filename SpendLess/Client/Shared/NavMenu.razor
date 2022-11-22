@@ -3,7 +3,8 @@
 @using SpendLess.Client.Services
 
 @inject ITransactionService TransactionService
-@inject IBalanceService BalanceService
+@inject ILocalStorageService _localStorage
+
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,7 +14,6 @@
         </button>
     </div>
 </div>
-
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">   
         <div class="nav-item px-3">
@@ -40,7 +40,6 @@
 @code {
 
     private bool collapseNavMenu = true;
-    // public static double balance = SpendLess.Shared.User.balance;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -51,14 +50,19 @@
 
     private double GetBalance()
     {
-        //balance = Math.Round(SpendLess.Shared.User.balance + Profile.TotalExpenses(Transactions.transactions), 2);
-        return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
+        if (TransactionService.Transactions is not null)
+            return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
+        return 0;
     }
+
 
     protected override async Task OnInitializedAsync()
     {
-        await TransactionService.GetTransactions();
-        BalanceService.BalanceChanged += StateHasChanged;
-    }
+        TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+        if (await _localStorage.GetItemAsStringAsync("token") is not null)
+        {
+            await TransactionService.GetTransactions();
 
+        }
+    }
 }

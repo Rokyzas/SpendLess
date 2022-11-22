@@ -5,6 +5,7 @@
 @using SpendLess.Client.Services
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
+@inject ITransactionService TransactionService
 
 <MudGrid>
     <MudItem xs="12" sm="7">
@@ -31,8 +32,6 @@
     private String? password = "";
     private bool success;
 
-
-
     private async Task ValidateLogin(bool success)
     {
 
@@ -47,6 +46,7 @@
             if (await AuthService.GetLoginAuthentication(user))
             {
                 NavigationManager.NavigateTo("");
+                await TransactionService.GetTransactions();
             }
         }
     }
