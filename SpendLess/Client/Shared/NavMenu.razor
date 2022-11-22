@@ -55,13 +55,17 @@
         return 0;
     }
 
+    public async void logExceptions(HttpClient client, string str, Exception ex)
+    {
+        await client.PostAsJsonAsync(str, ex);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
         if (await _localStorage.GetItemAsStringAsync("token") is not null)
         {
-            await TransactionService.GetTransactions();
+            await TransactionService.GetTransactions(logExceptions);
 
         }
     }
