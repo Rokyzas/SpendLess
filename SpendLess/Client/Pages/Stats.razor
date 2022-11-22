@@ -123,9 +123,6 @@
 	protected override async Task OnParametersSetAsync()
 	{
 		Transactions = TransactionService.Transactions;
-
-		//CategoriesList = new List<string>();
-		//ExpensesList = new List<double>();
 		DailyExpenses = new List<double>();
 		Series = new List<ChartSeries>();
 
@@ -149,7 +146,6 @@
 
 	public string[] InitDateLabels()
 	{
-		//var mc = new Stats();
 		return (from day in GetDates((DateTime)YearMonth) select day.Day.ToString()).ToArray();
 	}
 

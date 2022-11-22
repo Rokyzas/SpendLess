@@ -33,20 +33,13 @@
         </div>
     </nav>
     <div style="position:fixed; bottom:0"> 
-        @{
-            //if (_localStorage.GetItemAsStringAsync("token") is not null)
-            //if (TransactionService.Transactions.Count == 0)
-            {
-                <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
-            }
-        }
+        <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
     </div>
 </div>
 
 @code {
 
     private bool collapseNavMenu = true;
-    // public static double balance = SpendLess.Shared.User.balance;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -57,7 +50,6 @@
 
     private double GetBalance()
     {
-        //balance = Math.Round(SpendLess.Shared.User.balance + Profile.TotalExpenses(Transactions.transactions), 2);
         if (TransactionService.Transactions is not null)
             return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
         return 0;

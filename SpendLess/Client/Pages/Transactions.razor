@@ -165,8 +165,6 @@
 
 @code {
 
-    //public static List<Transaction> transactions = new List<Transaction>();
-
     public async Task Savelist()
     {
 
@@ -231,12 +229,6 @@
     protected override async Task OnInitializedAsync()
     {
         TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
-        //await Task.Delay(1000);   // TODO: NavMenu loads TransactionsList after this initialization.
-        //       So we must be sure initialization starts only after TransactionsList is loaded.
-        await UpdatePage();
-        //await Task.Delay(1000);
-        //TransactionService.OnTransactionsChanged();
-        //TransactionService.OnTransactionsChanged
     }
 
     private async Task<IEnumerable<string>> Search1(string value)
