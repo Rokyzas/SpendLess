@@ -1,0 +1,15 @@
+2022-11-30 01:41:42.830 +02:00 [INF] jonas1@gmail.com
+2022-11-30 01:42:11.231 +02:00 [INF] jonas1@gmail.com
+2022-11-30 01:42:15.449 +02:00 [INF] jonas1@gmail.com
+2022-11-30 02:17:48.606 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-30 02:18:01.472 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-30 02:21:44.217 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 

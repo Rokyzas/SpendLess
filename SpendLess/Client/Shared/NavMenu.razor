@@ -1,0 +1,72 @@
+﻿﻿@using Pages
+@using SpendLess.Shared
+@using SpendLess.Client.Services
+
+@inject ITransactionService TransactionService
+@inject ILocalStorageService _localStorage
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">SpendlessBlazor</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">   
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="transactions">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Transactions
+            </NavLink>
+         </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="profile">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Profile
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="stats">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Statistics
+            </NavLink>
+        </div>
+    </nav>
+    <div style="position:fixed; bottom:0"> 
+        <h3 style="color: floralwhite; margin:7%">Balance @GetBalance()</h3>
+    </div>
+</div>
+
+@code {
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private double GetBalance()
+    {
+        if (TransactionService.Transactions is not null)
+            return Math.Round((double)(from item in TransactionService.Transactions select item.Amount).Sum()! + Profile.balance, 2);
+        return 0;
+    }
+
+    public async void logExceptions(HttpClient client, string str, Exception ex)
+    {
+        await client.PostAsJsonAsync(str, ex);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+        if (await _localStorage.GetItemAsStringAsync("token") is not null)
+        {
+            await TransactionService.GetTransactions(logExceptions);
+
+        }
+    }
+}

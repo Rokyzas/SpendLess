@@ -1,0 +1,27 @@
+2022-11-22 16:11:09.606 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:11:14.943 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:12:06.100 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:12:32.092 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:14:21.586 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:16:54.063 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:19:12.142 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:19:50.217 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:20:53.327 +02:00 [INF] jonas@gmail.com
+2022-11-22 16:21:23.279 +02:00 [INF] tomas@gmail.com
+2022-11-22 16:21:40.678 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-22 16:21:54.305 +02:00 [INF] tomas@gmail.com
+2022-11-22 16:36:58.174 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-22 16:37:09.500 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 
+2022-11-22 16:40:23.686 +02:00 [ERR] CLIENT SIDE ERROR
+Anonymous user.
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 

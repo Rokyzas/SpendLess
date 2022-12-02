@@ -1,0 +1,35 @@
+﻿@page "/profile"
+@using SpendLess.Shared;
+@using SpendLess.Client.Pages
+@using System.Linq
+@using SpendLess.Client.Services
+@attribute [Authorize]
+@inject ISnackbar Snackbar
+@inject ITransactionService TransactionService
+
+<h1>User</h1>
+<div>
+        <p2>Enter your initial balance.</p2>
+</div>
+<div class="gap-4 d-flex flex-wrap">
+    
+    <MudTextField @bind-Value="balance" Label="Balance" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+</div>
+
+<br />
+
+<button class="btn btn-primary" @onclick="SaveToProfile">Save</button>
+
+@code {
+    public static double balance = 0;
+
+    public void SaveToProfile()
+    {
+        TransactionService.OnTransactionsChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}
