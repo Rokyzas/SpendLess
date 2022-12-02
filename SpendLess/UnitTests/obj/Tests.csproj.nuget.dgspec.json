@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj": {}
+    "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
+    "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
+        "projectUniqueName": "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj",
         "projectName": "SpendLess.Client",
-        "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\obj\\",
+        "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\zapas\\master\\SpendLess\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,15 +26,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }
@@ -126,20 +125,20 @@
         }
       }
     },
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
+    "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj",
+        "projectUniqueName": "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj",
         "projectName": "SpendLess.Server",
-        "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\obj\\",
+        "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\zapas\\master\\SpendLess\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -148,18 +147,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj"
               },
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }
@@ -228,20 +226,20 @@
         }
       }
     },
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+    "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "projectUniqueName": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj",
         "projectName": "SpendLess.Shared",
-        "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\obj\\",
+        "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -250,7 +248,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -288,20 +285,20 @@
         }
       }
     },
-    "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj": {
+    "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
+        "projectUniqueName": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\UnitTests\\obj\\",
+        "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -310,21 +307,20 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj"
               },
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj"
               },
-              "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-                "projectPath": "C:\\Univeras\\3-semestras\\PSI\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+              "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }
