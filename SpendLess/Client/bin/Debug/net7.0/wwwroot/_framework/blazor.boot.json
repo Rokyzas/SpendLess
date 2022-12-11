@@ -210,18 +210,18 @@
       "mscorlib.dll": "sha256-pO\/W4w\/X+UjVMUMaxE5tYTQ0tILP+hmMu0zi0MSVBLc=",
       "netstandard.dll": "sha256-kj5cBXzwPYC+HD+P8+6VybY34JtEzjXjMIHXEI3hIiM=",
       "System.Private.CoreLib.dll": "sha256-Awk1lCiFfH7r9AAZfBtGqS8rhv6UJ5lUu3yF6HDH3tQ=",
-      "SpendLess.Shared.dll": "sha256-2PTlXoMRNvXJA+tu+WnMWJs02gHtc0kOY\/I4KZ6mdts=",
-      "SpendLess.Client.dll": "sha256-MEAeGcNOv2XA+EBFKCaHp8DOR\/SGZ5B6KJW1OgMkggw="
+      "SpendLess.Shared.dll": "sha256-6IWCht8jbiQvXxgcmewF4aay7ozCsv0Ed8PgW8X5oco=",
+      "SpendLess.Client.dll": "sha256-eGmIUzwLps33Gyq9xs8FyAADjk\/rQuosWgCXVLG6UYY="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "SpendLess.Shared.pdb": "sha256-jdKIHb4bT2f57GC\/kPYiMXXMzgkfesGg9r38k3inZlI=",
-      "SpendLess.Client.pdb": "sha256-btPq8kA\/OUOr6R1ORKOtcroSUUDKVXWqR\/zYfx48qcM="
+      "SpendLess.Shared.pdb": "sha256-yvcJsEnwsuS+p9zwYK3QuA52\/Zxox4Y7YSL5iK2lrfw=",
+      "SpendLess.Client.pdb": "sha256-\/Z2ZDLdeqjd0orDr4LpNzghHBljFaaBTyADeFh7AG9k="
     },
     "runtime": {
-      "dotnet.7.0.0.xfuoa7xilk.js": "sha256-2jNLve8W0sST0LAebgAc1IwSnGhkbjOKO8QPWWiJssI=",
+      "dotnet.7.0.0.0uv8az42lf.js": "sha256-2jNLve8W0sST0LAebgAc1IwSnGhkbjOKO8QPWWiJssI=",
       "dotnet.timezones.blat": "sha256-NFPG+mWpX1lpilZGC5d9W\/8+Yjx+6oW2ujo2u+HYW1Q=",
       "dotnet.wasm": "sha256-LI9mKk\/YPFYBcqG6w2XuRqIzLVo+C1xcOQQl8PmIFI0=",
       "icudt.dat": "sha256-DXO3tJHXDOV4qgW\/w8ooggAgZdAVpa5ZllYYAQWpYIk=",

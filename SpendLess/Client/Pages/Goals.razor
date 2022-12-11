@@ -1,0 +1,60 @@
+﻿@page "/goals"
+@using SpendLess.Client.Services
+
+@inject IGoalService GoalService
+
+<h3>Goals</h3>
+<br>
+<!-- User inputs UI -->
+<div class="gap-4 d-flex flex-wrap">
+    @{
+        <MudTextField @bind-Value="textValue" Label="My goaln..." Variant="Variant.Outlined"></MudTextField>
+        <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+
+    }
+</div>
+
+@code {
+    //User input values
+    private int sk;
+    private string? textValue;
+    private string? categoryValue;
+    private double? amount = null;
+    private DateTime? date = DateTime.Today;
+}
+<br>
+<button class="btn btn-primary" @onclick="Savelist">Create</button>
+<br>
+<br>
+<br>
+<MudPaper Height="400px" Width="100%">
+	@{
+		{
+
+			<MudProgressLinear Color="Color.Success" Rounded="true" Size="Size.Large" Value="75" />
+		}
+	}
+</MudPaper>
+
+
+@code {
+
+    public async Task Savelist()
+    {
+        if (amount < 0)
+        {
+            //SnackBarService.WarningMsg("Amount can not be negative or zero!");
+            return;
+        }
+
+        await GoalService.AddGoal(1, textValue, amount, date ?? DateTime.MinValue);
+
+        categoryValue = null;
+        amount = null;
+
+        textValue = null;
+
+    }
+
+}
