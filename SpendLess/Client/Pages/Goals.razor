@@ -1,7 +1,7 @@
 ﻿@page "/goals"
 @using SpendLess.Client.Services
 @using SpendLess.Shared
-
+@attribute [Authorize]
 @inject IGoalService GoalService
 
 <h3>Goals</h3>

@@ -4,6 +4,7 @@ using System.Net;
 using SpendLess.Client.Pages;
 using System.Text.Json;
 using SpendLess.Shared;
+using System.Net.Http;
 
 
 namespace SpendLess.Client.Services
@@ -104,59 +105,45 @@ namespace SpendLess.Client.Services
 
         public async Task<string> ChangeCurrentAmount(Goal goal)
         {
+			var _httpClient = _clientFactory.CreateClient();
 			try
 			{
-				string token = await _localStorage.GetItemAsStringAsync("token");
-				var _httpClient = _clientFactory.CreateClient();
+                string token = await _localStorage.GetItemAsStringAsync("token");
+				
 				_httpClient.DefaultRequestHeaders.Authorization =
 						new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
 
 				var response = await _httpClient.PutAsJsonAsync($"https://localhost:7290/api/Goals/PutGoal", goal);
-				if (response.IsSuccessStatusCode)
+
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
 				{
-					//SnackBarService.SuccessMsg("Transaction was successfully deleted");
-
-					//int c = 0;
-					//foreach (var element in Goals)
-					//{
-					//    if (element.Id.Equals(goal.id))
-					//    {
-					//        Transactions.RemoveAt(c);
-					//        break;
-					//    }
-
-					//    c++;
-					//}
-					//return "Transaction was successfully deleted";
-				}
-				if (response.StatusCode == HttpStatusCode.TooManyRequests)
-				{
-
-					//SnackBarService.ErrorMsg("Slow down");
 					return "Failed to add value";
 				}
 				else
 				{
-					//SnackBarService.WarningMsg("Failed to delete transaction");
 					return "Failed to add value";
 				}
 			}
-			catch (NullReferenceException ex)
+            catch (NullReferenceException ex)
 			{
-				throw;
-			}
-			catch (InvalidOperationException ex)
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+                throw;
+            }
+            catch (InvalidOperationException ex)
 			{
-				throw;
-			}
-			catch (JsonException ex)
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+                throw;
+            }
+            catch (JsonException ex)
 			{
-				throw;
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}
-		}
+                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+				await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+                throw;
+            }
+        }
     }
 }
