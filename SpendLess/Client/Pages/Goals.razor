@@ -25,6 +25,7 @@
     private double? amount = null;
     private DateTime? date = DateTime.Today;
     private double? currentAmount = 0;
+    private double addCurrentAmount = 0;
 }
 <br>
 <button class="btn btn-primary" @onclick="Savelist">Create</button>
@@ -54,7 +55,7 @@
                             </MudText>
                         </CardHeaderContent>
                         <CardHeaderActions>
-                             <MudTextField @bind-Value="currentAmount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                             <MudTextField @bind-Value="addCurrentAmount" Label="Add money" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
                                             <button class="btn btn-primary" @onclick="(()=>UpdateCurrentAmount(goal))">Add</button>
                         </CardHeaderActions>
                         </MudCardHeader>
@@ -139,9 +140,9 @@
 
     public async Task<string> UpdateCurrentAmount(SpendLess.Shared.Goal goal)
     {
-        if (currentAmount < 0)
+        if (addCurrentAmount <= 0)
         {
-            //SnackBarService.WarningMsg("Amount can not be negative or zero!");
+            addCurrentAmount = 0;
             return"";
         }
 
@@ -149,11 +150,11 @@
         {
             if(element.Id == goal.Id)
             {
-                element.CurrentAmount += currentAmount;
+                element.CurrentAmount += addCurrentAmount;
                 await GoalService.ChangeCurrentAmount(element);
             }
         }
-        currentAmount = 0;
+        addCurrentAmount = 0;
         return "";
     }
 
