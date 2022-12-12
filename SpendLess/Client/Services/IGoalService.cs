@@ -6,7 +6,8 @@ namespace SpendLess.Client.Services
 	{
 		List<Goal> Goals { get; set; }
 
-		Task AddGoal(int userId, string name, double? amount, DateTime endDate);
-		Task GetGoals(LogException logException);
+		Task AddGoal(int userId, string name, double? amount, DateTime endDate, double? currentAmount);
+		Task GetGoals();
+		Task<string> ChangeCurrentAmount(Goal goal);
 	}
 }

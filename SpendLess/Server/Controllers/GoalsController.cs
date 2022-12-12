@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpendLess.Server.Middleware.Decorators;
 using SpendLess.Shared;
 
 
@@ -36,5 +37,14 @@ namespace SpendLess.Server.Controllers
 
 			return Ok(goal.Id);
 		}
-	}
+
+        [HttpPut("PutGoal")]
+        public async Task UpdateGoal(Goal goal)
+        {
+            _context.Goals.Attach(goal);
+            _context.Goals.Update(goal);
+            await _context.SaveChangesAsync();
+        }
+
+    }
 }

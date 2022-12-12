@@ -6,15 +6,17 @@
         public int UserId { get; set; }
         public string? Name { get; set; }
         public double? Amount { get; set; }
-        public DateTime endDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public double? CurrentAmount { get; set; }
 
-        public Goal(int id, int userId, string name, double? amount, DateTime endDate) 
+        public Goal(int id, int userId, string name, double? amount, DateTime endDate, double? currentAmount) 
         {
             this.Id = id;
             this.UserId = userId;
             this.Name = name;
             this.Amount = amount;
-            this.endDate= endDate;
+            this.EndDate= endDate;
+            this.CurrentAmount = currentAmount;
         }
     }
 }
