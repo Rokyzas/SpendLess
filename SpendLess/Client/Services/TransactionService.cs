@@ -1,8 +1,10 @@
-﻿using SpendLess.Shared;
+﻿using MudBlazor;
+using SpendLess.Shared;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SpendLess.Client.Services
 {
@@ -24,13 +26,15 @@ namespace SpendLess.Client.Services
                 TransactionsChanged.Invoke(this, EventArgs.Empty);
         }
 
-        public TransactionService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
+        public TransactionService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider, ISnackBarService snackBarService)
         {
             _clientFactory = clientFactory;
             _localStorage = localStorage;
             _authStateProvider = authStateProvider;
+            _snackBarService= snackBarService;
         }
 
+        private readonly ISnackBarService _snackBarService;
         private readonly IHttpClientFactory _clientFactory;
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
@@ -38,9 +42,54 @@ namespace SpendLess.Client.Services
 
         public delegate void LogException(HttpClient client, string str, Exception ex);
 
-        public async Task GetTransactions(Services.LogException logException)
+
+
+        public async Task Savelist(double? amount, bool toggleExpenseIncome, string? textValue, string? categoryValue, DateTime? date, bool togglePeriodical, int interval, string period, DateTime? endDate)
         {
-            
+            if (amount < 0){
+                //SnackBarService.WarningMsg("Amount can not be negative or zero!");
+                return;
+            }
+            if (toggleExpenseIncome == true)
+            {
+                categoryValue = "Income";
+            }
+            if (textValue == null){
+                textValue = "Transaction";
+            }
+            if (categoryValue != null && date.HasValue && amount != null){
+                if (toggleExpenseIncome == false){
+                    amount = -amount;
+                }
+
+                if (togglePeriodical == true)
+                {
+                    await AddPeriodicTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue, period, interval, endDate);
+                }
+                else
+                {
+                    await AddTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue);
+                }
+                Transactions.Sort();
+                await Task.Delay(1);
+
+                categoryValue = null;
+                amount = null;
+            }
+
+            else{
+                //SnackBarService.WarningMsg("Fields can not be empty!");
+                return;
+            }
+            textValue = null;
+            await OnTransactionsChanged();
+        }
+
+
+
+
+        public async Task GetTransactions(Services.LogException logException)
+        {           
             var client = _clientFactory.CreateClient();
             try
             {
@@ -49,37 +98,33 @@ namespace SpendLess.Client.Services
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
 
                 var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
-                if ((response.StatusCode) == HttpStatusCode.Unauthorized)
-                {
+                if ((response.StatusCode) == HttpStatusCode.Unauthorized){
                     await _authStateProvider.GetAuthenticationStateAsync();
-                    //SnackBarService.ErrorMsg("Session has ended");
+                    _snackBarService.ErrorMsg("Session has ended");
                     return;
                 }
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<List<Transactions>>();
                     Transactions = result;
-                }
-
-                
+                }              
             }
-            catch (NullReferenceException ex)
-            {
-				logException(client, "https://localhost:7290/api/Exception", ex);
-				throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                logException(client, "https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                logException(client, "https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
+    //        catch (NullReferenceException ex)
+    //        {
+				//logException(client, "https://localhost:7290/api/Exception", ex);
+				//throw;
+    //        }
+    //        catch (InvalidOperationException ex)
+    //        {
+    //            logException(client, "https://localhost:7290/api/Exception", ex);
+    //            throw;
+    //        }
+    //        catch (JsonException ex)
+    //        {
+    //            logException(client, "https://localhost:7290/api/Exception", ex);
+    //            throw;
+    //        }
+            catch (Exception ex){
                 logException(client, "https://localhost:7290/api/Exception", ex);
                 throw;
             }
@@ -112,36 +157,32 @@ namespace SpendLess.Client.Services
                     var id = await response.Content.ReadFromJsonAsync<int>();
                     transaction.Id = id;
                     Transactions.Add(transaction);
-                    //SnackBarService.SuccessMsg("Succsesfully saved data");
+                    _snackBarService.SuccessMsg("Succsesfully saved data");
                 }
-                if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                {
-
-                    //SnackBarService.ErrorMsg("Slow down");
+                else if (response.StatusCode == HttpStatusCode.TooManyRequests){
+                    _snackBarService.ErrorMsg("Slow down");
                     return;
                 }
-                else
-                {
-                    //SnackBarService.ErrorMsg("Failed to save data!");
+                else{
+                    _snackBarService.ErrorMsg("Failed to save data!");
                 }
             }
-            catch(NullReferenceException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch(JsonException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch(Exception ex)
-            {
+            //catch(NullReferenceException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch(JsonException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            catch(Exception ex){
                 await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
@@ -155,17 +196,11 @@ namespace SpendLess.Client.Services
                 string token = await _localStorage.GetItemAsStringAsync("token");               
                 _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", token.Replace("\"", ""));
-
-
-                if (endDate == null)
-                {
+                if (endDate == null){
                     endDate = date.AddMonths(12);
                 }
-
                 bool isMonthly = false;
-
-                switch (period)
-                {
+                switch (period) {
                     case "day(s)":
                         break;
                     case "week(s)":
@@ -183,12 +218,10 @@ namespace SpendLess.Client.Services
                 {
                     transactions.Add(new Transactions(null, amount, category, date, comment, null, period, interval, endDate));
 
-                    if (isMonthly)
-                    {
+                    if (isMonthly){
                         date = date.AddMonths(interval);
                     }
-                    else
-                    {
+                    else{
                         date = date.AddDays(interval);
                     }
                 }
@@ -199,35 +232,28 @@ namespace SpendLess.Client.Services
                 if (response.IsSuccessStatusCode)
                 {
                     Transactions.AddRange(transactionsID);
-                    //SnackBarService.SuccessMsg("Succsesfully saved data");
+                    _snackBarService.SuccessMsg("Succsesfully saved data");
                 }
-                else
-                {
-                   // SnackBarService.ErrorMsg("Failed to save data!");
+                else{
+                    _snackBarService.ErrorMsg("Failed to save data!");
                 }
             }
-            catch (NullReferenceException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch(ArgumentException ex)
-            {
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
+            //catch (InvalidOperationException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (JsonException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch(ArgumentException ex)
+            //{
+            //    await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            catch (Exception ex){
                 await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
@@ -245,47 +271,42 @@ namespace SpendLess.Client.Services
                 var response = await _httpClient.DeleteAsync($"https://localhost:7290/api/Transactions/{id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    //SnackBarService.SuccessMsg("Transaction was successfully deleted");
+                    _snackBarService.SuccessMsg("Transaction was successfully deleted");
                     
                     int c = 0;
                     foreach (var element in Transactions)
                     {
-                        if (element.Id.Equals(id))
-                        {
+                        if (element.Id.Equals(id)){
                             Transactions.RemoveAt(c);
                             break;
                         }
-
                         c++;
                     }
                     return "Transaction was successfully deleted";
                 }
-                if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                {
+                if (response.StatusCode == HttpStatusCode.TooManyRequests){
 
-                    //SnackBarService.ErrorMsg("Slow down");
+                    _snackBarService.ErrorMsg("Slow down");
                     return "Failed to delete transaction";
                 }
-                else
-                {
-                    //SnackBarService.WarningMsg("Failed to delete transaction");
+                else{
+                    _snackBarService.WarningMsg("Failed to delete transaction");
                     return "Failed to delete transaction";
                 }
             }
-            catch (NullReferenceException ex)
-            {
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
+            //catch (NullReferenceException ex)
+            //{
+            //    throw;
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    throw;
+            //}
+            //catch (JsonException ex)
+            //{
+            //    throw;
+            //}
+            catch (Exception ex){
                 throw;
             }
         }
@@ -300,10 +321,9 @@ namespace SpendLess.Client.Services
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
 
                 var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
-                if ((response.StatusCode) == HttpStatusCode.Unauthorized)
-                {
+                if ((response.StatusCode) == HttpStatusCode.Unauthorized){
                     await _authStateProvider.GetAuthenticationStateAsync();
-                    //SnackBarService.ErrorMsg("Session has ended");
+                    _snackBarService.ErrorMsg("Session has ended");
                     return;
                 }
                 if (response.IsSuccessStatusCode)
@@ -312,28 +332,25 @@ namespace SpendLess.Client.Services
                     Transactions = result;
                 }
             }
-            catch (NullReferenceException ex)
-            {
+            //catch (NullReferenceException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (JsonException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            catch (Exception ex) {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
-            catch (InvalidOperationException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-
-
             /*var _httpClient = clientFactory.CreateClient();
             var result = await _httpClient.GetFromJsonAsync<List<Transaction>>("api/finance/GetTransactions");
             if(result != null)

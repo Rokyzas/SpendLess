@@ -1,0 +1,6 @@
+2022-12-15 03:17:24.554 +02:00 [INF] not existing email
+2022-12-15 03:25:39.672 +02:00 [ERR] CLIENT SIDE ERROR
+User's email: email
+Token exp.: date
+Message:Exception of type 'System.Exception' was thrown.
+Stack trace: 

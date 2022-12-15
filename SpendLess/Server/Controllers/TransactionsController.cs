@@ -1,7 +1,9 @@
 ﻿
+using Autofac.Extras.DynamicProxy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpendLess.Server.Interceptor;
 using SpendLess.Server.Middleware.Decorators;
 using SpendLess.Shared;
 
@@ -50,14 +52,13 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        [LimitRequests(MaxRequests = 1, TimeWindow = 2)]
+        [LimitRequests(MaxRequests = 1, TimeWindow = 1)]
         public async Task<ActionResult<int?>> AddTransaction([FromBody] Transactions? transaction)
         {
             var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
             await _context.SaveChangesAsync();
-
             return Ok(transaction.Id);
         }
 
@@ -75,7 +76,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        [LimitRequests(MaxRequests = 1, TimeWindow = 1)]
+        [LimitRequests(MaxRequests = 3, TimeWindow = 1)]
         public async Task DeleteTransaction(int id)
         {
             var transaction = new Transactions(id, 0, "null", DateTime.MinValue);

@@ -6,8 +6,31 @@ using MudBlazor.Services;
 using SpendLess.Server.Services;
 using System.Text;
 using SpendLess.Server.Extensions;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using Autofac.Extras.DynamicProxy;
+using SpendLess.Server.Interceptor;
+using SpendLess.Client.Services;
+using SpendLess.Server.Controllers;
+using Castle.DynamicProxy;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<UnhandledExceptionLogger>();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(builder =>
+    {
+        builder.RegisterType<TransactionsController>()
+        .EnableInterfaceInterceptors()
+        .InterceptedBy(typeof(UnhandledExceptionLogger))
+        .InstancePerDependency();
+        builder.RegisterType<AuthServices>().As<IAuthServices>()
+        .EnableInterfaceInterceptors();
+        
+        //builder.RegisterType<AuthServices>().As<IAuthServices>()
+        //.EnableInterfaceInterceptors().InterceptedBy(typeof(UnhandledExceptionLogger))
+        //.InstancePerDependency();
+    });
+
 var dir = Environment.CurrentDirectory + "\\Logs\\exceptions-.log";
 Log.Logger = new LoggerConfiguration()
                  .WriteTo.File(Environment.CurrentDirectory + "\\Logs\\exceptions-.log", rollingInterval: RollingInterval.Day)
@@ -22,6 +45,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<SpendLessContext>();
 builder.Services.AddScoped<IAuthServices, AuthServices>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
