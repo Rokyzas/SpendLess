@@ -44,7 +44,6 @@ namespace SpendLess.Client.Services
             var client = _clientFactory.CreateClient();
             try
             {
-                throw new NullReferenceException("loloololo");
                 var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetTransactions");                
                 string token = await _localStorage.GetItemAsStringAsync("token");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
@@ -107,14 +106,19 @@ namespace SpendLess.Client.Services
 
 
                 var transaction = new Transactions(null, amount, category, date, comment);
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddTransaction", transaction);
-                var id = await response.Content.ReadFromJsonAsync<int>();
-                await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Exception", new Exception());
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7290/api/Transactions/AddTransaction", transaction);             
                 if (response.IsSuccessStatusCode)
                 {
+                    var id = await response.Content.ReadFromJsonAsync<int>();
                     transaction.Id = id;
                     Transactions.Add(transaction);
                     //SnackBarService.SuccessMsg("Succsesfully saved data");
+                }
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                {
+
+                    //SnackBarService.ErrorMsg("Slow down");
+                    return;
                 }
                 else
                 {
@@ -255,6 +259,12 @@ namespace SpendLess.Client.Services
                         c++;
                     }
                     return "Transaction was successfully deleted";
+                }
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                {
+
+                    //SnackBarService.ErrorMsg("Slow down");
+                    return "Failed to delete transaction";
                 }
                 else
                 {

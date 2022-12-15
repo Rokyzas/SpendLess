@@ -5,16 +5,18 @@ using Microsoft.IdentityModel.Tokens;
 using MudBlazor.Services;
 using SpendLess.Server.Services;
 using System.Text;
-
+using SpendLess.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var dir = Environment.CurrentDirectory + "\\Logs\\exceptions-.log";
 Log.Logger = new LoggerConfiguration()
-                 .WriteTo.File(Environment.CurrentDirectory + "\\Logs\\exceptions-.log", rollingInterval : RollingInterval.Day)
+                 .WriteTo.File(Environment.CurrentDirectory + "\\Logs\\exceptions-.log", rollingInterval: RollingInterval.Day)
                  .CreateLogger();
 // Add services to the container.
 builder.Services.AddMudServices();
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
@@ -51,23 +53,27 @@ else
 
 app.UseHttpsRedirection();
 
+
+
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-app.UseRouting();
+//app.UseRouting();
 
 
 app.MapRazorPages();
 
 app.UseAuthentication();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 app.UseAuthorization();
 app.MapBlazorHub();
-app.UseEndpoints(endpoints =>
+app.UseRateLimiting();
+app.MapControllers();
+/*app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapRazorPages();
-});
-app.MapFallbackToFile("index.html");
 
+});*/
+
+app.MapFallbackToFile("index.html");
 app.Run();
