@@ -1,0 +1,166 @@
+﻿@page "/goals"
+@using SpendLess.Client.Services
+@using SpendLess.Shared
+@attribute [Authorize]
+@inject IGoalService GoalService
+
+<h3>Goals</h3>
+<br>
+<!-- User inputs UI -->
+<div class="gap-4 d-flex flex-wrap">
+    @{
+        <MudTextField @bind-Value="textValue" Label="My goal..." Variant="Variant.Outlined"></MudTextField>
+        <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        <MudTextField @bind-Value="currentAmount" Label="Current amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+        <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+
+    }
+</div>
+
+@code {
+    //User input values
+    private int sk;
+    private string? textValue;
+    private double? amount = null;
+    private DateTime? date = DateTime.Today;
+    private double? currentAmount = 0;
+    private double addCurrentAmount = 0;
+}
+<br>
+<button class="btn btn-primary" @onclick="Savelist">Create</button>
+<br>
+<br>
+<br>
+<MudPaper Width="100%">
+    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
+    <MudTabPanel Text="Current">
+        @{   
+            foreach (var goal in GoalService.Goals)
+            {
+                if(goal.Amount > goal.CurrentAmount)
+                {
+                    
+                    <MudCard>
+                    <MudCardContent>
+                    
+
+                    @{
+                        int value = ((int)(((double)goal.CurrentAmount! / (double)goal.Amount!)*100));
+                        <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">
+								@goal.Name
+								@goal.CurrentAmount / @goal.Amount
+                            </MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                             <MudTextField @bind-Value="addCurrentAmount" Label="Add money" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                                            <button class="btn btn-primary" @onclick="(()=>UpdateCurrentAmount(goal))">Add</button>
+                        </CardHeaderActions>
+                        </MudCardHeader>
+                        if(value < 20)
+                        {
+                        
+                            <MudProgressLinear Color="Color.Error" Size="Size.Large" Value="@value" />
+                            <MudProgressLinear Color="Color.Error" Size="Size.Large" Value="@value" />
+
+                        }
+                        else if(value < 70)
+                        {
+                            <MudProgressLinear Color="Color.Warning"  Size="Size.Large" Value="@value" />
+                            <MudProgressLinear Color="Color.Warning" Size="Size.Large" Value="@value" />
+                        }
+                        else
+                        {
+                            <MudProgressLinear Color="Color.Success" Size="Size.Large" Value="@value"  />
+                            <MudProgressLinear Color="Color.Success" Size="Size.Large" Value="@value" />
+                        }
+					}
+					</MudCardContent>
+                    </MudCard>
+                }
+                
+
+            }
+        }
+
+    </MudTabPanel>
+    <MudTabPanel Text="Finished">
+        @{
+            foreach (var goal in GoalService.Goals)
+            {
+                if (goal.Amount <= goal.CurrentAmount)
+                {
+                    int value = ((int)(((double)goal.CurrentAmount! / (double)goal.Amount!) * 100));
+                    <div>
+                        @goal.Name
+                        @goal.CurrentAmount / @goal.Amount
+                    </div>
+                    if (value < 20)
+                    {
+                        <MudProgressLinear Color="Color.Error" Rounded="true" Size="Size.Large" Value="@value" />
+                    }
+                    else if (value < 70)
+                    {
+                        <MudProgressLinear Color="Color.Warning" Rounded="true" Size="Size.Large" Value="@value" />
+                    }
+                    else
+                    {
+                        <MudProgressLinear Color="Color.Success" Rounded="true" Size="Size.Large" Value="@value" />
+                    }
+                }
+
+
+            }
+        }
+    </MudTabPanel>
+    </MudTabs>
+</MudPaper>
+
+
+@code {
+
+    public async Task Savelist()
+    {
+        if (amount <= 0 || textValue == null)
+        {
+            //SnackBarService.WarningMsg("Amount can not be negative or zero!");
+            return;
+        }
+
+        await GoalService.AddGoal(1, textValue, amount, date ?? DateTime.MinValue, currentAmount);
+
+        amount = null;
+        textValue = null;
+
+    }
+
+    public async Task<string> UpdateCurrentAmount(SpendLess.Shared.Goal goal)
+    {
+        if (addCurrentAmount <= 0)
+        {
+            addCurrentAmount = 0;
+            return "";
+        }
+
+        foreach (var element in GoalService.Goals)
+        {
+            if (element.Id == goal.Id)
+            {
+                if (element.CurrentAmount + addCurrentAmount < element.Amount)
+                    element.CurrentAmount += addCurrentAmount;
+                else
+                    element.CurrentAmount = element.Amount;
+                await GoalService.ChangeCurrentAmount(element);
+            }
+        }
+        addCurrentAmount = 0;
+        return "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GoalService.GetGoals();
+    }
+
+}

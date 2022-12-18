@@ -13,7 +13,7 @@ namespace SpendLess.Server.Models
         {
         }
 
-        public DbSet<Goal> Goals { get; set; }
+        public DbSet<Goal> Goals { get; set; } = null!;
         public virtual DbSet<Transactions> Transactions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 

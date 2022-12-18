@@ -8053,23 +8053,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Users\\Rokis\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
       "projectName": "Tests",
-      "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\Tests.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\C#\\zapas\\master\\SpendLess\\UnitTests\\obj\\",
+      "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
+      "packagesPath": "C:\\Users\\Rokis\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Rokis\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8078,20 +8078,21 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj": {
-              "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Client\\SpendLess.Client.csproj"
+            "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
+              "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj"
             },
-            "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj": {
-              "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Server\\SpendLess.Server.csproj"
+            "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
+              "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj"
             },
-            "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-              "projectPath": "D:\\C#\\zapas\\master\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+            "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+              "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
             }
           }
         }
