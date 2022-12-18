@@ -8,56 +8,70 @@ namespace SpendLess.Server.Services
 {
     public class TransactionsService : ITransactionsService   
     {
+        private readonly IDatabaseService _databaseService;
+        public TransactionsService(IDatabaseService databaseService)
+        {
+            _databaseService = databaseService;
+        }
+
         public async Task<List<Transactions>> GetTransactions(SpendLessContext _context, HttpContext _httpContext)
         {
+            var user = await GetUserId(_context, _httpContext);
 
-            var identity = _httpContext.User.Identity as ClaimsIdentity;
-            var userClaims = identity.Claims;
-            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            var transactions = await _context.Transactions.Where(t => t.UserId == user.Id).ToListAsync();
+            var result = _databaseService.GetTransactionsAsync(user.Id);
+            var transactions = result.Result;
 
             return transactions;
         }
 
         public async Task<int?> AddTransaction(Transactions? transaction, SpendLessContext _context, HttpContext _httpContext)
         {
-            var identity = _httpContext.User.Identity as ClaimsIdentity;
-            var userClaims = identity.Claims;
-            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
+            var user = await GetUserId(_context, _httpContext);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             transaction.UserId = user.Id;
 
-            _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
+            await _databaseService.AddTransaction(transaction);
+            await _databaseService.SaveChangesAsync();
             return transaction.Id;
         }
 
-        public async Task<List<Transactions?>> AddPeriodicTransaction(List<Transactions?> transactions, SpendLessContext _context, HttpContext _httpContext)
+        public async Task<List<Transactions?>> AddPeriodicTransaction(List<Transactions> transactions, SpendLessContext _context, HttpContext _httpContext)
         {
-            var identity = _httpContext.User.Identity as ClaimsIdentity;
-            var userClaims = identity.Claims;
-            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await GetUserId(_context, _httpContext);
 
             foreach (var transaction in transactions)
             {
                 transaction.UserId = user.Id;
-                _context.Transactions.Add(transaction);
+                _databaseService.AddTransaction(transaction);
             }
-            await _context.SaveChangesAsync();
+            await _databaseService.SaveChangesAsync();
 
             return transactions;
         }
 
-        public async Task DeleteTransaction(int id, SpendLessContext _context)
+        public async Task<bool> DeleteTransaction(int id, SpendLessContext _context)
         {
+            if(id < 0)
+            {
+                return false;
+            }
+
             var transaction = new Transactions(id, 0, "null", DateTime.MinValue);
-            _context.Transactions.Attach(transaction);
-            _context.Transactions.Remove(transaction);
-            await _context.SaveChangesAsync();
+            _databaseService.RemoveTransaction(transaction);
+            await _databaseService.SaveChangesAsync();
+
+            return true;
         }
+
+
+        public async Task<User> GetUserId(SpendLessContext _context, HttpContext _httpContext)
+        {
+            var identity = _httpContext.User.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
+            var user = await _databaseService.GetUser(email);
+
+            return user;
+        } 
     }
 }
