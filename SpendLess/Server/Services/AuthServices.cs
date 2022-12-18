@@ -1,58 +1,43 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Autofac.Core;
+using Autofac.Extras.DynamicProxy;
+using Azure.Core;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SpendLess.Server.Interceptor;
 using SpendLess.Shared;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-
 namespace SpendLess.Server.Services
 {
+    [Intercept(typeof(UnhandledExceptionLogger))]
     public class AuthServices : IAuthServices
     {
-        private readonly SpendLessContext _context;
-
-        public AuthServices(SpendLessContext context)
+        private readonly IDatabaseService _databaseService;
+        //private readonly IConfiguration _configuration;
+        public AuthServices(IDatabaseService databaseService)
         {
-            _context = context;
+            _databaseService = databaseService;
         }
-
         public async Task<bool> CreateAccount(UserDto request)
         {
             if (VerifyRequest(request) && !await VerifyEmail(request.Email!))
             {
-                try
+                byte[] passwordHash;
+                byte[] passwordSalt;
+                CreatePasswordHash(request.Password!, out passwordHash, out passwordSalt);
+                User newUser = new User
                 {
-                    byte[] passwordHash;
-                    byte[] passwordSalt;
-                    CreatePasswordHash(request.Password!, out passwordHash, out passwordSalt);
-                    User newUser = new User
-                    {
-                        Email = request.Email!,
-                        PasswordHash = passwordHash,
-                        PasswordSalt = passwordSalt,
-                        Name = request.Username,
-                        InitialBalance = 0
-                    };
-                    await _context.Users.AddAsync(newUser);
-                    _context.SaveChanges();
-                    return true;
-                }
-                catch(SqlException ex)
-                {
-                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                    throw;
-                }
-                catch (ArgumentNullException ex)
-                {
-                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                    throw;
-                }
+                    Email = request.Email!,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    Name = request.Username,
+                    InitialBalance = 0
+                };
+                await _databaseService.AddNewUserAsync(newUser);
+                await  _databaseService.SaveChangesAsync();
+                return true;
 
             }
             return false;
@@ -73,44 +58,18 @@ namespace SpendLess.Server.Services
             {
                 if (await VerifyEmail(request.Email!))
                 {
-                    try
+                    var passwordHash = await _databaseService.GetUserPasswordHashAsync(request);
+                    var passwordSalt = await _databaseService.GetUserPasswordSaltAsync(request);
+                    await _databaseService.SaveChangesAsync();
+                    if (passwordHash == null || passwordSalt == null)
                     {
-                        var passwordHash = _context.Users
-                        .Where(user => user.Email.ToLower().Contains(request!.Email!.ToLower()))
-                        .Select(user => user.PasswordHash)
-                        .FirstOrDefault();
-                        var passwordSalt = _context.Users
-                            .Where(user => user.Email.ToLower().Contains(request!.Email!.ToLower()))
-                            .Select(user => user.PasswordSalt)
-                            .FirstOrDefault();
-                        await _context.SaveChangesAsync();
-                        if (passwordHash == null || passwordSalt == null)
-                        {
-                            return false;
-                        }
+                        return false;
+                    }
 
-                        using (var hmac = new HMACSHA512(passwordSalt!))
-                        {
-                            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(request.Password));
-                            bool loll = computedHash.SequenceEqual(passwordHash!);
-                            return computedHash.SequenceEqual(passwordHash!);
-                        }
-
-                    }
-                    catch(SqlException ex)
+                    using (var hmac = new HMACSHA512(passwordSalt!))
                     {
-                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                        throw;
-                    }
-                    catch (ArgumentNullException ex)
-                    {
-                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                        throw;
-                    }
-                    catch(Exception ex)
-                    {
-                        Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                        throw;
+                        var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(request.Password));
+                        return computedHash.SequenceEqual(passwordHash!);
                     }
 
                 }
@@ -119,50 +78,68 @@ namespace SpendLess.Server.Services
 
         }
 
+        public async Task<LoginResponse> Register(UserDto request, IConfiguration _configuration)
+        {
+            if (VerifyRequest(request!))
+            {
+                Log.Information(request.Email!);
+                if (await CreateAccount(request!))
+                {
+                    string? token = CreateToken(request!, _configuration);
+                    return new LoginResponse(token, "Success");
+                }
+                return new LoginResponse(null, "User already exists");
+            }
+            return new LoginResponse(null, "Input not valid");
+        }
+
+
+        public async Task<LoginResponse> Login(UserDto request, IConfiguration _configuration)
+        {
+            if (VerifyRequest(request!))
+            {
+                Log.Information(request.Email!);
+                if (!await VerifyAccount(request!)){
+                    return new LoginResponse(null, "User with this email and password is not found");
+                }
+                else
+                {
+                    string token = CreateToken(request!, _configuration);
+                    return new LoginResponse(token, "Success");
+                }
+            }
+            else return new LoginResponse(null, "Input not valid");
+        }
+
 
         private async Task<bool> VerifyEmail(string email)
         {
-            try
-            {
-                return await _context.Users.AnyAsync(o => o.Email == email);
-            }
-            catch(SqlException ex)
-            {
-                Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                throw;
-            }
+                var smth = await _databaseService.FindEmail(email);
+                return smth;
         }
 
         public string? CreateToken(UserDto user, IConfiguration _configuration)
         {
-            try
+            List<Claim> claims = new List<Claim>
             {
-                List<Claim> claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, user.Email!),
-                    new Claim(ClaimTypes.Role, "Admin")
-                };
+                new Claim(ClaimTypes.Email, user.Email!),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                    _configuration.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                _configuration.GetSection("AppSettings:Token").Value));
 
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-                var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.UtcNow.AddHours(1),
-                    signingCredentials: creds);
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: creds);
 
-                var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
 
-                return jwt;
-            }
-            catch (NullReferenceException ex)
-            {
-                Log.Error($"\nException message: {ex.Message}\nException stack trace: {ex.StackTrace}");
-                throw;
-            }
+            return jwt;
         }
 
         public bool VerifyRequest(UserDto request)
@@ -173,6 +150,9 @@ namespace SpendLess.Server.Services
             }
             return false;
         }
+
+
+
 
         /*
         public RefreshToken GenerateRefreshToken()

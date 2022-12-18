@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using Serilog;
+using SpendLess.Server.Models;
 using SpendLess.Shared;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -11,20 +12,45 @@ using System.Web;
 
 namespace SpendLess.Client.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
-        public AuthenticationService(IHttpClientFactory clientFactory, ILocalStorageService LocalStorage, AuthenticationStateProvider authStateProvider)
+        public AuthenticationService(IHttpClientFactory clientFactory, ILocalStorageService LocalStorage, AuthenticationStateProvider authStateProvider, ISnackBarService snackBarService)
         {
             _clientFactory = clientFactory;
             _localStorage = LocalStorage;
             _authStateprovider = authStateProvider;
+            _snackBarService = snackBarService;
+
         }
 
+        private readonly ISnackBarService _snackBarService;
         private readonly ILogger<AuthenticationService> _logger;
         private readonly AuthenticationStateProvider _authStateprovider;
         private readonly IHttpClientFactory _clientFactory;
         private readonly ILocalStorageService _localStorage;
         private UserDto? UserInfo;
+
+
+        public async Task<bool> ValidateLogin(bool success, string email, string username, string password)
+        {
+
+            if (success)
+            {
+                UserDto user = new UserDto
+                {
+                    Email = email,
+                    Username = username,
+                    Password = password
+                };
+                if (await GetLoginAuthentication(user))
+                {
+                    return true;
+
+                }
+
+            }
+            return false;
+        }
 
         public string? CheckPassword(string password)
         {
@@ -67,60 +93,49 @@ namespace SpendLess.Client.Services
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7290/api/User/register");
                 requestMessage.Content = new StringContent(serializedUser);
                 requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                
+
                 var response = await client.SendAsync(requestMessage);
                 if (response.IsSuccessStatusCode)
                 {
-                    //SnackBarService.WarningMsg(response.Content.ToString());
                     var content = response.Content.ReadAsStringAsync();
                     var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
-                    if (result != null)
+                    if (result.token != null)
                     {
-                        if (result.token != null)
-                        {
-                            await _localStorage.SetItemAsync("token", result.token);
-                            await _authStateprovider.GetAuthenticationStateAsync();
-                            //SnackBarService.SuccessMsg("Account has been created");
-                            return true;
-                        }
-                        else
-                        {
-                            //SnackBarService.ErrorMsg(result.message);
-                            return false;
-                        }
+                        await _localStorage.SetItemAsync("token", result.token);
+                        await _authStateprovider.GetAuthenticationStateAsync();
+                        _snackBarService.SuccessMsg("Account has been created");
+                        return true;
                     }
-                    else
-                    {
-                        //SnackBarService.ErrorMsg("Unexpected error 1");
+                    else{
+                        _snackBarService.ErrorMsg(result.message);
                         return false;
                     }
                 }
-                else
-                {
-                    //SnackBarService.ErrorMsg("Unexpected error 2");
+                else{
+                    _snackBarService.ErrorMsg("Unexpected error");
                     return false;
                 }
             }
-            catch(ArgumentNullException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (NullReferenceException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
+            //catch (ArgumentNullException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (NullReferenceException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (JsonException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
             catch (Exception ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
@@ -141,52 +156,49 @@ namespace SpendLess.Client.Services
                 string serializedUser = JsonConvert.SerializeObject(user);
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7290/api/User/login");
                 requestMessage.Content = new StringContent(serializedUser);
-                requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");               
+                requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 var response = await client.SendAsync(requestMessage);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
-                    if (result.token != null)
-                    {
+                    if (result.token != null){
                         await _localStorage.SetItemAsync("token", result.token);
                         await _authStateprovider.GetAuthenticationStateAsync();
                         //await transactionService.GetTransactions();
                         //await BalanceService.RefreshBalance();
-                        //SnackBarService.SuccessMsg("Logged in");
+                        _snackBarService.SuccessMsg("Logged in");
                         return true;
                     }
-                    else
-                    {
-                        //SnackBarService.ErrorMsg(result.message);
+                    else{
+                        _snackBarService.ErrorMsg(result.message);
                         return false;
                     }
                 }
-                else
-                {
-                   // SnackBarService.ErrorMsg("Server could not be reached.");
+                else {
+                    _snackBarService.ErrorMsg("Server could not be reached.");
                     return false;
                 }
             }
-            catch (ArgumentNullException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (NullReferenceException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (InvalidOperationException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            catch (JsonException ex)
-            {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
+            //catch (ArgumentNullException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (NullReferenceException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
+            //catch (JsonException ex)
+            //{
+            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+            //    throw;
+            //}
             catch (Exception ex)
             {
                 await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
