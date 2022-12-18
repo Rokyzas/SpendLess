@@ -32,9 +32,9 @@ namespace SpendLess.Server.Controllers
         [HttpGet("GetTransactions")]
         public async Task<ActionResult<List<Transactions>>> GetTransactions()
         {
-            var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
-            var token = header.Value.ToString();
-            var email = ParseEmailFromJwt(token);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             var transactions = await _context.Transactions.Where(t => t.UserId == user.Id).ToListAsync();
@@ -66,12 +66,17 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        [LimitRequests(MaxRequests = 1, TimeWindow = 1)]
+        //[LimitRequests(MaxRequests = 1, TimeWindow = 1)]
         public async Task<ActionResult<int?>> AddTransaction([FromBody] Transactions? transaction)
         {
-            var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
-            var token = header.Value.ToString();
-            var email = ParseEmailFromJwt(token);
+            //var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
+            //var token = header.Value.ToString();
+            //var email = ParseEmailFromJwt(token);
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
+
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             transaction.UserId = user.Id;
 
@@ -83,9 +88,9 @@ namespace SpendLess.Server.Controllers
         [HttpPost("AddPeriodicTransaction")]
         public async Task<ActionResult<List<Transactions?>>> AddPeriodicTransaction([FromBody] List<Transactions?> transactions)
         {
-            var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
-            var token = header.Value.ToString();
-            var email = ParseEmailFromJwt(token);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            string email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value;
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             foreach (var transaction in transactions)
@@ -99,7 +104,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        [LimitRequests(MaxRequests = 3, TimeWindow = 1)]
+        //[LimitRequests(MaxRequests = 3, TimeWindow = 1)]
         public async Task DeleteTransaction(int id)
         {
             var transaction = new Transactions(id, 0, "null", DateTime.MinValue);
@@ -107,7 +112,7 @@ namespace SpendLess.Server.Controllers
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();
         }
-
+        /*
         public static string ParseEmailFromJwt(string jwt)
         {
             var payload = jwt.Split('.')[1];
@@ -127,5 +132,6 @@ namespace SpendLess.Server.Controllers
             }
             return Convert.FromBase64String(base64);
         }
+        */
     }
 }
