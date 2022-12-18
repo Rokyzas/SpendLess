@@ -3,35 +3,77 @@
 @using SpendLess.Client.Pages
 @inject ISnackbar Snackbar
 @inject ITransactionService TransactionService
+@inject ILocalStorageService _localStorage
+@inject AuthenticationStateProvider AuthStateProvider
 
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 
-<PageTitle>SpendlessBlazor</PageTitle>
+<MudPaper Height="100vh" Style="overflow:hidden; position:relative;">
+    <MudDrawerContainer Class="mud-height-full">
+        <MudDrawer Style="height: 100%;" @bind-Open="@open" Fixed="false" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+            <MudNavMenu>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Home" Href="/">Home</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Custom.Uncategorized.AlertSuccess" Href="/goals">Goals</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.Payments" Href="/transactions">Transactions</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.BarChart" Href="/stats">Statistics</MudNavLink>
+            </MudNavMenu>
+        </MudDrawer>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+        <MudMenu Style="position:absolute; top:3%; right:3%;" FullWidth="false" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopRight">
+            <ActivatorContent>
+                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary">
+                    NAME
+                </MudChip>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem>Profile</MudMenuItem>
+                <MudMenuItem @onclick = "Logout"> Logout </MudMenuItem>
 
-    <main>
-        <div class="top-row px-4">
+            </ChildContent>
+        </MudMenu>
 
-            <LoginLogoutBtn/>
+
+        <div class="d-flex justify-center align-center mud-height-full">
+            @Body
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    </MudDrawerContainer>
+</MudPaper>
 
 
-@code {
+
+@code
+{
+
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+
+    public async void logExceptions(HttpClient client, string str, Exception ex)
+    {
+        await client.PostAsJsonAsync(str, ex);
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        //SnackBarService.InitSnackBarService(Snackbar);
+        TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+        if (await _localStorage.GetItemAsStringAsync("token") is not null)
+        {
+            await TransactionService.GetTransactions(logExceptions);
+
+        }
+    }
+
+    async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
     }
 }
+

@@ -66,7 +66,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpPost("AddTransaction")]
-        [LimitRequests(MaxRequests = 1, TimeWindow = 1)]
+        //[LimitRequests(MaxRequests = 5, TimeWindow = 100)]
         public async Task<ActionResult<int?>> AddTransaction([FromBody] Transactions? transaction)
         {
             var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
@@ -99,7 +99,7 @@ namespace SpendLess.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        [LimitRequests(MaxRequests = 3, TimeWindow = 1)]
+        //[LimitRequests(MaxRequests = 3, TimeWindow = 1)]
         public async Task DeleteTransaction(int id)
         {
             var transaction = new Transactions(id, 0, "null", DateTime.MinValue);
