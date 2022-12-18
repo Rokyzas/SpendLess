@@ -73,7 +73,7 @@ namespace SpendLess.Server.Middleware
                     LastSuccessfulResponseTime = DateTime.UtcNow,
                     NumberOfRequestsCompletedSuccessfully = 1
                 };
-                await SetCahceValueAsync(_cache, key, clientStat);
+                await SetCahceValueAsync(_cache, key, clientStatistics);
             }
         }
     }
