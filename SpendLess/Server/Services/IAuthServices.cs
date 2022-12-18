@@ -1,4 +1,5 @@
-﻿using SpendLess.Shared;
+﻿using SpendLess.Server.Interceptor;
+using SpendLess.Shared;
 namespace SpendLess.Server.Services
 {
     public interface IAuthServices
@@ -8,5 +9,8 @@ namespace SpendLess.Server.Services
         string? CreateToken(UserDto user, IConfiguration _configuration);
         Task<bool> VerifyAccount(UserDto request);
         bool VerifyRequest(UserDto request);
+        Task<LoginResponse> Login(UserDto request, IConfiguration _configuration);
+        Task<LoginResponse> Register(UserDto request, IConfiguration _configuration);
+
     }
 }

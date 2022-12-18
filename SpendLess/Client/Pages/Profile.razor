@@ -15,18 +15,8 @@
 
 <br />
 
-<button class="btn btn-primary" @onclick="SaveToProfile">Save</button>
+<button class="btn btn-primary" @onclick="()=>TransactionService.OnTransactionsChanged()">Save</button>
 
 @code {
     public static double balance = 0;
-
-    public void SaveToProfile()
-    {
-        TransactionService.OnTransactionsChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        
-    }
 }

@@ -18,7 +18,7 @@
                                   Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true"/>
                     <div class="d-flex align-center justify-space-between">        
                         <MudButton Href="Register" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Go to registration</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>ValidateLogin(success)" Class="ml-auto">Login</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>ValidateUser()" Class="ml-auto">Login</MudButton>
                     </div>
             </MudForm>   
         </MudPaper>
@@ -26,46 +26,17 @@
 </MudGrid>
 @code {
 
-    private UserDto? user;
-    private String? username = "";
+    private String username = "";
     private String? email = "";
     private String? password = "";
     private bool success;
 
-    private async Task ValidateLogin(bool success)
+
+    private async Task ValidateUser()
     {
-
-        if (success)
-        {
-            user = new UserDto
-                {
-                    Email = email,
-                    Username = username,
-                    Password = password
-                };
-            if (await AuthService.GetLoginAuthentication(user))
-            {
-                NavigationManager.NavigateTo("");
-                await TransactionService.GetTransactions();
-            }
-        }
-    }
-
-
-    /*private void ValidateLogin(bool success = false)
-        {
-        if (success)
-            {
-            SnackBarService.SuccessMsg("Logged in");
-
-           User.emailAddress = email;
-            User.password = password;
-            User.username = username;
+        if (await AuthService.ValidateLogin(success, email, username, password)){
             NavigationManager.NavigateTo("");
-        return;
-        }
-
-        SnackBarService.ErrorMsg("Could not login, try again");
-    return;
-    }*/
+            await TransactionService.GetTransactions();
+        }     
+    }
 }

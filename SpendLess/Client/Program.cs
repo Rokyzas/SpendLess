@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
-
 using SpendLess.Client;
 using SpendLess.Client.Services;
 
@@ -19,6 +18,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
+builder.Services.AddScoped<ISnackBarService, SnackBarService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddHttpClient("API", c =>
 {

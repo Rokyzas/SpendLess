@@ -382,3 +382,8 @@ D:\C#\zapas\master\SpendLess\Server\obj\Debug\net7.0\refint\SpendLess.Server.dll
 D:\C#\zapas\master\SpendLess\Server\obj\Debug\net7.0\SpendLess.Server.pdb
 D:\C#\zapas\master\SpendLess\Server\obj\Debug\net7.0\SpendLess.Server.genruntimeconfig.cache
 D:\C#\zapas\master\SpendLess\Server\obj\Debug\net7.0\ref\SpendLess.Server.dll
+D:\C#\zapas\master\SpendLess\Server\bin\Debug\net7.0\Autofac.dll
+D:\C#\zapas\master\SpendLess\Server\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+D:\C#\zapas\master\SpendLess\Server\bin\Debug\net7.0\Autofac.Extras.DynamicProxy.dll
+D:\C#\zapas\master\SpendLess\Server\bin\Debug\net7.0\Castle.Core.dll
+D:\C#\zapas\master\SpendLess\Server\bin\Debug\net7.0\Castle.Core.AsyncInterceptor.dll
