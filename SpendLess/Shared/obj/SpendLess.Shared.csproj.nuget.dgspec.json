@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {}
+    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
         "projectName": "SpendLess.Shared",
-        "projectPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
-        "packagesPath": "C:\\Users\\Rokis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rokis\\source\\repos\\Test\\SpendLess\\SpendLess\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Rokis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

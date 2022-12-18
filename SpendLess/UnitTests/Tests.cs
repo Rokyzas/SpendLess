@@ -281,6 +281,16 @@ namespace SpendLess.UnitTests
         }
 
         [Test]
+        public async Task DeleteTransactionFromDatabaseWithIncorrectIdFails()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var result = await service.DeleteTransaction(-1, _spendLessContext);
+
+            Assert.That(!result);
+        }
+
+        [Test]
         public void VoidMethodsWithExceptionsAreLoggedByInterceptor()
         {
             var file = new DirectoryInfo(Environment.CurrentDirectory + "\\Logs")
