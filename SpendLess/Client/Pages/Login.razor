@@ -6,8 +6,9 @@
 @inject AuthenticationService AuthService
 @inject NavigationManager NavigationManager
 @inject ITransactionService TransactionService
+@inject ISnackBarService SnackBarService
 
-<MudGrid>
+@*<MudGrid>
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
             <MudForm @bind-IsValid="@success">
@@ -23,7 +24,170 @@
             </MudForm>   
         </MudPaper>
     </MudItem>
-</MudGrid>
+</MudGrid>*@
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+    }
+
+    .hero {
+        height: 100%;
+        width: 100%;
+        background-image: url("lol1.jpg");
+        background-position: center;
+        background-size: cover;
+        position: absolute;
+    }
+
+    .form-box {
+        width: 380px;
+        height: 650px;
+        position: relative;
+        margin: 6% auto;
+        background: #fff;
+        padding: 5px;
+        overflow: hidden;
+    }
+
+    .form-name {
+        width: 160px;
+        margin: 35px auto;
+        position: relative;
+    }
+
+    .button-box {
+        width: 220px;
+        margin: 35px auto;
+        position: relative;
+        box-shadow: 0 0 20px 9px #bd4ae61f;
+        border-radius: 30px;
+    }
+
+    .toggle-btn {
+        padding: 10px 30px;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        outline: none;
+        position: relative;
+    }
+
+    #btn {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 110px;
+        height: 100%;
+        background: linear-gradient(to right, #6337dc, #dc3dcc);
+        border-radius: 30px;
+        transition: .5s;
+    }
+
+    .input-group {
+        top: 180px;
+        position: absolute;
+        width: 280px;
+        transition: .5s;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px 0;
+        margin: 5px 0;
+        border-left: 0;
+        border-top: 0;
+        border-right: 0;
+        outline: none;
+        background: transparent;
+    }
+
+    .submit-btn {
+        width: 85%;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: block;
+        margin: auto;
+        background: linear-gradient(to right, #6337dc, #dc3dcc);
+        border: 0;
+        outline: none;
+        border-radius: 30px;
+    }
+
+    .check-box {
+        margin: 30px 10px 30px 0;
+    }
+
+    .spn {
+        color: #777;
+        font-size: 12px;
+        bottom: 68px;
+        position: absolute;
+    }
+
+    #login {
+    }
+
+    #register {
+    }
+</style>
+
+<div class="hero">
+    <div class="form-box">
+        <div class="form-name">
+            <h1 class="form-name">Spendless</h1>
+        </div>
+        <div class="button-box" >
+            <div id="btn" style="left: @btnLeft"></div>
+            <button type="button" class="toggle-btn" @onclick="login">Log in</button>
+            <button type="button" class="toggle-btn" @onclick="register">Register</button>
+        </div>
+        <form id="login" class="input-group" style="left: @logLeft">
+            <MudForm @bind-IsValid="@success">
+                <MudTextField class="input-field" @bind-Value="email" T="string" Label="Email" Required="true"
+                    Validation="@(new Func<string, string?>(AuthService.CheckEmail))"/>
+                <MudTextField class="input-field" @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                    InputType="InputType.Password"
+                    Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true"/>
+                <input type="checkbox" class="check-box"><span>Remember Password</span>
+
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>ValidateUser()" Class="ml-auto; submit-btn">Login</MudButton>
+            </MudForm>
+        </form>
+        <form id="register" class="input-group" style=" left: @regLeft">    
+            <MudForm @bind-IsValid="@success">
+                <MudTextField class="input-field" @bind-Value="username" T="string" Label="Your name" Required="true" RequiredError="Your name is required!" />
+                <MudTextField class="input-field" @bind-Value="email" T="string" Label="Email" Required="true"
+                              Validation="@(new Func<string, string?>(AuthService.CheckEmail))" />
+                <MudTextField class="input-field" @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                              InputType="InputType.Password"
+                              Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true" />
+                <input type="checkbox" class="check-box"><span>I agree to the terms & conditions</span>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>RegisterAccount(success)" Class="ml-auto; submit-btn">Register</MudButton>
+            </MudForm>
+
+@*                        <MudForm @bind-IsValid="@success">
+                    <MudTextField @bind-Value="username" T="string" Label="Your name" Required="true" RequiredError="Your name is required!"/>
+                    <MudTextField @bind-Value="email" T="string" Label="Email" Required="true"
+                                  Validation="@(new Func<string, string?>(AuthService.CheckEmail))"/>
+                    <MudTextField @bind-Value="password" T="string" Label="Password" HelperText="Password must be at least 8 symbols long, it must c    ontain at least 1 digit, 1 uppercase, 1 lowecase letter and a special symbol."
+                                  InputType="InputType.Password"
+                                  Validation="@(new Func<string, string?>(AuthService.CheckPassword))" Required="true"/>
+                    <div class="d-flex align-center justify-space-between">
+                        <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree with terms :)"  />
+                        <MudButton  Href = "Login" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Cancel</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" OnClick="()=>RegisterAccount(success)" Class="ml-auto">Register</MudButton>
+                    </div>
+            </MudForm>   *@
+        </form>
+    </div>
+
+</div>
+
+
 @code {
 
     private String username = "";
@@ -35,8 +199,48 @@
     private async Task ValidateUser()
     {
         if (await AuthService.ValidateLogin(success, email, username, password)){
-            NavigationManager.NavigateTo("");
+            NavigationManager.NavigateTo("/");
             await TransactionService.GetTransactions();
         }     
+    }
+
+    private UserDto? user;
+
+    private async Task RegisterAccount(bool success = false)
+    {
+
+        if (success)
+        {
+            user = new UserDto
+                {
+                    Email = email,
+                    Username = username,
+                    Password = password
+                };
+            if (await AuthService.CreateAccount(user))
+            {
+                NavigationManager.NavigateTo("");
+            }
+        }
+
+
+    }
+
+    string logLeft = "50px";
+    string regLeft = "450px";
+    string btnLeft = "0px";
+
+    void register() {
+        logLeft = "-400px";
+        regLeft = "50px";
+        btnLeft = "110px";
+        StateHasChanged();
+    }
+
+    void login() {
+        logLeft = "50px";
+        regLeft = "450px";
+        btnLeft = "0px";
+        StateHasChanged();
     }
 }
