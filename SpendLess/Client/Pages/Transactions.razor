@@ -167,63 +167,7 @@
 
     public async Task Savelist()
     {
-
-        if (amount < 0)
-        {
-            //SnackBarService.WarningMsg("Amount can not be negative or zero!");
-            return;
-        }
-
-        if (toggleExpenseIncome == true)
-        {
-            categoryValue = "Income";
-        }
-
-        if(textValue == null)
-        {
-            textValue = "Transaction";
-        }
-
-        if (categoryValue != null && date.HasValue && amount != null)
-        {
-
-            if (toggleExpenseIncome == false)
-            {
-                amount = -amount;
-            }
-
-            if(togglePeriodical == true)
-            {
-                await TransactionService.AddPeriodicTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue, period, interval, endDate);
-            }
-            else
-            {
-                await TransactionService.AddTransaction(amount, categoryValue, date ?? DateTime.MinValue, textValue);
-            }
-
-            TransactionService.Transactions.Sort();
-            await UpdatePage();
-
-            categoryValue = null;
-            amount = null;
-        }
-
-        else
-        {
-            //SnackBarService.WarningMsg("Fields can not be empty!");
-            return;
-        }
-        textValue = null;
-        TransactionService.OnTransactionsChanged();
-    }
-
-    private static bool _loading;
-
-    public static async Task UpdatePage()
-    {
-        _loading = true;
-        await Task.Delay(1);
-        _loading = false;
+        await TransactionService.Savelist(amount, toggleExpenseIncome, textValue, categoryValue, date, togglePeriodical, interval, period, endDate);
     }
 
     protected override async Task OnInitializedAsync()

@@ -20,16 +20,13 @@ namespace SpendLess.Server.Middleware
         {
             var endpoint = context.GetEndpoint();
             var currentDate = DateTime.UtcNow;
-            ////////////////
-            ///   always null
             var rateLimitingDecorator = endpoint?.Metadata.GetMetadata<LimitRequests>();
-            //////////////
+
             if (rateLimitingDecorator is null)
             {
                 await _next(context);
                 return;
             }
-
 
             var key = GenerateClientKey(context);
             var clientStatistics = await GetClientStatisticsByKey(key);
@@ -39,7 +36,6 @@ namespace SpendLess.Server.Middleware
                 context.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                 return;
             }
-
             await UpdateClientStatisticsStorage(key, rateLimitingDecorator.MaxRequests);
             await _next(context);
         }
@@ -47,12 +43,17 @@ namespace SpendLess.Server.Middleware
         private static string GenerateClientKey(HttpContext context) => 
             $"{context.Request.Method}_{context.Connection.RemoteIpAddress}";
 
-        private async Task<ClientStatistics> GetClientStatisticsByKey(string key) => await _cache.GetCacheValueAsync<ClientStatistics>(key);
+        private async Task<ClientStatistics> GetClientStatisticsByKey(string key) => await GetCacheValueAsync(_cache, key);
+
+        protected virtual async Task<ClientStatistics> GetCacheValueAsync(IDistributedCache cache, string key) =>
+            await cache.GetCacheValueAsync<ClientStatistics>(key);
+
+        protected virtual async Task SetCahceValueAsync(IDistributedCache cache, string key, ClientStatistics? clientStat) =>
+            await cache.SetCahceValueAsync(key, clientStat);
 
         private async Task UpdateClientStatisticsStorage(string key, int maxRequests)
         {
-            var clientStat = await _cache.GetCacheValueAsync<ClientStatistics>(key);
-
+            var clientStat = await GetCacheValueAsync(_cache, key);
             if (clientStat != null)
             {
                 clientStat.LastSuccessfulResponseTime = DateTime.UtcNow;
@@ -63,7 +64,7 @@ namespace SpendLess.Server.Middleware
                 else
                     clientStat.NumberOfRequestsCompletedSuccessfully++;
 
-                await _cache.SetCahceValueAsync<ClientStatistics>(key, clientStat);
+                await SetCahceValueAsync(_cache, key, clientStat);
             }
             else
             {
@@ -72,11 +73,8 @@ namespace SpendLess.Server.Middleware
                     LastSuccessfulResponseTime = DateTime.UtcNow,
                     NumberOfRequestsCompletedSuccessfully = 1
                 };
-
-                await _cache.SetCahceValueAsync<ClientStatistics>(key, clientStatistics);
-                
+                await SetCahceValueAsync(_cache, key, clientStat);
             }
-
         }
     }
 

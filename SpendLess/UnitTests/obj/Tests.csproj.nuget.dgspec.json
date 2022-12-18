@@ -172,6 +172,26 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Autofac": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Autofac.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Autofac.Extras.DynamicProxy": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Castle.Core": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Castle.Core.AsyncInterceptor": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -335,6 +355,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
             "Microsoft.Extensions.Http": {
               "target": "Package",
               "version": "[7.0.0, )"

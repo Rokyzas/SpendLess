@@ -14,11 +14,35 @@ using System.IO;
 using UnitTests.MockingServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using SpendLess.Client;
+using MudBlazor;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using SpendLess.Server.Models;
+using Serilog;
+using Castle.DynamicProxy;
+using IInvocation = Castle.DynamicProxy.IInvocation;
+using Autofac.Core;
+using SpendLess.Server.Interceptor;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Castle.Core.Configuration;
+using Microsoft.Extensions.Configuration;
+using SpendLess.Server.Middleware.Decorators;
+using System.Linq;
+using SpendLess.Server.Middleware;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
+using Microsoft.Extensions.Caching.Distributed;
+using SpendLess.Server.Extensions;
+using Tests.MockingServices;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net;
 
 namespace SpendLess.UnitTests
 {
     public class Tests
     {
+
         private AuthServices _serverAuthServices;
         private AuthenticationService _clientAuthServices;
 
@@ -27,24 +51,277 @@ namespace SpendLess.UnitTests
         private IHttpClientFactory _clientFactoryInt = new HttpClientFactoryMock<int>(0);
         private IHttpClientFactory _clientFactoryTransactionList = new HttpClientFactoryMock<List<Transactions?>>
         ( new List<Transactions?>{new Transactions(null, 10, "Food", DateTime.Now, "Taco", null), null} );
+
+
+        private Microsoft.Extensions.Configuration.IConfiguration _config;
         private ILocalStorageService _localStorage = new LocalStorage();
         private ILocalStorageService _localStorageAuth = new LocalStorage();
         private AuthenticationStateProvider _authProviderMock = new CustomAuthStateProviderMock();
         private TransactionService _transactionServiceDelete;
         private TransactionService _transactionServiceAdd;
         private TransactionService _transactionServiceAddPeriodic;
+        private TransactionService _transactionServiceGetTransactions;
         private AuthenticationStateProvider _authStateProvider;
-
-
+        private ISnackBarService _snackBarService;
+        private Mock<ISnackBarService> _snackBarServiceMock;
+        private Mock<IDatabaseService> databaseServiceMock;
+        private Mock<Microsoft.Extensions.Configuration.IConfiguration> _configurationMock;
+        private Mock<HttpContext> _contextMock;
+        DefaultHttpContext httpcontext = new DefaultHttpContext();
+        private Mock<IDistributedCache> _cacheMock;
         [SetUp]
         public void Setup()
         {
+            _cacheMock = new Mock<IDistributedCache>();
+           // _cacheMock.Setup(x => x.GetCacheValueAsync<ClientStatistics>(It.IsAny<string>(), default).Returns(Task.FromResult(new ClientStatistics())));
+            var metadata = new EndpointMetadataCollection(new LimitRequests()
+            {
+                TimeWindow = 10,
+                MaxRequests = 10
+            });
+            var endpoint = new Endpoint(null, metadata, null);
+
+            httpcontext.SetEndpoint(endpoint);
+            //_contextMock = new Mock<HttpContext>();
+            //_contextMock.Setup(x => x.GetEndpoint()).Returns(endpoint);
+
+            var key = new Mock<Microsoft.Extensions.Configuration.IConfigurationSection>();
+            key.Setup(x => x.Value).Returns("my top secret key");
+            _configurationMock = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
+            _configurationMock.Setup(x => x.GetSection("AppSettings:Token")).Returns(key.Object);
+            databaseServiceMock = new Mock<IDatabaseService>();
+            databaseServiceMock.Setup(x => x.FindEmail("existing email")).Returns(Task.FromResult(true));
+            databaseServiceMock.Setup(x => x.FindEmail("not existing email")).Returns(Task.FromResult(false));
+            databaseServiceMock.Setup(x => x.AddNewUserAsync(It.IsAny<User>())).Returns(Task.CompletedTask);
+            databaseServiceMock.Setup(x => x.GetUserPasswordSaltAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
+            databaseServiceMock.Setup(x => x.GetUserPasswordHashAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
+            databaseServiceMock.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
+
+
+            Log.Logger = new LoggerConfiguration()
+                 .WriteTo.File(Environment.CurrentDirectory + "\\Logs\\exceptions-.log", rollingInterval: RollingInterval.Day)
+                 .CreateLogger();
+            _snackBarServiceMock = new Mock<ISnackBarService>();
+            _snackBarServiceMock.Setup(service => service.SuccessMsg(It.IsAny<string>())).Verifiable();
+            _snackBarServiceMock.Setup(service => service.ErrorMsg(It.IsAny<string>())).Verifiable();
+            _snackBarServiceMock.Setup(service => service.WarningMsg(It.IsAny<string>())).Verifiable();
+
+
+
             _authStateProvider = new CustomAuthenticationStateProvider(_localStorageAuth, _clientFactoryLogin);
-            _transactionServiceAddPeriodic = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock);
-            _transactionServiceAdd = new TransactionService(_clientFactoryInt, _localStorage, _authProviderMock);
-            _transactionServiceDelete = new TransactionService(_clientFactoryLogin, _localStorage, _authProviderMock);
+            _transactionServiceAddPeriodic = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
+            _transactionServiceAdd = new TransactionService(_clientFactoryInt, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
+            _transactionServiceDelete = new TransactionService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
+            _transactionServiceGetTransactions = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
             _serverAuthServices = new AuthServices(null);
-            _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock);
+            _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
+        
+    
+        }
+
+
+
+        [Test]
+        public async Task AllowedAmountOfRequestsInvokesNextDelegate()
+        {
+            string status = "initial";
+            RequestDelegate next = (httpcontext) => Task.Run(() => status = "changed");
+            RateLimitingMiddleware middleware = new RateLimitingMiddlewareMock(next, _cacheMock.Object, null);
+            await middleware.InvokeAsync(httpcontext);
+            Task.WaitAny();
+            Assert.That(status == "changed");
+        }
+
+        [Test]
+        public async Task TooManyRequestsWhenclientStatisticsIsNotNull()
+        {
+            var value = new ClientStatistics()
+            {
+                LastSuccessfulResponseTime = DateTime.UtcNow,
+                NumberOfRequestsCompletedSuccessfully = 10
+            };
+            RateLimitingMiddleware middleware = new RateLimitingMiddlewareMock(null, _cacheMock.Object, value);
+            await middleware.InvokeAsync(httpcontext);
+            Assert.That(httpcontext.Response.StatusCode == (int)HttpStatusCode.TooManyRequests);
+        }
+
+
+        [Test]
+        public  void DeserialisingObjectReturnsObject ()
+        {        
+            var serialized = Encoding.Default.GetBytes(JsonConvert.SerializeObject("word"));
+            Assert.That(serialized.FromByteArray<string>(), Is.EqualTo("word"));
+        }
+
+        [Test]
+        public void SerialisingObjectReturnsBiteArray()
+        {          
+            var word = "word";
+            var serialized = Encoding.Default.GetBytes(JsonConvert.SerializeObject(word));
+            Assert.That(word.ToByteArray(), Is.EqualTo(serialized));
+        }
+
+
+        [Test]
+        public async Task SuccessfulyCreatingAccountInDatabaseReturnsTrue()
+        {
+            var authService = new AuthServices(databaseServiceMock.Object);
+            var user = new UserDto()
+            {
+                Email = "not existing email",
+                Password = "password",
+                Username = "username"
+            };
+            Assert.That(await authService.CreateAccount(user) is true);
+        }
+
+        [Test]
+        public async Task RegisteringWithNewAccountInDatabaseReturnsLoginResponseWithSuccessMessage()
+        {
+            var authService = new AuthServices(databaseServiceMock.Object);
+            var user = new UserDto()
+            {
+                Email = "not existing email",
+                Password = "password",
+                Username = "username"
+            };
+            var loginResponse = await authService.Register(user, _configurationMock.Object);
+            Assert.That(loginResponse.message == "Success");
+        }
+
+        [Test]
+        public async Task RegisteringWithExistingAccountInDatabaseReturnsLoginResponseWithNullToken()
+        {
+            var authService = new AuthServices(databaseServiceMock.Object);
+            var user = new UserDto()
+            {
+                Email = "existing email",
+                Password = "password",
+                Username = "username"
+            };
+            var loginResponse = await authService.Register(user, _configurationMock.Object);
+            Assert.That(loginResponse.token == null);
+        }
+
+        [Test]
+        public async Task LoggingToNonExistingAccountInDatabaseReturnsLoginResponseWithNullToken()
+        {
+            var authService = new AuthServices(databaseServiceMock.Object);
+            var user = new UserDto()
+            {
+                Email = "not existing email",
+                Password = "password",
+                Username = "username"
+            };
+            var loginResponse = await authService.Login(user, _configurationMock.Object);
+            Assert.That(loginResponse.token == null);
+        }
+
+
+        [Test]
+        public void VoidMethodsWithExceptionsAreLoggedByInterceptor()
+        {
+            var file = new DirectoryInfo(Environment.CurrentDirectory + "\\Logs")
+                .GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
+            long lengthInitial = file.Length;
+
+            var invocation = new Mock<IInvocation>();
+            invocation.Setup(service => service.Proceed()).Throws<Exception>();
+            var interceptorMock = new UnhandledExceptionLogger();
+            Assert.Throws<Exception>(() => interceptorMock.Intercept(invocation.Object));
+            file.Refresh();
+            long lengthFinal = file.Length;
+            Assert.That(lengthFinal > lengthInitial);
+
+        }
+
+        [Test]
+        public void TaskMethodsWithExceptionsAreLoggedByInterceptor()
+        {
+            var task = ((Func<Task>)(async () => {
+                throw new Exception();
+            }))();
+            var invocation = new Mock<IInvocation>();
+            invocation.Setup(service => service.Method).Throws<Exception>();
+            var interceptorMock = new UnhandledExceptionLogger();
+            Assert.ThrowsAsync<Exception>(async () => await interceptorMock.InterceptAsync(task));
+
+        }
+
+        [Test]
+        public async Task TaskResultMethodsWithExceptionsAreLoggedByInterceptor()
+        {
+            var task = ((Func<Task<string>>)(async () => {
+                 throw new Exception("TaskResult");
+            }))();
+            var invocation = new Mock<IInvocation>();
+            invocation.Setup(service => service.Method).Throws<Exception>();
+            var interceptorMock = new UnhandledExceptionLogger();
+            Assert.ThrowsAsync<Exception>(async () => await interceptorMock.InterceptAsync(task));
+        }
+
+        [Test]
+        public async Task LoggingExceptionsToFile()
+        {
+            var file = new DirectoryInfo(Environment.CurrentDirectory + "\\Logs")
+                .GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
+            long lengthInitial = file.Length;
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Email, "email"),
+                new Claim(ClaimTypes.Expiration, "date")
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPirncipal = new ClaimsPrincipal(identity);
+            var service = new ExceptionService();
+            await service.LogException(new Exception(), claimsPirncipal);
+            file.Refresh();
+            long lengthFinal = file.Length;
+            Assert.That(lengthFinal > lengthInitial);
+        }
+
+        [Test]
+        public async Task LoggingExceptionsToFileWhenExceptionIsThrownInMethod()
+        {
+            var service = new ExceptionService();
+            Assert.ThrowsAsync<NullReferenceException>(async () => await service.LogException(new Exception(), null));
+
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        [Test]
+        public async Task ValidatingUserReturnsTrueIfUserWasFoundInDatabase(bool isSuccess)
+        {
+          
+            
+            var success = await _clientAuthServices.ValidateLogin(isSuccess, "email", "user", "psw");
+            Assert.That(success, Is.EqualTo(isSuccess));
+
+        }
+
+        [Test]
+        public async Task GettingTransactionsSetsTransactionList()
+        {
+            var list1 = _transactionServiceGetTransactions.Transactions;
+            await _transactionServiceGetTransactions.GetTransactions();
+            var list2 = _transactionServiceGetTransactions.Transactions;
+            Task.WaitAny();
+            Assert.That(list2.Count() > 0);
+
+        }
+
+
+        [TestCase(true, null, false)]
+        [TestCase(false, "something", false)]
+        [Test]
+        public async Task SortsListWhenNewValueIsAdded(bool toggleExpenseIncome, string? textValue, bool togglePeriodical)
+        {
+            await _transactionServiceAdd.Savelist(10, toggleExpenseIncome, textValue, "Food", DateTime.Now, togglePeriodical, 0, "year", DateTime.Now);
+            Task.WaitAll();
+            var list = _transactionServiceAdd.Transactions;
+             
+            Assert.That(list.Count() > 0);
         }
 
         [Test]
@@ -52,10 +329,11 @@ namespace SpendLess.UnitTests
         {
             string token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJqb25hc0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTY2ODU1MDIxNX0.WRDJFuhBLpbeWK8q4fx4CNJ9TOZeq_owRbuuqt8CQrt-97ctoAfTff2vdyCBpgeXWY8bPW0sMJWVmZu5Q2fMWA";
             var state = CustomAuthenticationStateProvider.ParseClaimsFromJwt(token);
-            var email =  state.Select(s => s.Value).FirstOrDefault();
-            Assert.That(email,Is.EqualTo("jonas@gmail.com"));
+            var email = state.Select(s => s.Value).FirstOrDefault();
+            Assert.That(email, Is.EqualTo("jonas@gmail.com"));
 
         }
+
 
 
         [Test]
@@ -65,9 +343,9 @@ namespace SpendLess.UnitTests
             var isAuthenticated = state.User.Identity.IsAuthenticated;
             Assert.False(isAuthenticated);
         }
-        
+
         [Test]
-        public async Task GettingTransactionsListChangesTransactionList()
+        public async Task AddingTransactionsListChangesTransactionList()
         {
             var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
             await _transactionServiceAddPeriodic.AddPeriodicTransaction(10, "Food", DateTime.Now, "Pizza", "week(s)", 3, DateTime.Now.AddMonths(2));
@@ -76,7 +354,7 @@ namespace SpendLess.UnitTests
         }
 
         [Test]
-        public async Task AddingTransactionsListChangesTransactionList()
+        public async Task GettingTransactionsListChangesTransactionList()
         {
             var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
             await _transactionServiceAddPeriodic.GetTransactions();
@@ -105,7 +383,7 @@ namespace SpendLess.UnitTests
                 Password = "password",
                 Username = "username"
             });
-        
+
             Assert.IsNotNull(_localStorage.GetItemAsStringAsync("token"));
         }
 

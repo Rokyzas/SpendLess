@@ -6,6 +6,7 @@ namespace SpendLess.Client.Services
 
     public interface ITransactionService
     {
+        public Task Savelist(double? amount, bool toggleExpenseIncome, string? textValue, string? categoryValue, DateTime? date, bool togglePeriodical, int interval, string period, DateTime? endDate);
         public List<Transactions> Transactions { get; set; }
 
         event EventHandler<EventArgs>? TransactionsChanged;
