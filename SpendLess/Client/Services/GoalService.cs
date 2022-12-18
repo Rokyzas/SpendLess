@@ -145,5 +145,28 @@ namespace SpendLess.Client.Services
                 throw;
             }
         }
+
+        //public async Task<string> UpdateCurrentAmount(SpendLess.Shared.Goal goal, double? addCurrentAmount)
+        //{
+        //    if (addCurrentAmount <= 0)
+        //    {
+        //        addCurrentAmount = 0;
+        //        return "";
+        //    }
+
+        //    foreach (var element in Goals)
+        //    {
+        //        if (element.Id == goal.Id)
+        //        {
+        //            if (element.CurrentAmount + addCurrentAmount < element.Amount)
+        //                element.CurrentAmount += addCurrentAmount;
+        //            else
+        //                element.CurrentAmount = element.Amount;
+        //            await ChangeCurrentAmount(element);
+        //        }
+        //    }
+        //    addCurrentAmount = 0;
+        //    return "";
+        //}
     }
 }

@@ -21,7 +21,6 @@
     //User input values
     private int sk;
     private string? textValue;
-    private string? categoryValue;
     private double? amount = null;
     private DateTime? date = DateTime.Today;
     private double? currentAmount = 0;
@@ -123,7 +122,7 @@
 
     public async Task Savelist()
     {
-        if (amount < 0)
+        if (amount <= 0 || textValue == null)
         {
             //SnackBarService.WarningMsg("Amount can not be negative or zero!");
             return;
@@ -131,9 +130,7 @@
 
         await GoalService.AddGoal(1, textValue, amount, date ?? DateTime.MinValue, currentAmount);
 
-        categoryValue = null;
         amount = null;
-
         textValue = null;
 
     }
@@ -143,14 +140,17 @@
         if (addCurrentAmount <= 0)
         {
             addCurrentAmount = 0;
-            return"";
+            return "";
         }
 
-        foreach(var element in GoalService.Goals)
+        foreach (var element in GoalService.Goals)
         {
-            if(element.Id == goal.Id)
+            if (element.Id == goal.Id)
             {
-                element.CurrentAmount += addCurrentAmount;
+                if (element.CurrentAmount + addCurrentAmount < element.Amount)
+                    element.CurrentAmount += addCurrentAmount;
+                else
+                    element.CurrentAmount = element.Amount;
                 await GoalService.ChangeCurrentAmount(element);
             }
         }
