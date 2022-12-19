@@ -1,10 +1,11 @@
 ﻿@using SpendLess.Client
+@inject NavigationManager NavigationManager
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    You need to log in to see website contents
+                    @{NavigationManager.NavigateTo("/login");}
                 </NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />

@@ -5,6 +5,7 @@
 @inject ITransactionService TransactionService
 @inject ILocalStorageService _localStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -21,19 +22,22 @@
                 <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.BarChart" Href="/stats">Statistics</MudNavLink>
             </MudNavMenu>
         </MudDrawer>
+        <AuthorizeView>
+            <Authorized>
+                <MudMenu Style="position:absolute; top:3%; right:3%;" FullWidth="false" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopRight">
+                    <ActivatorContent>
+                        <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary">
+                            NAME
+                        </MudChip>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem @onclick = "NavToProfile"> Profile</MudMenuItem>
+                        <MudMenuItem @onclick = "Logout"> Logout </MudMenuItem>
 
-        <MudMenu Style="position:absolute; top:3%; right:3%;" FullWidth="false" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopRight">
-            <ActivatorContent>
-                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary">
-                    NAME
-                </MudChip>
-            </ActivatorContent>
-            <ChildContent>
-                <MudMenuItem>Profile</MudMenuItem>
-                <MudMenuItem @onclick = "Logout"> Logout </MudMenuItem>
-
-            </ChildContent>
-        </MudMenu>
+                    </ChildContent>
+                </MudMenu>
+            </Authorized>
+        </AuthorizeView>
 
 
         <div class="d-flex justify-center align-center mud-height-full">
@@ -74,6 +78,11 @@
     {
         await _localStorage.RemoveItemAsync("token");
         await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("/login");
+    }
+    void NavToProfile()
+    {
+        NavigationManager.NavigateTo("/profile");
     }
 }
 

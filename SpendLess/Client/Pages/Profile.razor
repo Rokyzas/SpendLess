@@ -6,17 +6,17 @@
 @attribute [Authorize]
 @inject ISnackbar Snackbar
 @inject ITransactionService TransactionService
-
+<div>
 <h1>User</h1>
 
-<div class="gap-4 d-flex flex-wrap">
+<div>
     <MudTextField @bind-Value="balance" Label="Balance" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
 </div>
 
 <br />
 
 <button class="btn btn-primary" @onclick="()=>TransactionService.OnTransactionsChanged()">Save</button>
-
+</div>
 @code {
     public static double balance = 0;
 }
