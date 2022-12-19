@@ -92,22 +92,15 @@
                     if (goal.Amount <= goal.CurrentAmount)
                     {
                         int value = ((int)(((double)goal.CurrentAmount! / (double)goal.Amount!) * 100));
-                        <div>
+                        <MudText Typo="Typo.h6">
                             @goal.Name
-                            @goal.CurrentAmount / @goal.Amount
-                        </div>
-                        if (value < 20)
-                        {
-                            <MudProgressLinear Color="Color.Error" Rounded="true" Size="Size.Large" Value="@value" />
-                        }
-                        else if (value < 70)
-                        {
-                            <MudProgressLinear Color="Color.Warning" Rounded="true" Size="Size.Large" Value="@value" />
-                        }
-                        else
-                        {
-                            <MudProgressLinear Color="Color.Success" Rounded="true" Size="Size.Large" Value="@value" />
-                        }
+                                @goal.CurrentAmount / @goal.Amount
+                        </MudText>
+
+                        
+                        <MudProgressLinear Color="Color.Success" Size="Size.Large" Value="@value" />
+                        <MudProgressLinear Color="Color.Success" Size="Size.Large" Value="@value" />
+                        
                     }
 
 
