@@ -8,20 +8,6 @@
 
 	<MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
 
-@*	<div class="d-flex flex-grow-1 gap-10">
-		<div>
-			<MudChart ChartType="MudBlazor.ChartType.Donut" Width="100%" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
-				<CustomGraphics>
-					<text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-					<text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
-				</CustomGraphics>
-			</MudChart>
-		</div>
-		<div>
-			<MudChart ChartType="MudBlazor.ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels.Value" Width="100%" Height="550px"></MudChart>
-		</div>
-	</div>*@
-
 	@*Keyframes by https://animate.style/*@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 	<style type="text/css">
