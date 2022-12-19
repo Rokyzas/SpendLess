@@ -9,5 +9,9 @@ namespace SpendLess.Server.Services
         Task<byte[]?> GetUserPasswordSaltAsync(UserDto request);
         Task<bool> FindEmail(string email);
         Task SaveChangesAsync();
+        Task AddTransaction(Transactions transaction);
+        Task<User> GetUser(string email);
+        Task<List<Transactions>> GetTransactionsAsync(int userId);
+        Task RemoveTransaction(Transactions transaction);
     }
 }
