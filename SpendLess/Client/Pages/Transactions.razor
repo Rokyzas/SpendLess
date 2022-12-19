@@ -8,6 +8,7 @@
 @attribute [Authorize]
 @inject HttpClient httpClient
 @inject ITransactionService TransactionService
+@inject IPageService PageService
 
 <div>
     <h3>Have you done any transactions recently?</h3>
@@ -20,7 +21,7 @@
             if (toggleExpenseIncome == false)
             {
                                 <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
-                                <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@Search1" Variant="Variant.Outlined" />
+                <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@PageService.Search" Variant="Variant.Outlined" />
                                 <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
             }
             else
@@ -132,7 +133,7 @@
                         )</td>
                                 <td>@filteredTransactions.ElementAt(i).Amount</td>
                                 <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
-                                <td><button class="btn btn-primary" @onclick="() => DeleteRow(id)">Delete</button></td>
+                                <td><button class="btn btn-primary" @onclick="() => PageService.DeleteRow(id)">Delete</button></td>
                             </tr>
                         }
 
@@ -154,17 +155,6 @@
 
     string[] headings = { "Item", "Category", "Amount", "Date" };
 
-    public async Task DeleteRow(int id)
-    {
-        await TransactionService.DeleteTransaction(id);
-        TransactionService.OnTransactionsChanged();
-
-    }
-}
-
-
-@code {
-
     public async Task Savelist()
     {
         await TransactionService.Savelist(amount, toggleExpenseIncome, textValue, categoryValue, date, togglePeriodical, interval, period, endDate);
@@ -173,19 +163,5 @@
     protected override async Task OnInitializedAsync()
     {
         TransactionService.TransactionsChanged += (source, args) => StateHasChanged();
-    }
-
-    private async Task<IEnumerable<string>> Search1(string value)
-    {
-        // In real life use an asynchronous function for fetching data from an api.
-        await Task.Delay(5);
-
-        string[] categoryVal = System.Enum.GetNames(typeof(SpendLess.Shared.CategoryValues));
-
-
-        // if text is null or empty, show complete list
-        if (string.IsNullOrEmpty(value))
-            return categoryVal.Where(x => x != "Income");
-        return categoryVal.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase) && x != "Income");
     }
 }

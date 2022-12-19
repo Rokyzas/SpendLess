@@ -3,6 +3,8 @@
 @using SpendLess.Shared
 @attribute [Authorize]
 @inject ITransactionService TransactionService
+@inject IPageService PageService
+
 <div style ="width:90%; height:90%; margin-bottom: 60px">
 	<h3>Stats</h3>
 
@@ -136,7 +138,7 @@
 		CategoriesList = (from item in results select item.Category).ToList();
 		ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
 
-		foreach (var day in GetDates((DateTime)YearMonth))
+		foreach (var day in PageService.GetDates((DateTime)YearMonth))
 		{
 			DailyExpenses.Add((from item in Transactions where item.TransactionDate == day && !item.Category.Contains("Income") select Math.Abs((double)item.Amount)).Sum());
 		}
@@ -148,18 +150,9 @@
 
 	public string[] InitDateLabels()
 	{
-		return (from day in GetDates((DateTime)YearMonth) select day.Day.ToString()).ToArray();
+		return (from day in PageService.GetDates((DateTime)YearMonth) select day.Day.ToString()).ToArray();
 	}
 
-	public static List<DateTime> GetDates(DateTime date)
-	{
-		int year = int.Parse(date.ToString("yyyy"));
-		int month = int.Parse(date.ToString("MM"));
-
-		return Enumerable.Range(1, DateTime.DaysInMonth(year, month))
-		.Select(day => new DateTime(year, month, day))
-		.ToList();
-	}
 
 	protected override async Task OnInitializedAsync()
 	{

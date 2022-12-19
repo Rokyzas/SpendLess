@@ -19,6 +19,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 builder.Services.AddScoped<ISnackBarService, SnackBarService>();
+builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddHttpClient("API", c =>
 {

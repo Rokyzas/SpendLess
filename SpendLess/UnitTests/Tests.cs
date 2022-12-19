@@ -38,6 +38,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net;
 
+
 namespace SpendLess.UnitTests
 {
     public class Tests
@@ -61,6 +62,7 @@ namespace SpendLess.UnitTests
         private TransactionService _transactionServiceAdd;
         private TransactionService _transactionServiceAddPeriodic;
         private TransactionService _transactionServiceGetTransactions;
+        private PageService _pageService;
         private AuthenticationStateProvider _authStateProvider;
         private ISnackBarService _snackBarService;
         private Mock<ISnackBarService> _snackBarServiceMock;
@@ -115,8 +117,9 @@ namespace SpendLess.UnitTests
             _transactionServiceGetTransactions = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
             _serverAuthServices = new AuthServices(null);
             _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
-        
-    
+            _pageService = new PageService(_transactionServiceDelete);
+
+
         }
 
 
@@ -363,6 +366,16 @@ namespace SpendLess.UnitTests
         }
 
         [Test]
+        public async Task RemovingTransactionWithPageServiceRemovesFromList()
+        {
+            var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
+            await _transactionServiceAddPeriodic.AddPeriodicTransaction(10, "Food", DateTime.Now, "Pizza", "week(s)", 3, DateTime.Now.AddMonths(2));
+            await _pageService.DeleteRow(10);
+            var listCountAfter = _transactionServiceAddPeriodic.Transactions.Count;
+            Assert.True(listCountBefore < listCountAfter);
+        }
+
+        [Test]
         public async Task SuccessfulyCreatingAccountReturnsTrue()
         {
             var result = await _clientAuthServices.CreateAccount(new UserDto()
@@ -510,6 +523,23 @@ namespace SpendLess.UnitTests
             Assert.That(_clientAuthServices.CheckEmail(email)!,
                 Is.EqualTo("Email format is incorrect"));
 
+        }
+
+        [Test]
+        public async Task SearchingForCategoryValueWithPartialInput()
+        {
+            var result = await _pageService.Search("Trans");
+            string resultString = result.ElementAt(0);
+
+            Assert.That("Transportation".Equals(resultString));
+        }
+
+        [Test]
+        public async Task GetDatesReturnProperResult()
+        {
+            var result = _pageService.GetDates(DateTime.MinValue);
+
+            Assert.That(result.Count == 31);
         }
     }
 }
