@@ -37,6 +37,7 @@ using Tests.MockingServices;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net;
+using System.Security.Principal;
 
 namespace SpendLess.UnitTests
 {
@@ -62,6 +63,7 @@ namespace SpendLess.UnitTests
         private TransactionService _transactionServiceAddPeriodic;
         private TransactionService _transactionServiceGetTransactions;
         private AuthenticationStateProvider _authStateProvider;
+        private SpendLessContext _spendLessContext;
         private ISnackBarService _snackBarService;
         private Mock<ISnackBarService> _snackBarServiceMock;
         private Mock<IDatabaseService> databaseServiceMock;
@@ -96,6 +98,13 @@ namespace SpendLess.UnitTests
             databaseServiceMock.Setup(x => x.GetUserPasswordSaltAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
             databaseServiceMock.Setup(x => x.GetUserPasswordHashAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
             databaseServiceMock.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
+            databaseServiceMock.Setup(x => x.AddTransaction(It.IsAny<Transactions>())).Returns(Task.CompletedTask);
+            databaseServiceMock.Setup(x => x.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User()));
+            databaseServiceMock.Setup(x => x.RemoveTransaction(It.IsAny<Transactions>())).Returns(Task.CompletedTask);
+
+            var mockTransactions = new List<Transactions>();
+            mockTransactions.Add(new Transactions(1, 1, "", DateTime.MinValue));
+            databaseServiceMock.Setup(x => x.GetTransactionsAsync(It.IsAny<int>())).Returns(Task.FromResult(mockTransactions));
 
 
             Log.Logger = new LoggerConfiguration()
@@ -217,6 +226,69 @@ namespace SpendLess.UnitTests
             Assert.That(loginResponse.token == null);
         }
 
+        [Test]
+        public async Task NewlyAddedTransactionReceivesId()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+            var transaction = new Transactions(-1, 1, "", DateTime.UtcNow);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            int? result = await service.AddTransaction(transaction, _spendLessContext, httpcontext);
+            Assert.That(result.HasValue);
+        }
+
+        [Test]
+        public async Task AddingPeriodicTransactionsToDatabase()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+            var transaction = new Transactions(-1, 1, "", DateTime.UtcNow);
+            var transactions = new List<Transactions>();
+            transactions.Add(transaction);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            var result = await service.AddPeriodicTransaction(transactions, _spendLessContext, httpcontext);
+            Assert.That((result.ElementAt(0)) == transaction);
+        }
+
+        [Test]
+        public async Task GetTransactionListFromDatabaseByUserId()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            var result = await service.GetTransactions(_spendLessContext, httpcontext);
+            var firstTrn = result.ElementAt(0);
+            Assert.That(firstTrn.Id == 1 && firstTrn.TransactionDate == DateTime.MinValue);
+        }
+
+        [Test]
+        public async Task DeleteTransactionFromDatabaseReturnSuccess()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var result = await service.DeleteTransaction(1, _spendLessContext);
+            
+            Assert.That(result);
+        }
+
+        [Test]
+        public async Task DeleteTransactionFromDatabaseWithIncorrectIdFails()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var result = await service.DeleteTransaction(-1, _spendLessContext);
+
+            Assert.That(!result);
+        }
 
         [Test]
         public void VoidMethodsWithExceptionsAreLoggedByInterceptor()
