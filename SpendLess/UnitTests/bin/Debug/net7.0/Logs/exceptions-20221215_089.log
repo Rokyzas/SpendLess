@@ -1,4 +1,0 @@
-2022-12-15 03:15:47.868 +02:00 [ERR] 
-Exception message: Object reference not set to an instance of an object.
-Exception stack trace:    at SpendLess.Server.Services.ExceptionService.LogException(Exception ex, ClaimsPrincipal identity) in D:\C#\zapas\master\SpendLess\Server\Services\ExceptionService.cs:line 15
-2022-12-15 03:15:47.933 +02:00 [INF] not existing email

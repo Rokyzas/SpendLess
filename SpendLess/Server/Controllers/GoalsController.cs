@@ -32,7 +32,6 @@ namespace SpendLess.Server.Controllers
 		{
 			var header = Request.Headers.FirstOrDefault(h => h.Key.Equals("Authorization"));
 			_context.Goals.Add(goal);
-			_context.SaveChanges();
 			await _context.SaveChangesAsync();
 
 			return Ok(goal.Id);

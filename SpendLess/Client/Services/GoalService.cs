@@ -72,6 +72,7 @@ namespace SpendLess.Client.Services
 					goal.Id = id;
 					Goals.Add(goal);
 					_snackBarService.SuccessMsg("Succsesfully saved data");
+					return;
 				}
 				if (response.StatusCode == HttpStatusCode.TooManyRequests)
 				{
@@ -82,7 +83,8 @@ namespace SpendLess.Client.Services
 				else
 				{
 					_snackBarService.ErrorMsg("Failed to save data!");
-				}
+                    return;
+                }
 			}
 			catch (NullReferenceException ex)
 			{
@@ -124,7 +126,7 @@ namespace SpendLess.Client.Services
 				}
 				else
 				{
-					return "Failed to add value";
+					return "Successfully Added value";
 				}
 			}
             catch (NullReferenceException ex)
