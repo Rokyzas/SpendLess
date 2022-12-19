@@ -63,6 +63,7 @@ namespace SpendLess.UnitTests
         private TransactionService _transactionServiceAddPeriodic;
         private TransactionService _transactionServiceGetTransactions;
         private PageService _pageService;
+        private GoalService _goalService;
         private AuthenticationStateProvider _authStateProvider;
         private ISnackBarService _snackBarService;
         private Mock<ISnackBarService> _snackBarServiceMock;
@@ -118,6 +119,7 @@ namespace SpendLess.UnitTests
             _serverAuthServices = new AuthServices(null);
             _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
             _pageService = new PageService(_transactionServiceDelete);
+            _goalService = new GoalService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
 
 
         }
@@ -540,6 +542,14 @@ namespace SpendLess.UnitTests
             var result = _pageService.GetDates(DateTime.MinValue);
 
             Assert.That(result.Count == 31);
+        }
+
+        [Test]
+        public async Task ChangingCurrentGoalAmountReturnSuccess()
+        {
+            var result = _goalService.ChangeCurrentAmount(new Goal(1, 1, "", 5, DateTime.MinValue, 0));
+
+            Assert.That(result.Result.Equals("Successfully Added value"));
         }
     }
 }
