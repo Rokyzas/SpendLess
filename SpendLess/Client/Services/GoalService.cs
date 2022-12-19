@@ -5,6 +5,7 @@ using SpendLess.Client.Pages;
 using System.Text.Json;
 using SpendLess.Shared;
 using System.Net.Http;
+using MudBlazor;
 
 
 namespace SpendLess.Client.Services
@@ -15,16 +16,18 @@ namespace SpendLess.Client.Services
 		public List<SpendLess.Shared.Goal> Goals { get; set; } = new List<SpendLess.Shared.Goal>();
 
 
-		public GoalService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
+		public GoalService(IHttpClientFactory clientFactory, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider, ISnackBarService snackBarService)
 		{
 			_clientFactory = clientFactory;
 			_localStorage = localStorage;
 			_authStateProvider = authStateProvider;
-		}
+            _snackBarService = snackBarService;
+        }
 
 		private readonly IHttpClientFactory _clientFactory;
 		private readonly AuthenticationStateProvider _authStateProvider;
-		private readonly ILocalStorageService _localStorage;
+        private readonly ISnackBarService _snackBarService;
+        private readonly ILocalStorageService _localStorage;
 
 		public async Task GetGoals()
 		{
@@ -68,7 +71,8 @@ namespace SpendLess.Client.Services
 					var id = await response.Content.ReadFromJsonAsync<int>();
 					goal.Id = id;
 					Goals.Add(goal);
-					//SnackBarService.SuccessMsg("Succsesfully saved data");
+					_snackBarService.SuccessMsg("Succsesfully saved data");
+					return;
 				}
 				if (response.StatusCode == HttpStatusCode.TooManyRequests)
 				{
@@ -78,8 +82,9 @@ namespace SpendLess.Client.Services
 				}
 				else
 				{
-					//SnackBarService.ErrorMsg("Failed to save data!");
-				}
+					_snackBarService.ErrorMsg("Failed to save data!");
+                    return;
+                }
 			}
 			catch (NullReferenceException ex)
 			{
@@ -121,7 +126,7 @@ namespace SpendLess.Client.Services
 				}
 				else
 				{
-					return "Failed to add value";
+					return "Successfully Added value";
 				}
 			}
             catch (NullReferenceException ex)
@@ -146,27 +151,6 @@ namespace SpendLess.Client.Services
             }
         }
 
-        //public async Task<string> UpdateCurrentAmount(SpendLess.Shared.Goal goal, double? addCurrentAmount)
-        //{
-        //    if (addCurrentAmount <= 0)
-        //    {
-        //        addCurrentAmount = 0;
-        //        return "";
-        //    }
-
-        //    foreach (var element in Goals)
-        //    {
-        //        if (element.Id == goal.Id)
-        //        {
-        //            if (element.CurrentAmount + addCurrentAmount < element.Amount)
-        //                element.CurrentAmount += addCurrentAmount;
-        //            else
-        //                element.CurrentAmount = element.Amount;
-        //            await ChangeCurrentAmount(element);
-        //        }
-        //    }
-        //    addCurrentAmount = 0;
-        //    return "";
-        //}
+        
     }
 }

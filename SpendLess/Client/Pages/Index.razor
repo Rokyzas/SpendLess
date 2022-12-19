@@ -1,7 +1,41 @@
 ﻿@page "/"
 
-<PageTitle>Spendless</PageTitle>
+<div style="width: 80%; heigth: 70%">
+    <h3>Welcome, Rokas</h3>
+    <br>
+    <br>
+    <MudGrid Class="xs=1">
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <div>
+                    <h2>Overview</h2>
+                </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <div>
+                    <h2>This month spendings</h2>
+                    <MudChart ChartType="ChartType.Donut" InputData="@data" InputLabels="@labels">
+                        <CustomGraphics>
+                            <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
+                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@data.Sum().ToString()</text>
+                        </CustomGraphics>
+                    </MudChart>
+                </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <div>
+                    <h2>Today's transactions</h2>
+                </div>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</div>
 
-<h1>Spendless</h1>
-
-Introducing you to your new Expenses Tracker.
+@code {
+    public double[] data = { 25, 77, 28, 5 };
+    public string[] labels = { "Oil", "Coal", "Gas", "Biomass" };
+}

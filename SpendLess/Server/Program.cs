@@ -46,7 +46,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddDbContext<SpendLessContext>();
 builder.Services.AddScoped<IAuthServices, AuthServices>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
-builder.Services.AddScoped<ITransactionsService, TransactionsService>(); 
+builder.Services.AddScoped<ITransactionsService, TransactionsService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

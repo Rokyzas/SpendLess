@@ -62,6 +62,8 @@ namespace SpendLess.UnitTests
         private TransactionService _transactionServiceAdd;
         private TransactionService _transactionServiceAddPeriodic;
         private TransactionService _transactionServiceGetTransactions;
+        private PageService _pageService;
+        private GoalService _goalService;
         private AuthenticationStateProvider _authStateProvider;
         private SpendLessContext _spendLessContext;
         private ISnackBarService _snackBarService;
@@ -124,8 +126,9 @@ namespace SpendLess.UnitTests
             _transactionServiceGetTransactions = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
             _serverAuthServices = new AuthServices(null);
             _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
-        
-    
+            _pageService = new PageService(_transactionServiceDelete);
+            _goalService = new GoalService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
+
         }
 
 
@@ -489,6 +492,23 @@ namespace SpendLess.UnitTests
             Assert.That(_transactionServiceAdd.Transactions.Count, Is.EqualTo(count + 1));
         }
 
+        [Test]
+        public async Task ChangingCurrentGoalAmountReturnSuccess()
+        {
+            var result = _goalService.ChangeCurrentAmount(new Goal(1, 1, "", 5, DateTime.MinValue, 0));
+
+            Assert.That(result.Result.Equals("Successfully Added value"));
+        }
+
+        [Test]
+        public async Task RemovingTransactionWithPageServiceRemovesFromList()
+        {
+            var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
+            await _transactionServiceAddPeriodic.AddPeriodicTransaction(10, "Food", DateTime.Now, "Pizza", "week(s)", 3, DateTime.Now.AddMonths(2));
+            await _pageService.DeleteRow(10);
+            var listCountAfter = _transactionServiceAddPeriodic.Transactions.Count;
+            Assert.True(listCountBefore < listCountAfter);
+        }
 
         [Test]
         public void ProvidingInvalidRequestReturnsFalse()
@@ -507,6 +527,23 @@ namespace SpendLess.UnitTests
                 Username = "username"
             };
             Assert.Throws<NullReferenceException>(() => _serverAuthServices.CreateToken(user, null));
+        }
+
+        [Test]
+        public async Task SearchingForCategoryValueWithPartialInput()
+        {
+            var result = await _pageService.Search("Trans");
+            string resultString = result.ElementAt(0);
+
+            Assert.That("Transportation".Equals(resultString));
+        }
+
+        [Test]
+        public async Task GetDatesReturnProperResult()
+        {
+            var result = _pageService.GetDates(DateTime.MinValue);
+
+            Assert.That(result.Count == 31);
         }
 
         [Test]
