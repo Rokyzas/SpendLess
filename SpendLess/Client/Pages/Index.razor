@@ -1,4 +1,7 @@
 ﻿@page "/"
+@using SpendLess.Shared
+@using SpendLess.Client.Services
+@inject ITransactionService TransactionService
 
 <div style="width: 80%; heigth: 70%">
     <h3>Welcome, Rokas</h3>
@@ -16,10 +19,10 @@
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <div>
                     <h2>This month spendings</h2>
-                    <MudChart ChartType="ChartType.Donut" InputData="@data" InputLabels="@labels">
+                    <MudChart Class="align-self-center py-4 flex-1" ChartType="MudBlazor.ChartType.Donut" Width="100%" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
                         <CustomGraphics>
                             <text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@data.Sum().ToString()</text>
+                            <text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
                         </CustomGraphics>
                     </MudChart>
                 </div>
@@ -36,6 +39,43 @@
 </div>
 
 @code {
-    public double[] data = { 25, 77, 28, 5 };
-    public string[] labels = { "Oil", "Coal", "Gas", "Biomass" };
+	public List<SpendLess.Shared.Transactions> Transactions;
+
+	public List<string> CategoriesList;
+	public List<double> ExpensesList;
+
+	[Parameter]
+	public DateTime? YearMonth
+	{
+		get
+		{
+			return DateTime.Today;
+		}
+		set
+		{
+		}
+	}
+
+
+	protected override async Task OnParametersSetAsync()
+	{
+		Transactions = TransactionService.Transactions;
+
+		var firstTable = from item in Transactions
+							where !item.Category.Contains("Income") &&
+							(item.TransactionDate.Year == ((DateTime)YearMonth).Year && item.TransactionDate.Month == ((DateTime)YearMonth).Month)
+							select item;
+		var results = from item in firstTable group item by item.Category into g select new { Category = g.First().Category, TotalAmount = g.Sum(pc => pc.Amount) };
+		CategoriesList = (from item in results select item.Category).ToList();
+		ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
+
+		StateHasChanged();
+	}
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+		TransactionService.TransactionsChanged += ((source, args) => OnParametersSetAsync());
+	}
 }
