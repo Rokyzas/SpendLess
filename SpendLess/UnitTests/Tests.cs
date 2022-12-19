@@ -37,7 +37,7 @@ using Tests.MockingServices;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net;
-
+using System.Security.Principal;
 
 namespace SpendLess.UnitTests
 {
@@ -62,9 +62,8 @@ namespace SpendLess.UnitTests
         private TransactionService _transactionServiceAdd;
         private TransactionService _transactionServiceAddPeriodic;
         private TransactionService _transactionServiceGetTransactions;
-        private PageService _pageService;
-        private GoalService _goalService;
         private AuthenticationStateProvider _authStateProvider;
+        private SpendLessContext _spendLessContext;
         private ISnackBarService _snackBarService;
         private Mock<ISnackBarService> _snackBarServiceMock;
         private Mock<IDatabaseService> databaseServiceMock;
@@ -99,6 +98,13 @@ namespace SpendLess.UnitTests
             databaseServiceMock.Setup(x => x.GetUserPasswordSaltAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
             databaseServiceMock.Setup(x => x.GetUserPasswordHashAsync(It.IsAny<UserDto>())).Returns(Task.FromResult(new byte[0]));
             databaseServiceMock.Setup(x => x.SaveChangesAsync()).Returns(Task.CompletedTask);
+            databaseServiceMock.Setup(x => x.AddTransaction(It.IsAny<Transactions>())).Returns(Task.CompletedTask);
+            databaseServiceMock.Setup(x => x.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User()));
+            databaseServiceMock.Setup(x => x.RemoveTransaction(It.IsAny<Transactions>())).Returns(Task.CompletedTask);
+
+            var mockTransactions = new List<Transactions>();
+            mockTransactions.Add(new Transactions(1, 1, "", DateTime.MinValue));
+            databaseServiceMock.Setup(x => x.GetTransactionsAsync(It.IsAny<int>())).Returns(Task.FromResult(mockTransactions));
 
 
             Log.Logger = new LoggerConfiguration()
@@ -118,10 +124,8 @@ namespace SpendLess.UnitTests
             _transactionServiceGetTransactions = new TransactionService(_clientFactoryTransactionList, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
             _serverAuthServices = new AuthServices(null);
             _clientAuthServices = new AuthenticationService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
-            _pageService = new PageService(_transactionServiceDelete);
-            _goalService = new GoalService(_clientFactoryLogin, _localStorage, _authProviderMock, _snackBarServiceMock.Object);
-
-
+        
+    
         }
 
 
@@ -222,6 +226,69 @@ namespace SpendLess.UnitTests
             Assert.That(loginResponse.token == null);
         }
 
+        [Test]
+        public async Task NewlyAddedTransactionReceivesId()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+            var transaction = new Transactions(-1, 1, "", DateTime.UtcNow);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            int? result = await service.AddTransaction(transaction, _spendLessContext, httpcontext);
+            Assert.That(result.HasValue);
+        }
+
+        [Test]
+        public async Task AddingPeriodicTransactionsToDatabase()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+            var transaction = new Transactions(-1, 1, "", DateTime.UtcNow);
+            var transactions = new List<Transactions>();
+            transactions.Add(transaction);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            var result = await service.AddPeriodicTransaction(transactions, _spendLessContext, httpcontext);
+            Assert.That((result.ElementAt(0)) == transaction);
+        }
+
+        [Test]
+        public async Task GetTransactionListFromDatabaseByUserId()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var identity = httpcontext.User.Identities.FirstOrDefault();
+            identity.AddClaim(new Claim(ClaimTypes.Email, "email"));
+
+
+            var result = await service.GetTransactions(_spendLessContext, httpcontext);
+            var firstTrn = result.ElementAt(0);
+            Assert.That(firstTrn.Id == 1 && firstTrn.TransactionDate == DateTime.MinValue);
+        }
+
+        [Test]
+        public async Task DeleteTransactionFromDatabaseReturnSuccess()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var result = await service.DeleteTransaction(1, _spendLessContext);
+            
+            Assert.That(result);
+        }
+
+        [Test]
+        public async Task DeleteTransactionFromDatabaseWithIncorrectIdFails()
+        {
+            var service = new TransactionsService(databaseServiceMock.Object);
+
+            var result = await service.DeleteTransaction(-1, _spendLessContext);
+
+            Assert.That(!result);
+        }
 
         [Test]
         public void VoidMethodsWithExceptionsAreLoggedByInterceptor()
@@ -363,16 +430,6 @@ namespace SpendLess.UnitTests
         {
             var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
             await _transactionServiceAddPeriodic.GetTransactions();
-            var listCountAfter = _transactionServiceAddPeriodic.Transactions.Count;
-            Assert.True(listCountBefore < listCountAfter);
-        }
-
-        [Test]
-        public async Task RemovingTransactionWithPageServiceRemovesFromList()
-        {
-            var listCountBefore = _transactionServiceAddPeriodic.Transactions.Count;
-            await _transactionServiceAddPeriodic.AddPeriodicTransaction(10, "Food", DateTime.Now, "Pizza", "week(s)", 3, DateTime.Now.AddMonths(2));
-            await _pageService.DeleteRow(10);
             var listCountAfter = _transactionServiceAddPeriodic.Transactions.Count;
             Assert.True(listCountBefore < listCountAfter);
         }
@@ -525,31 +582,6 @@ namespace SpendLess.UnitTests
             Assert.That(_clientAuthServices.CheckEmail(email)!,
                 Is.EqualTo("Email format is incorrect"));
 
-        }
-
-        [Test]
-        public async Task SearchingForCategoryValueWithPartialInput()
-        {
-            var result = await _pageService.Search("Trans");
-            string resultString = result.ElementAt(0);
-
-            Assert.That("Transportation".Equals(resultString));
-        }
-
-        [Test]
-        public async Task GetDatesReturnProperResult()
-        {
-            var result = _pageService.GetDates(DateTime.MinValue);
-
-            Assert.That(result.Count == 31);
-        }
-
-        [Test]
-        public async Task ChangingCurrentGoalAmountReturnSuccess()
-        {
-            var result = _goalService.ChangeCurrentAmount(new Goal(1, 1, "", 5, DateTime.MinValue, 0));
-
-            Assert.That(result.Result.Equals("Successfully Added value"));
         }
     }
 }
