@@ -3,6 +3,7 @@
 @using SpendLess.Shared
 @attribute [Authorize]
 @inject IGoalService GoalService
+@inject ISnackBarService SnackBarService
 <div style="height:100%; width:100%; overflow: auto; display: flex; justify-content: center" id="unique_id_scroll_section" class="ma-0">
     <div>
         <br>
@@ -119,9 +120,9 @@
 
     public async Task Savelist()
     {
-        if (amount <= 0 || textValue == null)
+        if (amount <= 0 || textValue == null || amount == null)
         {
-            //SnackBarService.WarningMsg("Amount can not be negative or zero!");
+            SnackBarService.WarningMsg("Don't leave empty fields!");
             return;
         }
 

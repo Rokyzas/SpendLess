@@ -155,7 +155,12 @@
 
     public async Task Savelist()
     {
-        await TransactionService.Savelist(amount, toggleExpenseIncome, textValue, categoryValue, date, togglePeriodical, interval, period, endDate);
+        if ((await TransactionService.Savelist(amount, toggleExpenseIncome, textValue, categoryValue, date, togglePeriodical, interval, period, endDate)))
+        {
+            amount = null;
+            textValue = null;
+            categoryValue = null;
+        }
     }
 
     protected override async Task OnInitializedAsync()
