@@ -37,11 +37,11 @@ namespace SpendLess.Client.Services
 
 
 
-        public async Task Savelist(double? amount, bool toggleExpenseIncome, string? textValue, string? categoryValue, DateTime? date, bool togglePeriodical, int interval, string period, DateTime? endDate)
+        public async Task<bool> Savelist(double? amount, bool toggleExpenseIncome, string? textValue, string? categoryValue, DateTime? date, bool togglePeriodical, int interval, string period, DateTime? endDate)
         {
             if (amount < 0){
                 //SnackBarService.WarningMsg("Amount can not be negative or zero!");
-                return;
+                return false;
             }
             if (toggleExpenseIncome == true)
             {
@@ -68,11 +68,12 @@ namespace SpendLess.Client.Services
 
                 categoryValue = null;
                 amount = null;
+                return true;
             }
 
             else{
                 //SnackBarService.WarningMsg("Fields can not be empty!");
-                return;
+                return false;
             }
             textValue = null;
             await OnTransactionsChanged();
@@ -150,6 +151,7 @@ namespace SpendLess.Client.Services
                     var id = await response.Content.ReadFromJsonAsync<int>();
                     transaction.Id = id;
                     Transactions.Add(transaction);
+
                     _snackBarService.SuccessMsg("Succsesfully saved data");
                 }
                 else if (response.StatusCode == HttpStatusCode.TooManyRequests){
