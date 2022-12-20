@@ -8,6 +8,7 @@ namespace SpendLess.Client.Services
     {
         public Task Savelist(double? amount, bool toggleExpenseIncome, string? textValue, string? categoryValue, DateTime? date, bool togglePeriodical, int interval, string period, DateTime? endDate);
         public List<Transactions> Transactions { get; set; }
+        public string UserName { get; set; }
 
         event EventHandler<EventArgs>? TransactionsChanged;
 
@@ -21,5 +22,7 @@ namespace SpendLess.Client.Services
         Task AddPeriodicTransaction(double? amount, string category, DateTime date, string comment, string period, int interval, DateTime? endDate);
 
         Task<string> DeleteTransaction(int id);
+
+        Task GetUserName();
     }
 }

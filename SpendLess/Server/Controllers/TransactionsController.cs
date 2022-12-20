@@ -50,5 +50,10 @@ namespace SpendLess.Server.Controllers
         [LimitRequests(MaxRequests = 3, TimeWindow = 1)]
         public async Task DeleteTransaction(int id) =>
             await _service.DeleteTransaction(id, _context);
+
+        [HttpGet("GetUser")]
+        public async Task<ActionResult<User>> GetUser() =>
+            await _service.GetUser(_context, HttpContext);
+
     }
 }
