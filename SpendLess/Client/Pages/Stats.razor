@@ -4,78 +4,80 @@
 @attribute [Authorize]
 @inject ITransactionService TransactionService
 @inject IPageService PageService
+<div style="height:100%; width:100%; overflow: auto; display: flex; justify-content: center" id="unique_id_scroll_section" class="ma-0">
+	<div style ="width:90%; height:90%; margin-bottom: 60px">
+		<br>
+		<h3>Stats</h3>
 
-<div style ="width:90%; height:90%; margin-bottom: 60px">
-	<h3>Stats</h3>
+		<MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
 
-	<MudDatePicker Label="Choose month of the year" @bind-Date="YearMonth" OpenTo="OpenTo.Month" FixDay="1" DateFormat="MMMM" />
+		@*Keyframes by https://animate.style/*@
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+		<style type="text/css">
 
-	@*Keyframes by https://animate.style/*@
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<style type="text/css">
+			.bounceIn {
+				opacity: 0;
+				animation-delay: 0.5s;
+				animation-duration: 0.5s;
+				animation-name: bounceIn;
+				animation-fill-mode: forwards;
+			}
 
-		.bounceIn {
-			opacity: 0;
-			animation-delay: 0.5s;
-			animation-duration: 0.5s;
-			animation-name: bounceIn;
-			animation-fill-mode: forwards;
-		}
+			.bounceOut {
+				animation-duration: 0.5s;
+				animation-name: bounceOut;
+				animation-fill-mode: forwards;
+			}
 
-		.bounceOut {
-			animation-duration: 0.5s;
-			animation-name: bounceOut;
-			animation-fill-mode: forwards;
-		}
+			.backInDown {
+				opacity: 0;
+				animation-delay: 0.5s;
+				animation-duration: 0.5s;
+				animation-name: backInDown;
+				animation-fill-mode: forwards;
+			}
 
-		.backInDown {
-			opacity: 0;
-			animation-delay: 0.5s;
-			animation-duration: 0.5s;
-			animation-name: backInDown;
-			animation-fill-mode: forwards;
-		}
+			.backOutDown {
+				animation-duration: 0.5s;
+				animation-name: backOutDown;
+				animation-fill-mode: forwards;
+			}
 
-		.backOutDown {
-			animation-duration: 0.5s;
-			animation-name: backOutDown;
-			animation-fill-mode: forwards;
-		}
+			.rotateIn {
+				opacity: 0;
+				animation-delay: 0.5s;
+				animation-duration: 0.5s;
+				animation-name: rotateIn;
+				animation-fill-mode: forwards;
+			}
 
-		.rotateIn {
-			opacity: 0;
-			animation-delay: 0.5s;
-			animation-duration: 0.5s;
-			animation-name: rotateIn;
-			animation-fill-mode: forwards;
-		}
+			.rotateOut {
+				animation-duration: 0.5s;
+				animation-name: rotateOut;
+				animation-fill-mode: forwards;
+			}
+		</style>
 
-		.rotateOut {
-			animation-duration: 0.5s;
-			animation-name: rotateOut;
-			animation-fill-mode: forwards;
-		}
-	</style>
-
-	<MudCarousel Class="mud-width-full" Style="height:700px" TData="object" AutoCycle="false">
-		<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="backInDown" CustomTransitionExit="backOutDown">
-			<div class="d-flex" style="height:100%">
-				<MudChart Class="align-self-center py-4 flex-1" ChartType="MudBlazor.ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels.Value" Width="100%" Height="550px"></MudChart>
-			</div>
-		</MudCarouselItem>
-		<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="rotateIn" CustomTransitionExit="rotateOut">
-			<div class="d-flex"  style="height:100%">
-				<MudChart Class="align-self-center py-4 flex-1" ChartType="MudBlazor.ChartType.Donut" Width="100%" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
-					<CustomGraphics>
-						<text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
-						<text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
-					</CustomGraphics>
-				</MudChart>
-			</div>
-		</MudCarouselItem>
-	</MudCarousel>
+		<MudCarousel Class="mud-width-full" Style="height:700px" TData="object" AutoCycle="false">
+			<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="backInDown" CustomTransitionExit="backOutDown">
+				<div class="d-flex" style="height:100%">
+					<MudChart Class="align-self-center py-4 flex-1" ChartType="MudBlazor.ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels.Value" Width="100%" Height="550px"></MudChart>
+				</div>
+			</MudCarouselItem>
+			<MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="rotateIn" CustomTransitionExit="rotateOut">
+				<div class="d-flex"  style="height:100%">
+					<MudChart Class="align-self-center py-4 flex-1" ChartType="MudBlazor.ChartType.Donut" Width="100%" Height="300px" InputData="@(ExpensesList.ToArray())" InputLabels="@(CategoriesList.ToArray())">
+						<CustomGraphics>
+							<text class="donut-inner-text" x="47%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="2">Total</text>
+							<text class="donut-inner-text" x="47%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-family="Helvetica" font-size="5">@Math.Round(ExpensesList.Sum(), 2)</text>
+						</CustomGraphics>
+					</MudChart>
+				</div>
+			</MudCarouselItem>
+		</MudCarousel>
 
 	</div>
+</div>
 @code {
 	public List<SpendLess.Shared.Transactions> Transactions = new List<SpendLess.Shared.Transactions>();
 

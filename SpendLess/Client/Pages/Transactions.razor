@@ -10,145 +10,143 @@
 @inject ITransactionService TransactionService
 @inject IPageService PageService
 
-<div>
-    <h3>Have you done any transactions recently?</h3>
-
-    <br>
-
-    <!-- User inputs UI -->
-    <div class="gap-4 d-flex flex-wrap">
-        @{
-            if (toggleExpenseIncome == false)
-            {
-                                <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
-                <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@PageService.Search" Variant="Variant.Outlined" />
-                                <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-            }
-            else
-            {
-                                <MudTextField @bind-Value="textValue" Label="I made money from..." Variant="Variant.Outlined"></MudTextField>
-                                <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-            }
-
-                    <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
-        }
-    </div>
-
-    @code {
-        //User input values
-        private int sk;
-        private string? textValue;
-        private string? categoryValue;
-        private double? amount = null;
-        private DateTime? date = DateTime.Today;
-    }
-
-
-    <br />
-
-    <!-- Save, toggle buttons -->
+<div style="height:100%; width:100%; overflow: auto; display: flex; justify-content: center" id="unique_id_scroll_section" class="ma-0">
     <div>
-        <button class="btn btn-primary" @onclick="Savelist">Save</button>
-        <MudToggleIconButton @bind-Toggled="@toggleExpenseIncome" Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
-        <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
-        <MudToggleIconButton @bind-Toggled="@togglePeriodical" Icon="@Icons.Filled.TimerOff" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.Timer" ToggledColor="@Color.Success" ToggledTitle="On" />
-        <span>@(togglePeriodical ? "Periodic" : "OneTime")</span>
-    </div>
-    @{
-        if (togglePeriodical)
-        {
-            <div class="gap-4 d-flex flex-wrap">
-                <p>Repeat every</p>
-                <MudTextField @bind-Value="interval" Variant="Variant.Outlined"></MudTextField>
-                <MudSelect T="string" @bind-Value="period" AnchorOrigin="Origin.BottomCenter">
-                    <MudSelectItem Value="@("day(s)")" />
-                    <MudSelectItem Value="@("week(s)")" />
-                    <MudSelectItem Value="@("month(s)")" />
-                </MudSelect>
-                <MudDatePicker Label="End Date" Editable="true" @bind-Date="endDate" Variant="Variant.Outlined" />
-            </div>
-        }
-    }
+        <br>
+        <br>
+        <h3>Have you done any transactions recently?</h3>
 
+        <br>
 
-
-    @code {
-        private bool toggleExpenseIncome;
-        private bool togglePeriodical;
-
-        private int interval = 1;
-        private string period = "day(s)";
-        private DateTime? endDate = null;
-    }
-
-    <br />
-
-    <br />
-
-    <!-- Transaction table -->
-    <MudSimpleTable Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Style="overflow-x: auto;">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th width="20%">
-                    <MudDatePicker Label="DateFilterFrom" Editable="true" @bind-Date="dateFilterFrom" Variant="Variant.Outlined"/>
-                </th>
-                <th width="20%">
-                    <MudDatePicker Label="DateFilterTo" Editable="true" @bind-Date="dateFilterTo" Variant="Variant.Outlined" />
-                </th>
-                <th></th>
-            </tr>
-            <tr>
-                @foreach (var h in headings)
-                {
-                            <th>@h</th>
-                }
-                <th width="3%"></th>
-            </tr>
-
-        </thead>
-        <tbody>
+        <!-- User inputs UI -->
+        <div class="gap-4 d-flex flex-wrap">
             @{
-                if (TransactionService.Transactions is not null)
+                if (toggleExpenseIncome == false)
                 {
-                    List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
+                                    <MudTextField @bind-Value="textValue" Label="I spent money on..." Variant="Variant.Outlined"></MudTextField>
+                    <MudAutocomplete T="string" Label="Category" @bind-Value="categoryValue" SearchFunc="@PageService.Search" Variant="Variant.Outlined" />
+                                    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                }
+                else
+                {
+                                    <MudTextField @bind-Value="textValue" Label="I made money from..." Variant="Variant.Outlined"></MudTextField>
+                                    <MudTextField @bind-Value="amount" Label="Amount" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+                }
 
-                    if (dateFilterTo != null)
-                        filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
+                        <MudDatePicker Label="Date" Editable="true" @bind-Date="date" Variant="Variant.Outlined" />
+            }
+        </div>
 
-                    if (dateFilterFrom != null)
-                        filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
+        @code {
+            //User input values
+            private int sk;
+            private string? textValue;
+            private string? categoryValue;
+            private double? amount = null;
+            private DateTime? date = DateTime.Today;
+        }
 
 
-                    if (filteredTransactions != null)
+        <br />
+
+        <!-- Save, toggle buttons -->
+        <div>
+            <button class="btn btn-primary" @onclick="Savelist">Save</button>
+            <MudToggleIconButton @bind-Toggled="@toggleExpenseIncome" Icon="@Icons.Filled.AttachMoney" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.AttachMoney" ToggledColor="@Color.Success" ToggledTitle="On" />
+            <span>@(toggleExpenseIncome ? "Income" : "Expense")</span>
+            <MudToggleIconButton @bind-Toggled="@togglePeriodical" Icon="@Icons.Filled.TimerOff" Color="@Color.Error" Title="Off" ToggledIcon="@Icons.Filled.Timer" ToggledColor="@Color.Success" ToggledTitle="On" />
+            <span>@(togglePeriodical ? "Periodic" : "OneTime")</span>
+        </div>
+        @{
+            if (togglePeriodical)
+            {
+                <div class="gap-4 d-flex flex-wrap">
+                    <p>Repeat every</p>
+                    <MudTextField @bind-Value="interval" Variant="Variant.Outlined"></MudTextField>
+                    <MudSelect T="string" @bind-Value="period" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelectItem Value="@("day(s)")" />
+                        <MudSelectItem Value="@("week(s)")" />
+                        <MudSelectItem Value="@("month(s)")" />
+                    </MudSelect>
+                    <MudDatePicker Label="End Date" Editable="true" @bind-Date="endDate" Variant="Variant.Outlined" />
+                </div>
+            }
+        }
+
+
+
+        @code {
+            private bool toggleExpenseIncome;
+            private bool togglePeriodical;
+
+            private int interval = 1;
+            private string period = "day(s)";
+            private DateTime? endDate = null;
+        }
+
+        <br />
+
+        <br />
+
+        <!-- Transaction table -->
+        <MudSimpleTable Dense="false" Hover="true" Bordered="false" Striped="false" Style="overflow-x: auto;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th width="20%">
+                        <MudDatePicker Label="DateFilterFrom" Editable="true" @bind-Date="dateFilterFrom" Variant="Variant.Outlined"/>
+                    </th>
+                    <th width="20%">
+                        <MudDatePicker Label="DateFilterTo" Editable="true" @bind-Date="dateFilterTo" Variant="Variant.Outlined" />
+                    </th>
+                    <th></th>
+                </tr>
+                <tr>
+                    @foreach (var h in headings)
                     {
-                        for (int i = 0; i < filteredTransactions.Count; i++)
-                        {
-                            int id = filteredTransactions.ElementAt(i).Id ?? 0;
-                            <tr>
-                                <td>@filteredTransactions.ElementAt(i).Comment</td>
-                                <td>@(
-                        (filteredTransactions.ElementAt(i).Category)
-                        )</td>
-                                <td>@filteredTransactions.ElementAt(i).Amount</td>
-                                <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
-                                <td><button class="btn btn-primary" @onclick="() => PageService.DeleteRow(id)">Delete</button></td>
-                            </tr>
-                        }
+                                <th>@h</th>
+                    }
+                    <th width="3%"></th>
+                </tr>
 
+            </thead>
+            <tbody>
+                @{
+                    if (TransactionService.Transactions is not null)
+                    {
+                        List<SpendLess.Shared.Transactions> filteredTransactions = TransactionService.Transactions;
+
+                        if (dateFilterTo != null)
+                            filteredTransactions = filteredTransactions.Where(x => x.TransactionDate <= dateFilterTo).ToList();
+
+                        if (dateFilterFrom != null)
+                            filteredTransactions = filteredTransactions.Where(x => x.TransactionDate >= dateFilterFrom).ToList();
+
+
+                        if (filteredTransactions != null)
+                        {
+                            for (int i = 0; i < filteredTransactions.Count; i++)
+                            {
+                                int id = filteredTransactions.ElementAt(i).Id ?? 0;
+                                <tr>
+                                    <td>@filteredTransactions.ElementAt(i).Comment</td>
+                                    <td>@((filteredTransactions.ElementAt(i).Category))</td>
+                                    <td>@filteredTransactions.ElementAt(i).Amount</td>
+                                    <td>@filteredTransactions.ElementAt(i).TransactionDate.ToString("dd/MM/yyy")</td>
+                                    <td><button class="btn btn-primary" @onclick="() => PageService.DeleteRow(id)">Delete</button></td>
+                                </tr>
+                            }
+
+                        }
                     }
                 }
-            }
-        </tbody>
-    </MudSimpleTable>
+            </tbody>
+        </MudSimpleTable>
+    </div>
 </div>
 @code {
     //Table properties
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
 
     DateTime? dateFilterFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
     DateTime? dateFilterTo = DateTime.Today;

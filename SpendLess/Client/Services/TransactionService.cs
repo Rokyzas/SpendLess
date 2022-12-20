@@ -12,13 +12,6 @@ namespace SpendLess.Client.Services
     public class TransactionService : ITransactionService
     {
 
-        /* private readonly HttpClient _httpClient;
-
-         public TransactionService(HttpClient httpClient)
-         {
-             _httpClient = httpClient;
-         }*/
-
         public event EventHandler<EventArgs>? TransactionsChanged;
         public async Task OnTransactionsChanged()
         {
