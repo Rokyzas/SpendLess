@@ -1,9 +1,11 @@
-﻿using MudBlazor;
+﻿using Microsoft.IdentityModel.Tokens;
+using MudBlazor;
 using SpendLess.Shared;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SpendLess.Client.Services
@@ -32,6 +34,7 @@ namespace SpendLess.Client.Services
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
         public List<SpendLess.Shared.Transactions> Transactions { get; set; } = new List<SpendLess.Shared.Transactions>();
+        public string UserName { get; set; } = "Name not found";
 
         public delegate void LogException(HttpClient client, string str, Exception ex);
 
@@ -354,6 +357,34 @@ namespace SpendLess.Client.Services
                 SnackBarService.SuccessMsg("Data loaded");
             }*/
             await this.OnTransactionsChanged();
+        }
+
+        public async Task GetUserName()
+        {
+            var client = _clientFactory.CreateClient();
+            try
+            {
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetUser");
+                string token = await _localStorage.GetItemAsStringAsync("token");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
+
+                var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
+                if ((response.StatusCode) == HttpStatusCode.Unauthorized)
+                {
+                    await _authStateProvider.GetAuthenticationStateAsync();
+                    _snackBarService.ErrorMsg("Session has ended");
+                    UserName = "Name not found";
+                }
+
+                var result = await response.Content.ReadFromJsonAsync<Server.Models.User>();
+                UserName = result.Name;
+                
+            }
+            catch (Exception ex)
+            {
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
+                throw;
+            }
         }
 
     }

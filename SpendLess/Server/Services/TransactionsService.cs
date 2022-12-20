@@ -16,7 +16,7 @@ namespace SpendLess.Server.Services
 
         public async Task<List<Transactions>> GetTransactions(SpendLessContext _context, HttpContext _httpContext)
         {
-            var user = await GetUserId(_context, _httpContext);
+            var user = await GetUser(_context, _httpContext);
 
             var result = _databaseService.GetTransactionsAsync(user.Id);
             var transactions = result.Result;
@@ -26,7 +26,7 @@ namespace SpendLess.Server.Services
 
         public async Task<int?> AddTransaction(Transactions? transaction, SpendLessContext _context, HttpContext _httpContext)
         {
-            var user = await GetUserId(_context, _httpContext);
+            var user = await GetUser(_context, _httpContext);
 
             transaction.UserId = user.Id;
 
@@ -37,7 +37,7 @@ namespace SpendLess.Server.Services
 
         public async Task<List<Transactions?>> AddPeriodicTransaction(List<Transactions> transactions, SpendLessContext _context, HttpContext _httpContext)
         {
-            var user = await GetUserId(_context, _httpContext);
+            var user = await GetUser(_context, _httpContext);
 
             foreach (var transaction in transactions)
             {
@@ -64,7 +64,7 @@ namespace SpendLess.Server.Services
         }
 
 
-        public async Task<User> GetUserId(SpendLessContext _context, HttpContext _httpContext)
+        public async Task<User> GetUser(SpendLessContext _context, HttpContext _httpContext)
         {
             var identity = _httpContext.User.Identity as ClaimsIdentity;
             var userClaims = identity.Claims;
@@ -72,6 +72,6 @@ namespace SpendLess.Server.Services
             var user = await _databaseService.GetUser(email);
 
             return user;
-        } 
+        }
     }
 }

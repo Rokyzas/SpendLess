@@ -2,12 +2,13 @@
 @using SpendLess.Shared
 @using SpendLess.Client.Services
 @inject ITransactionService TransactionService
+
 @attribute [Authorize]
 <div style="height:100%; width:100%; overflow: auto; display: flex; justify-content: center" id="unique_id_scroll_section" class="ma-0">
     <div style="width: 80%; heigth: 70%;">
         <br>
         <br>
-        <h3>Welcome, Rokas</h3>
+        <h3>Welcome, @userName</h3>
         <br>
         <br>
         <MudGrid Class="xs=1">
@@ -72,22 +73,24 @@
     </div>
 </div>
 @code {
-	public List<SpendLess.Shared.Transactions> Transactions;
+    public List<SpendLess.Shared.Transactions> Transactions;
 
-	public List<string> CategoriesList;
-	public List<double> ExpensesList;
+    public List<string> CategoriesList;
+    public List<double> ExpensesList;
 
-	[Parameter]
-	public DateTime? YearMonth
-	{
-		get
-		{
-			return DateTime.Today;
-		}
-		set
-		{
-		}
-	}
+    public string userName;
+
+    [Parameter]
+    public DateTime? YearMonth
+    {
+        get
+        {
+            return DateTime.Today;
+        }
+        set
+        {
+        }
+    }
 
     private double GetBalance()
     {
@@ -97,25 +100,27 @@
     }
 
 
-	protected override async Task OnParametersSetAsync()
-	{
-		Transactions = TransactionService.Transactions;
+    protected override async Task OnParametersSetAsync()
+    {
+        Transactions = TransactionService.Transactions;
 
-		var firstTable = from item in Transactions
-							where !item.Category.Contains("Income") &&
-							(item.TransactionDate.Year == ((DateTime)YearMonth).Year && item.TransactionDate.Month == ((DateTime)YearMonth).Month)
-							select item;
-		var results = from item in firstTable group item by item.Category into g select new { Category = g.First().Category, TotalAmount = g.Sum(pc => pc.Amount) };
-		CategoriesList = (from item in results select item.Category).ToList();
-		ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
+        var firstTable = from item in Transactions
+                         where !item.Category.Contains("Income") &&
+                         (item.TransactionDate.Year == ((DateTime)YearMonth).Year && item.TransactionDate.Month == ((DateTime)YearMonth).Month)
+                         select item;
+        var results = from item in firstTable group item by item.Category into g select new { Category = g.First().Category, TotalAmount = g.Sum(pc => pc.Amount) };
+        CategoriesList = (from item in results select item.Category).ToList();
+        ExpensesList = (from item in results select Math.Abs((double)item.TotalAmount)).ToList();
 
-		StateHasChanged();
-	}
+        StateHasChanged();
+    }
 
 
-	protected override async Task OnInitializedAsync()
-	{
-		TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
-		TransactionService.TransactionsChanged += ((source, args) => OnParametersSetAsync());
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        TransactionService.TransactionsChanged += ((source, args) => StateHasChanged());
+        TransactionService.TransactionsChanged += ((source, args) => OnParametersSetAsync());
+        await TransactionService.GetUserName();
+        userName = TransactionService.UserName;
+    }
 }
