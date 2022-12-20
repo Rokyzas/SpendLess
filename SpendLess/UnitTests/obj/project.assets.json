@@ -8053,23 +8053,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\viliu\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
+      "projectUniqueName": "D:\\C#\\final\\SpendLess\\UnitTests\\Tests.csproj",
       "projectName": "Tests",
-      "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\UnitTests\\Tests.csproj",
-      "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\UnitTests\\obj\\",
+      "projectPath": "D:\\C#\\final\\SpendLess\\UnitTests\\Tests.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\C#\\final\\SpendLess\\UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8078,21 +8078,20 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
-              "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj"
+            "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj": {
+              "projectPath": "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj"
             },
-            "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
-              "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj"
+            "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj": {
+              "projectPath": "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj"
             },
-            "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-              "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+            "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+              "projectPath": "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj"
             }
           }
         }

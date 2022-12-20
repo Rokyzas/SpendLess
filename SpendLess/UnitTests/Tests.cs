@@ -38,6 +38,8 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net;
 using System.Security.Principal;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Identity;
 
 namespace SpendLess.UnitTests
 {
@@ -131,7 +133,25 @@ namespace SpendLess.UnitTests
 
         }
 
+        [Test]
+        public async Task GettingUserNameSetsClassVariable()
+        {
 
+            var user = new User()
+            {
+                Id= 1,
+                Email = "email",
+                Name= "name",
+                PasswordHash = new byte[] {1},
+                PasswordSalt= new byte[] {1}
+            };
+            var clientFactoryMock = new HttpClientFactoryMock<Server.Models.User>(user);
+            var service = new TransactionService(clientFactoryMock, _localStorageAuth, _authProviderMock, _snackBarServiceMock.Object);
+            await service.GetUserName();
+            var userName = service.UserName;
+
+            Assert.That(userName, Is.EqualTo("name"));
+        }
 
         [Test]
         public async Task AllowedAmountOfRequestsInvokesNextDelegate()

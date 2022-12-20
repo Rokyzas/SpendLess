@@ -58,3 +58,15 @@ C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\Shared\obj\Debug\net7.0\Spen
 C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\Shared\obj\Debug\net7.0\refint\SpendLess.Shared.dll
 C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.pdb
 C:\Users\viliu\Documents\GitHub\SpendLess\SpendLess\Shared\obj\Debug\net7.0\ref\SpendLess.Shared.dll
+D:\C#\final\SpendLess\Shared\bin\Debug\net7.0\SpendLess.Shared.deps.json
+D:\C#\final\SpendLess\Shared\bin\Debug\net7.0\SpendLess.Shared.dll
+D:\C#\final\SpendLess\Shared\bin\Debug\net7.0\SpendLess.Shared.pdb
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.csproj.AssemblyReference.cache
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.AssemblyInfoInputs.cache
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.AssemblyInfo.cs
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.csproj.CoreCompileInputs.cache
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.dll
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\refint\SpendLess.Shared.dll
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\SpendLess.Shared.pdb
+D:\C#\final\SpendLess\Shared\obj\Debug\net7.0\ref\SpendLess.Shared.dll

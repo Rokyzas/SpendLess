@@ -2,6 +2,7 @@
 using MudBlazor;
 using SpendLess.Shared;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -85,7 +86,7 @@ namespace SpendLess.Client.Services
 
 
 
-        public async Task GetTransactions(Services.LogException logException)
+        public async Task GetTransactions()
         {           
             var client = _clientFactory.CreateClient();
             try
@@ -106,23 +107,23 @@ namespace SpendLess.Client.Services
                     Transactions = result;
                 }              
             }
-    //        catch (NullReferenceException ex)
-    //        {
-				//logException(client, "https://localhost:7290/api/Exception", ex);
-				//throw;
-    //        }
-    //        catch (InvalidOperationException ex)
-    //        {
-    //            logException(client, "https://localhost:7290/api/Exception", ex);
-    //            throw;
-    //        }
-    //        catch (JsonException ex)
-    //        {
-    //            logException(client, "https://localhost:7290/api/Exception", ex);
-    //            throw;
-    //        }
+            //        catch (NullReferenceException ex)
+            //        {
+            //logException(client, "https://localhost:7290/api/Exception", ex);
+            //throw;
+            //        }
+            //        catch (InvalidOperationException ex)
+            //        {
+            //            logException(client, "https://localhost:7290/api/Exception", ex);
+            //            throw;
+            //        }
+            //        catch (JsonException ex)
+            //        {
+            //            logException(client, "https://localhost:7290/api/Exception", ex);
+            //            throw;
+            //        }
             catch (Exception ex){
-                logException(client, "https://localhost:7290/api/Exception", ex);
+                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
                 throw;
             }
 
@@ -309,55 +310,7 @@ namespace SpendLess.Client.Services
             }
         }
 
-        public async Task GetTransactions()
-        {
-            var client = _clientFactory.CreateClient();
-            try
-            {
-                var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7290/api/Transactions/GetTransactions");
-                string token = await _localStorage.GetItemAsStringAsync("token");
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token.Replace("\"", ""));
-
-                var response = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
-                if ((response.StatusCode) == HttpStatusCode.Unauthorized){
-                    await _authStateProvider.GetAuthenticationStateAsync();
-                    _snackBarService.ErrorMsg("Session has ended");
-                    return;
-                }
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadFromJsonAsync<List<Transactions>>();
-                    Transactions = result;
-                }
-            }
-            //catch (NullReferenceException ex)
-            //{
-            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-            //    throw;
-            //}
-            //catch (InvalidOperationException ex)
-            //{
-            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-            //    throw;
-            //}
-            //catch (JsonException ex)
-            //{
-            //    await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-            //    throw;
-            //}
-            catch (Exception ex) {
-                await client.PostAsJsonAsync("https://localhost:7290/api/Exception", ex);
-                throw;
-            }
-            /*var _httpClient = clientFactory.CreateClient();
-            var result = await _httpClient.GetFromJsonAsync<List<Transaction>>("api/finance/GetTransactions");
-            if(result != null)
-            {
-                Transactions = result;
-                SnackBarService.SuccessMsg("Data loaded");
-            }*/
-            await this.OnTransactionsChanged();
-        }
+        
 
         public async Task GetUserName()
         {

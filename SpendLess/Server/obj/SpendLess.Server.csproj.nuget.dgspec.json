@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {}
+    "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
+    "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
+        "projectUniqueName": "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj",
         "projectName": "SpendLess.Client",
-        "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj",
-        "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\obj\\",
+        "projectPath": "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\final\\SpendLess\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,15 +26,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-                "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+              "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }
@@ -126,20 +125,20 @@
         }
       }
     },
-    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj": {
+    "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj",
+        "projectUniqueName": "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj",
         "projectName": "SpendLess.Server",
-        "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\SpendLess.Server.csproj",
-        "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Server\\obj\\",
+        "projectPath": "D:\\C#\\final\\SpendLess\\Server\\SpendLess.Server.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\final\\SpendLess\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -148,18 +147,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj": {
-                "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Client\\SpendLess.Client.csproj"
+              "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj": {
+                "projectPath": "D:\\C#\\final\\SpendLess\\Client\\SpendLess.Client.csproj"
               },
-              "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
-                "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj"
+              "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+                "projectPath": "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj"
               }
             }
           }
@@ -248,20 +246,20 @@
         }
       }
     },
-    "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
+    "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "projectUniqueName": "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj",
         "projectName": "SpendLess.Shared",
-        "projectPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\SpendLess.Shared.csproj",
-        "packagesPath": "C:\\Users\\viliu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\viliu\\Documents\\GitHub\\SpendLess\\SpendLess\\Shared\\obj\\",
+        "projectPath": "D:\\C#\\final\\SpendLess\\Shared\\SpendLess.Shared.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\C#\\final\\SpendLess\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\viliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -270,7 +268,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

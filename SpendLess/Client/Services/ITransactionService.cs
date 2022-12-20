@@ -13,7 +13,6 @@ namespace SpendLess.Client.Services
         event EventHandler<EventArgs>? TransactionsChanged;
 
         public Task OnTransactionsChanged();
-        Task GetTransactions(LogException logexception);
         
         Task GetTransactions();
 
